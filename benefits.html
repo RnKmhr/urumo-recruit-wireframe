@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>福利厚生 — Urumo 採用サイト Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  :root{
+    --ink:#0A0A0A;--g900:#161616;--g800:#262626;--g700:#3D3D3D;--g600:#555555;
+    --g500:#777777;--g400:#A0A0A0;--g300:#C8C8C8;--g200:#E0E0E0;--g100:#EFEFEF;
+    --g50:#F7F7F7;--paper:#FAFAFA;--white:#FFFFFF;
+    --serif:'Inter','Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;
+    --jp:'Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--jp);color:var(--ink);background:var(--white);line-height:1.75;font-size:15px;font-feature-settings:"palt";letter-spacing:0.02em}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.wrap{padding:0 20px}}
+
+  /* ══ NAV ══ */
+  nav.site-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.92);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--g100)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.nav-inner{padding:0 20px}}
+  .nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .nav-logo .mark{width:30px;height:30px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .nav-logo .mark span{width:12px;height:12px;border-radius:50%;background:var(--white);display:block}
+  .nav-logo .text{font-family:var(--serif);font-size:13px;font-weight:700;letter-spacing:0.01em;color:var(--ink);white-space:nowrap}
+  .nav-logo .text small{display:block;font-size:9px;font-weight:500;color:var(--g500);letter-spacing:0.1em;margin-top:1px}
+  .nav-links{display:flex;gap:4px;align-items:center;list-style:none;margin:0 24px}
+  .nav-links > li{position:relative}
+  .nav-links > li > a{font-size:13px;font-weight:500;color:var(--g600);transition:color .2s;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border-radius:6px}
+  .nav-links > li > a:hover{color:var(--ink);background:var(--g50)}
+  .nav-links > li.has-dd > a::after{content:'▾';font-size:9px;color:var(--g400);transition:transform .2s;display:inline-block}
+  .nav-links > li.has-dd:hover > a::after,.nav-links > li.has-dd.dd-open > a::after{transform:rotate(180deg);color:var(--ink)}
+  .nav-dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--white);border:1px solid var(--g200);border-radius:10px;padding:6px;min-width:160px;list-style:none;box-shadow:0 16px 40px -12px rgba(0,0,0,0.14);opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s,transform .18s;z-index:300}
+  .nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:11px;height:11px;background:var(--white);border-left:1px solid var(--g200);border-top:1px solid var(--g200)}
+  .nav-links > li.has-dd:hover .nav-dropdown,.nav-links > li.has-dd.dd-open .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .nav-dropdown li a{display:block;padding:9px 14px;font-size:13px;color:var(--g700);border-radius:6px;transition:background .12s,color .12s;white-space:nowrap}
+  .nav-dropdown li a:hover{background:var(--g50);color:var(--ink)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .nav-cta{background:var(--ink);color:var(--white) !important;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:0.02em;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:background .2s,transform .2s}
+  .nav-cta:hover{background:var(--g700);transform:translateY(-1px)}
+
+  /* ══ COMMON ══ */
+  section.block{padding:96px 0}
+  section.block.alt{background:var(--paper)}
+  .section-eyebrow{font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);margin-bottom:16px}
+  .section-h2{font-size:clamp(24px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.01em;color:var(--ink);margin-bottom:16px}
+  .section-lede{font-size:15px;line-height:1.95;color:var(--g600);margin-bottom:40px}
+  .more-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--ink);letter-spacing:0.04em;border-bottom:2px solid var(--ink);padding-bottom:4px;transition:gap .2s}
+  .more-link:hover{gap:12px}
+
+  /* ══ PLACEHOLDER ══ */
+  .ph{background:var(--g800);border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .ph::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(255,255,255,0.07),transparent 70%)}
+  .ph-label{font-family:var(--serif);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);z-index:1;position:relative;text-align:center}
+  .ph.light{background:var(--g100)}
+  .ph.light .ph-label{color:var(--g500)}
+
+  /* ══ SCROLL REVEAL ══ */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+  .reveal.is-visible{opacity:1;transform:none}
+  .reveal-d1{transition-delay:.12s}
+  .reveal-d2{transition-delay:.24s}
+
+  /* ══ PAGE HERO ══ */
+  .page-hero{
+    padding-top:64px;background:var(--paper);border-bottom:1px solid var(--g100);
+  }
+  .page-hero-inner{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    align-items:center;
+  }
+  @media(max-width:900px){.page-hero-inner{grid-template-columns:1fr}}
+  .page-hero-text{
+    padding:56px 48px 56px 48px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  @media(max-width:900px){.page-hero-text{padding:48px 20px}}
+  .page-hero-eyebrow{
+    font-family:var(--serif);font-size:10px;font-weight:700;
+    letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);
+    margin-bottom:16px;
+  }
+  .page-hero h1{
+    font-size:clamp(36px,5vw,64px);font-weight:800;line-height:1.15;
+    letter-spacing:-0.02em;color:var(--ink);
+  }
+  .page-hero-right{
+    padding:56px 48px 56px 56px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  @media(max-width:900px){.page-hero-right{padding:40px 20px}}
+  .badge-row{display:flex;gap:12px;flex-wrap:wrap}
+  .cert-badge{
+    border:1px solid var(--g200);border-radius:6px;padding:10px 14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .cert-badge .badge-icon{
+    width:36px;height:36px;background:var(--g100);border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:7px;font-weight:700;color:var(--g500);
+    letter-spacing:0.04em;text-align:center;flex-shrink:0;line-height:1.3;
+  }
+  .cert-badge .badge-info{display:flex;flex-direction:column;gap:1px}
+  .cert-badge .badge-name{font-size:12px;font-weight:700;color:var(--ink);line-height:1.3}
+  .cert-badge .badge-sub{font-size:11px;color:var(--g500)}
+  .page-hero-lede{font-size:14px;line-height:2;color:var(--g600)}
+
+  /* ══ BENEFITS TABLE ══ */
+  .benefits-section{padding:64px 0 80px}
+  .benefits-intro{margin-bottom:48px}
+  .benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--g200)}
+  @media(max-width:768px){.benefits-grid{grid-template-columns:1fr}}
+  .benefit-item{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:20px;
+    padding:24px 0;border-bottom:1px solid var(--g200);
+  }
+  .benefits-grid > .benefit-item:nth-child(odd){padding-right:40px;border-right:1px solid var(--g200)}
+  .benefits-grid > .benefit-item:nth-child(even){padding-left:40px}
+  @media(max-width:768px){
+    .benefit-item{padding:20px 0}
+    .benefits-grid > .benefit-item:nth-child(odd){padding-right:0;border-right:none}
+    .benefits-grid > .benefit-item:nth-child(even){padding-left:0}
+  }
+  .benefit-text{flex:1}
+  .benefit-text h4{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.5;letter-spacing:0.01em}
+  .benefit-text p{font-size:13px;color:var(--g600);line-height:1.9}
+  .benefit-icon{
+    width:56px;height:56px;border-radius:50%;background:var(--white);
+    border:1.5px solid var(--g200);display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .benefit-icon .ph-label{font-size:8px;color:var(--g400)}
+
+  /* ══ FOOTNOTE ══ */
+  .benefit-note{margin-top:32px;padding:20px 24px;background:var(--paper);border-radius:8px;border:1px solid var(--g100)}
+  .benefit-note p{font-size:12px;color:var(--g500);line-height:1.9}
+
+  /* ══ FOOTER CTA ══ */
+  .footer-cta{background:var(--ink);color:var(--white);padding:100px 0;text-align:center;position:relative;overflow:hidden}
+  .footer-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 75% 20%,rgba(255,255,255,0.05),transparent 60%),radial-gradient(ellipse 50% 50% at 20% 80%,rgba(255,255,255,0.04),transparent 60%)}
+  .footer-cta-inner{position:relative;z-index:1}
+  .footer-cta h2{font-size:clamp(24px,4vw,44px);font-weight:800;line-height:1.32;margin-bottom:16px;letter-spacing:-0.01em}
+  .footer-cta p{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:36px;max-width:44ch;margin-left:auto;margin-right:auto;line-height:2}
+  .footer-cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn-primary-w{background:var(--white);color:var(--ink);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s}
+  .btn-primary-w:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,0.4)}
+  .btn-ghost-w{color:var(--white);padding:14px 8px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.4);transition:gap .2s}
+  .btn-ghost-w:hover{gap:12px}
+
+  /* ══ FOOTER ══ */
+  footer.site-foot{background:var(--g900);color:rgba(255,255,255,0.7);padding:64px 0 28px;font-size:13px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08)}
+  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+  .footer-brand{display:flex;flex-direction:column;gap:16px}
+  .footer-brand .logo{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:800;font-size:13px;color:var(--white)}
+  .footer-brand .logo .mark{width:26px;height:26px;background:var(--white);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .footer-brand .logo .mark span{width:10px;height:10px;background:var(--g900);border-radius:50%;display:block}
+  .footer-brand p{font-size:12px;line-height:1.9;color:rgba(255,255,255,0.45)}
+  .footer-col h4{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g500);margin-bottom:14px}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .footer-col a{font-size:12px;color:rgba(255,255,255,0.6);transition:color .2s}
+  .footer-col a:hover{color:var(--white)}
+  .footer-bottom{padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.3)}
+  .footer-bottom .legal{display:flex;gap:20px}
+
+  /* ══ WF BADGE ══ */
+  .wf-badge{position:fixed;right:20px;bottom:20px;z-index:500;background:var(--ink);color:var(--white);border-radius:6px;padding:8px 14px;font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;box-shadow:0 6px 20px -6px rgba(0,0,0,0.4)}
+  .wf-badge .sub{color:rgba(255,255,255,0.45);font-weight:400;font-size:9px;margin-top:1px}
+</style>
+</head>
+<body>
+
+<!-- ══════════ GLOBAL NAV ══════════ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="mf-recruit-wireframe.html" class="nav-logo">
+      <div class="mark"><span></span></div>
+      <div class="text">Urumo<small>採用サイト</small></div>
+    </a>
+    <ul class="nav-links">
+      <li class="has-dd">
+        <a href="#">会社について</a>
+        <ul class="nav-dropdown">
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </li>
+      <li class="has-dd">
+        <a href="#">働く環境</a>
+        <ul class="nav-dropdown">
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html" style="color:var(--ink);font-weight:700">福利厚生</a></li>
+        </ul>
+      </li>
+      <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+      <li><a href="students.html">新卒採用</a></li>
+      <li><a href="qa.html">Q&amp;A</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="mf-recruit-wireframe.html#jobs" class="nav-cta">募集職種・エントリー →</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════ PAGE HERO ══════════ -->
+<section class="page-hero">
+  <div class="wrap" style="padding:0">
+    <div class="page-hero-inner">
+      <div class="page-hero-text">
+        <div class="page-hero-eyebrow">Benefits</div>
+        <h1>福利厚生・制度</h1>
+      </div>
+      <div class="page-hero-right">
+        <p class="page-hero-lede">社員それぞれが、自身の生活スタイルや価値観に合わせて働く環境づくりを目指しており、2024年に「えるぼし認定」3つ星・「PRIDE指標2024」ブロンズを獲得しました。社員が自由にメニューを選択し利用することができるカフェテリア（選択式）型の福利厚生制度をご紹介します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ BENEFITS LIST ══════════ -->
+<section class="benefits-section">
+  <div class="wrap">
+    <div class="section-eyebrow">Welfare &amp; Benefits</div>
+    <h2 class="section-h2" style="margin-bottom:32px">福利厚生</h2>
+    <div class="benefits-grid reveal">
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>交通費支給</h4>
+          <p>出社実績に応じて支給（上限あり）</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>ランチ手当</h4>
+          <p>社内のコミュニケーションの活性化やクリエイティブな発想の創出機会の提供を目的として、1,320円/1日（週上限なし）を補助。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>結婚祝い金</h4>
+          <p>ご入籍に際して祝い金を支給</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>出産祝い金</h4>
+          <p>ご出産に際して祝い金を支給</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>リモートワーク制度</h4>
+          <p>リモートワーク可<br>※部署、職種によって出社頻度が異なる</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>借上社宅制度</h4>
+          <p>住みたい・住んでいる賃貸物件の契約を「法人契約」とすることで、税金および社会保険料への対策ができる制度</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>慶弔見舞金</h4>
+          <p>結婚・出産・病気・災害など、各種慶弔の際に見舞金を支給</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>書籍購入支援</h4>
+          <p>業務に関連する書籍・学習教材の購入費用を会社が負担。自己成長を会社全体でサポートします。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>フレックスタイム制</h4>
+          <p>コアタイムなしのフルフレックス。自分のライフスタイルに合わせて柔軟に働く時間を設定できます。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>健康診断</h4>
+          <p>年1回の定期健康診断を会社負担で実施。オプション検査の一部費用補助もあり。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>育児・介護休業制度</h4>
+          <p>法定を上回る育児・介護休業を整備。男性育休取得も積極的に推進しています。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>確定拠出年金（DC）</h4>
+          <p>会社掛金による確定拠出年金制度。将来に向けた資産形成をサポートします。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:80px">
+      <div class="section-eyebrow">Work System</div>
+      <h2 class="section-h2" style="margin-bottom:32px">制度</h2>
+    </div>
+
+    <div class="benefits-grid reveal" style="grid-template-columns:1fr;margin-bottom:0;margin-top:0">
+      <div class="benefit-item" style="padding-right:0;border-right:none;flex-direction:column;gap:24px">
+        <div class="benefit-text">
+          <h4>評価制度</h4>
+          <p>半期ごとの目標設定と評価面談を実施。成果・行動・成長の3軸で公正に評価し、等級・給与への反映を透明なプロセスで行います。マネージャーとの1on1を通じて、個人の成長とキャリアパスを継続的にサポートします。</p>
+        </div>
+        <div class="ph" style="width:100%;height:280px;border-radius:8px"><span class="ph-label">Photo</span></div>
+      </div>
+    </div>
+
+    <div class="benefits-grid reveal">
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>フレックスタイム制</h4>
+          <p>コアタイムなしのフルフレックス。自分のライフスタイルに合わせて働く時間を設定できます。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>リモートワーク制度</h4>
+          <p>リモートワーク可。部署・職種によって出社頻度が異なります。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>育児・介護休業制度</h4>
+          <p>法定を上回る育児・介護休業を整備。男性育休取得も積極的に推進しています。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>借上社宅制度</h4>
+          <p>住みたい・住んでいる賃貸物件の契約を「法人契約」とすることで、税金および社会保険料への対策ができる制度。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>確定拠出年金（DC）</h4>
+          <p>会社掛金による確定拠出年金制度。将来に向けた資産形成をサポートします。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-text">
+          <h4>書籍購入支援</h4>
+          <p>業務に関連する書籍・学習教材の購入費用を会社が負担。自己成長を会社全体でサポートします。</p>
+        </div>
+        <div class="benefit-icon ph light"><span class="ph-label">Icon</span></div>
+      </div>
+
+    </div>
+
+    <div class="benefit-note reveal">
+      <p>※上記は一部抜粋です。制度の詳細・最新情報は選考過程でご確認いただけます。<br>※一部の制度については、勤続年数や雇用形態によって適用条件が異なる場合があります。</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FOOTER CTA ══════════ -->
+<div class="footer-cta">
+  <div class="wrap">
+    <div class="footer-cta-inner">
+      <h2>Urumoで一緒に働きませんか。</h2>
+      <p>充実した福利厚生と成長できる環境で、あなたのキャリアを加速させましょう。</p>
+      <div class="footer-cta-actions">
+        <a href="mf-recruit-wireframe.html#jobs" class="btn-primary-w">募集職種を見る →</a>
+        <a href="students.html" class="btn-ghost-w">新卒採用はこちら →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><div class="mark"><span></span></div>Urumo</div>
+        <p>採用サイト</p>
+      </div>
+      <div class="footer-col">
+        <h4>会社について</h4>
+        <ul>
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>働く環境</h4>
+        <ul>
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>その他</h4>
+        <ul>
+          <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+          <li><a href="students.html">新卒採用</a></li>
+          <li><a href="qa.html">Q&amp;A</a></li>
+          <li><a href="mf-recruit-wireframe.html#jobs">募集職種・エントリー</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Urumo, Inc.</span>
+      <div class="legal"><a href="#">プライバシーポリシー</a><a href="#">利用規約</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="wf-badge">Wireframe<div class="sub">福利厚生 — 2025.06</div></div>
+
+<script>
+(function(){
+  document.querySelectorAll('.nav-links > li.has-dd > a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var li = this.closest('li.has-dd');
+      var isOpen = li.classList.contains('dd-open');
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(function(el){ el.classList.remove('dd-open'); });
+      if(!isOpen) li.classList.add('dd-open');
+    });
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.has-dd')){
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(function(el){ el.classList.remove('dd-open'); });
+    }
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if(revealEls.length){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
+
+<script>
+window.PAGE_ANNOTATIONS = [
+  {
+    label: 'ページタイトル',
+    section: 'ヒーロー',
+    selector: '.page-hero h1',
+    desc: 'ページの大見出し。「福利厚生・制度」など、このページで何が分かるかを端的に示す。',
+    chars: '10〜26文字',
+  },
+  {
+    label: 'ヒーロー リード文',
+    section: 'ヒーロー',
+    selector: '.page-hero-lede',
+    desc: '福利厚生ページのイントロ文。Urumoの福利厚生に対する姿勢・考え方を伝える。カフェテリア型制度の概要もここで触れる。',
+    chars: '30〜55文字',
+  },
+  {
+    label: '交通費支給 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(1) p',
+    desc: '交通費支給の内容説明。支給条件・上限など具体的な数値があると信頼感が出る。',
+    chars: '25〜65文字',
+  },
+  {
+    label: 'ランチ手当 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(2) p',
+    desc: 'ランチ手当の説明。金額・頻度・目的（コミュニケーション促進など）を端的に。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '結婚祝い金 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(3) p',
+    desc: '結婚祝い金の内容。支給条件・金額の概要を簡潔に。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '出産祝い金 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(4) p',
+    desc: '出産祝い金の内容説明。',
+    chars: '25〜65文字',
+  },
+  {
+    label: 'リモートワーク制度 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(5) p',
+    desc: 'リモートワーク制度の詳細。フル/ハイブリッドの別、出社頻度の目安など。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '借上社宅制度 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(6) p',
+    desc: '借上社宅制度の内容説明。法人契約による税・社会保険対策の仕組みを端的に。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '慶弔見舞金 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(7) p',
+    desc: '慶弔見舞金の対象となるライフイベントと支給概要を端的に。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '書籍購入支援 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(8) p',
+    desc: '書籍購入支援の内容。支援範囲・上限・目的（自己成長支援）を簡潔に。',
+    chars: '25〜65文字',
+  },
+  {
+    label: 'フレックスタイム制 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(9) p',
+    desc: 'フレックスタイム制の詳細。コアタイムの有無や働き方の柔軟性を伝える。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '健康診断 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(10) p',
+    desc: '健康診断の頻度・負担者・オプション補助の有無など。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '育児・介護休業制度 説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(11) p',
+    desc: '育児・介護休業制度の内容。法定以上の整備状況や男性育休推進についても言及。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '確定拠出年金（DC）説明文',
+    section: '福利厚生一覧',
+    selector: '.benefit-item:nth-child(12) p',
+    desc: '確定拠出年金制度の内容。会社掛金での資産形成サポートを端的に。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '評価制度 説明文',
+    section: '制度',
+    selector: '[style*="grid-template-columns:1fr"] .benefit-text p',
+    desc: '評価制度の概要説明。評価軸・頻度・フィードバックの仕組みなど、透明性・公平性が伝わる内容に。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '注記テキスト',
+    section: '注記',
+    selector: '.benefit-note p',
+    desc: '制度の補足注記。「一部抜粋」である旨、適用条件の違いに関する注釈。最新情報は選考過程で確認できる旨を明記。',
+    chars: '20〜60文字',
+  }
+];
+</script>
+<script src="anno.js?v=2"></script>
+
+</body>
+</html>

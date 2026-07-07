@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数字でみる — Urumo 採用サイト Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  :root{
+    --ink:#0A0A0A;--g900:#161616;--g800:#262626;--g700:#3D3D3D;--g600:#555555;
+    --g500:#777777;--g400:#A0A0A0;--g300:#C8C8C8;--g200:#E0E0E0;--g100:#EFEFEF;
+    --g50:#F7F7F7;--paper:#FAFAFA;--white:#FFFFFF;
+    --serif:'Inter','Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;
+    --jp:'Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--jp);color:var(--ink);background:var(--white);line-height:1.75;font-size:15px;font-feature-settings:"palt";letter-spacing:0.02em}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.wrap{padding:0 20px}}
+
+  /* ── NAV ── */
+  nav.site-nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--g100);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.nav-inner{padding:0 20px}}
+  .nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .nav-logo .mark{width:30px;height:30px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .nav-logo .mark span{width:12px;height:12px;border-radius:50%;background:var(--white);display:block}
+  .nav-logo .text{font-family:var(--serif);font-size:13px;font-weight:700;letter-spacing:0.01em;color:var(--ink);white-space:nowrap}
+  .nav-logo .text small{display:block;font-size:9px;font-weight:500;color:var(--g500);letter-spacing:0.1em;margin-top:1px}
+  .nav-links{display:flex;gap:4px;align-items:center;list-style:none;margin:0 24px}
+  .nav-links > li{position:relative}
+  .nav-links > li > a{font-size:13px;font-weight:500;color:var(--g600);transition:color .2s;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border-radius:6px}
+  .nav-links > li > a:hover{color:var(--ink);background:var(--g50)}
+  .nav-links > li.has-dd > a::after{content:'▾';font-size:9px;color:var(--g400);transition:transform .2s;display:inline-block}
+  .nav-links > li.has-dd:hover > a::after{transform:rotate(180deg);color:var(--ink)}
+  .nav-dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--white);border:1px solid var(--g200);border-radius:10px;padding:6px;min-width:160px;list-style:none;box-shadow:0 16px 40px -12px rgba(0,0,0,0.14);opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s,transform .18s;z-index:300}
+  .nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:11px;height:11px;background:var(--white);border-left:1px solid var(--g200);border-top:1px solid var(--g200)}
+  .nav-links > li.has-dd:hover .nav-dropdown,.nav-links > li.has-dd:focus-within .nav-dropdown,.nav-links > li.has-dd.dd-open .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .nav-dropdown li a{display:block;padding:9px 14px;font-size:13px;color:var(--g700);border-radius:6px;transition:background .12s,color .12s;white-space:nowrap}
+  .nav-dropdown li a:hover{background:var(--g50);color:var(--ink)}
+  .nav-dropdown li a.is-current{color:var(--ink);font-weight:700}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .nav-cta{background:var(--ink);color:var(--white) !important;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:0.02em;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:background .2s,transform .2s}
+  .nav-cta:hover{background:var(--g700);transform:translateY(-1px)}
+
+  /* ── CONTENT AREA ── */
+  .page-content{padding-top:64px}
+
+  /* ── COMMON ── */
+  .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.wrap{padding:0 20px}}
+  .section-block{padding:80px 0}
+  .section-block.alt{background:var(--paper)}
+  .section-block.dark{background:var(--ink);color:var(--white)}
+  .section-eyebrow{
+    font-family:var(--serif);font-size:10px;font-weight:700;
+    letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);margin-bottom:16px;
+  }
+  .section-h2{
+    font-size:clamp(24px,3.6vw,40px);font-weight:800;line-height:1.28;
+    letter-spacing:-0.01em;color:var(--ink);margin-bottom:24px;
+  }
+  .section-lede{font-size:15px;line-height:1.95;color:var(--g600);max-width:52ch}
+
+  /* placeholder */
+  .ph{background:var(--g800);border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .ph::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(255,255,255,0.07),transparent 70%)}
+  .ph-label{font-family:var(--serif);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);z-index:1;position:relative;text-align:center}
+  .ph.light{background:var(--g100)}
+  .ph.light .ph-label{color:var(--g500)}
+
+  /* ── PAGE HERO ── */
+  .page-hero{
+    padding:100px 0 80px;border-bottom:1px solid var(--g100);
+  }
+  .page-hero .section-eyebrow{margin-bottom:20px}
+  .page-hero h1{
+    font-size:clamp(32px,5vw,64px);font-weight:800;line-height:1.15;
+    letter-spacing:-0.02em;color:var(--ink);margin-bottom:20px;
+  }
+  .page-hero p{font-size:16px;line-height:2;color:var(--g600);max-width:48ch}
+
+  /* ── BIG STATS GRID ── */
+  .stats-hero-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:0;border:1px solid var(--g200);border-radius:8px;overflow:hidden;margin-top:56px;
+  }
+  @media(max-width:900px){.stats-hero-grid{grid-template-columns:1fr 1fr}}
+  .stat-hero-cell{
+    padding:40px 32px;border-right:1px solid var(--g200);
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .stat-hero-cell:last-child{border-right:none}
+  @media(max-width:900px){
+    .stat-hero-cell:nth-child(2n){border-right:none}
+    .stat-hero-cell:nth-child(n+3){border-top:1px solid var(--g200)}
+  }
+  .stat-hero-val{
+    font-family:var(--serif);font-size:clamp(40px,5vw,64px);font-weight:800;
+    color:var(--ink);letter-spacing:-0.04em;line-height:1;
+  }
+  .stat-hero-val .unit{font-size:18px;font-weight:600;color:var(--g600);letter-spacing:0}
+  .stat-hero-label{font-size:13px;color:var(--g500);margin-top:6px}
+  .stat-hero-note{font-family:var(--serif);font-size:10px;color:var(--g400);margin-top:4px}
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider{
+    display:flex;align-items:center;gap:24px;
+    padding:56px 0 40px;
+  }
+  .section-divider h2{
+    font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.01em;white-space:nowrap;
+  }
+  .section-divider .line{flex:1;height:1px;background:var(--g200)}
+
+  /* ── CHART PLACEHOLDER ── */
+  .chart-block{
+    border:1px solid var(--g200);border-radius:8px;overflow:hidden;
+    background:var(--white);
+  }
+  .chart-head{
+    padding:20px 24px 16px;border-bottom:1px solid var(--g100);
+    display:flex;align-items:baseline;gap:12px;
+  }
+  .chart-title{font-size:13px;font-weight:700;color:var(--ink)}
+  .chart-note{font-size:11px;color:var(--g500);font-family:var(--serif)}
+  .chart-area{
+    padding:24px;
+  }
+  .chart-visual{border-radius:4px}
+
+  /* ── STAT CARDS (medium) ── */
+  .stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+  @media(max-width:900px){.stat-cards{grid-template-columns:1fr 1fr}}
+  .stat-card{
+    border:1px solid var(--g200);border-radius:8px;padding:28px 24px;
+    background:var(--white);
+  }
+  .stat-card-label{font-size:12px;color:var(--g500);margin-bottom:8px}
+  .stat-card-val{
+    font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:800;
+    color:var(--ink);letter-spacing:-0.03em;line-height:1;
+  }
+  .stat-card-val .unit{font-size:14px;font-weight:600;color:var(--g600);letter-spacing:0}
+  .stat-card-sub{font-size:11px;color:var(--g400);margin-top:8px;font-family:var(--serif)}
+
+  /* ── BAR CHART ── */
+  .bar-list{display:flex;flex-direction:column;gap:16px;margin-top:8px}
+  .bar-item{display:flex;flex-direction:column;gap:6px}
+  .bar-item-head{display:flex;justify-content:space-between;align-items:center}
+  .bar-item-label{font-size:12px;color:var(--g600)}
+  .bar-item-val{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--ink)}
+  .bar-track{height:8px;background:var(--g100);border-radius:999px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--ink);border-radius:999px}
+
+  /* ── 2-COL LAYOUT ── */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+  @media(max-width:768px){.two-col{grid-template-columns:1fr}}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:40px}
+  @media(max-width:900px){.three-col{grid-template-columns:1fr 1fr}}
+
+  /* ── PHOTO ROW ── */
+  .photo-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:40px}
+  @media(max-width:768px){.photo-row{grid-template-columns:1fr 1fr}}
+  .photo-row .ph{aspect-ratio:4/3;border-radius:6px}
+
+  /* ── FOOTER CTA ── */
+  .footer-cta{background:var(--ink);color:var(--white);padding:100px 0;text-align:center;position:relative;overflow:hidden}
+  .footer-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 75% 20%,rgba(255,255,255,0.05),transparent 60%),radial-gradient(ellipse 50% 50% at 20% 80%,rgba(255,255,255,0.04),transparent 60%)}
+  .footer-cta-inner{position:relative;z-index:1}
+  .footer-cta h2{font-size:clamp(24px,4vw,44px);font-weight:800;line-height:1.32;margin-bottom:16px;letter-spacing:-0.01em}
+  .footer-cta p{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:36px;max-width:44ch;margin-left:auto;margin-right:auto;line-height:2}
+  .footer-cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn-primary-w{background:var(--white);color:var(--ink);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s}
+  .btn-primary-w:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,0.4)}
+  .btn-ghost-w{color:var(--white);padding:14px 8px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.4);transition:gap .2s}
+  .btn-ghost-w:hover{gap:12px}
+
+  /* ── FOOTER ── */
+  footer.site-foot{background:var(--g900);color:rgba(255,255,255,0.7);padding:64px 0 28px;font-size:13px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08)}
+  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+  .footer-brand{display:flex;flex-direction:column;gap:16px}
+  .footer-brand .logo{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:800;font-size:13px;color:var(--white)}
+  .footer-brand .logo .mark{width:26px;height:26px;background:var(--white);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .footer-brand .logo .mark span{width:10px;height:10px;background:var(--g900);border-radius:50%;display:block}
+  .footer-brand p{font-size:12px;line-height:1.9;color:rgba(255,255,255,0.45)}
+  .footer-col h4{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g500);margin-bottom:14px}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .footer-col a{font-size:12px;color:rgba(255,255,255,0.6);transition:color .2s}
+  .footer-col a:hover{color:var(--white)}
+  .footer-bottom{padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.3)}
+  .footer-bottom .legal{display:flex;gap:20px}
+
+  /* Wireframe badge */
+  .wf-badge{position:fixed;right:20px;bottom:20px;z-index:500;background:var(--ink);color:var(--white);border-radius:6px;padding:8px 14px;font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;box-shadow:0 6px 20px -6px rgba(0,0,0,0.4)}
+  .wf-badge .sub{color:rgba(255,255,255,0.45);font-weight:400;font-size:9px;margin-top:1px}
+</style>
+</head>
+<body>
+
+<!-- ══ GLOBAL NAV ══ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="mf-recruit-wireframe.html" class="nav-logo">
+      <div class="mark"><span></span></div>
+      <div class="text">
+        Urumo
+        <small>採用サイト</small>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li class="has-dd">
+        <a href="#">会社について</a>
+        <ul class="nav-dropdown">
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </li>
+      <li class="has-dd">
+        <a href="#">働く環境</a>
+        <ul class="nav-dropdown">
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </li>
+      <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+      <li><a href="students.html">新卒採用</a></li>
+      <li><a href="qa.html">Q&amp;A</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="mf-recruit-wireframe.html#jobs" class="nav-cta">募集職種・エントリー →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE CONTENT ══ -->
+<div class="page-content">
+
+  <!-- ① PAGE HERO -->
+  <section class="section-block">
+    <div class="wrap">
+      <div class="section-eyebrow">By the Numbers</div>
+      <h1 class="page-hero" style="padding:0;border:none">
+        <span style="font-size:clamp(32px,5vw,64px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;display:block;margin-bottom:20px">数字で見るUrumo</span>
+      </h1>
+      <p class="section-lede">組織、カルチャー、働き方に関するデータをご紹介します。<br>数字を通じてUrumoへの理解を深めてください。</p>
+
+      <!-- KEY STATS 4つ -->
+      <div class="stats-hero-grid">
+        <div class="stat-hero-cell">
+          <div class="stat-hero-val">○○○<span class="unit">+</span></div>
+          <div class="stat-hero-label">グループ全従業員数</div>
+          <div class="stat-hero-note">2025年○月現在</div>
+        </div>
+        <div class="stat-hero-cell">
+          <div class="stat-hero-val">○○<span class="unit">%</span></div>
+          <div class="stat-hero-label">エンジニア・デザイナー比率</div>
+          <div class="stat-hero-note">正社員比率</div>
+        </div>
+        <div class="stat-hero-cell">
+          <div class="stat-hero-val">○○<span class="unit">ヶ国</span></div>
+          <div class="stat-hero-label">メンバーの出身国籍数</div>
+          <div class="stat-hero-note">2025年○月現在</div>
+        </div>
+        <div class="stat-hero-cell">
+          <div class="stat-hero-val">○○○○</div>
+          <div class="stat-hero-label">創業年</div>
+          <div class="stat-hero-note">設立○周年</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② 組織 SECTION -->
+  <section class="section-block alt">
+    <div class="wrap">
+
+      <!-- 従業員数推移グラフ -->
+      <div class="chart-block">
+        <div class="chart-head">
+          <span class="chart-title">従業員数推移</span>
+          <span class="chart-note">正社員 / 全グループ ※各年○月時点</span>
+        </div>
+        <div class="chart-area">
+          <div class="ph light" style="height:240px">
+            <span class="ph-label">Line Chart — 従業員数推移グラフ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card-label">平均年齢</div>
+          <div class="stat-card-val">○○<span class="unit">歳</span></div>
+          <div class="stat-card-sub">2025年○月現在</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">平均勤続年数</div>
+          <div class="stat-card-val">○.○<span class="unit">年</span></div>
+          <div class="stat-card-sub">正社員平均</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">中途採用比率</div>
+          <div class="stat-card-val">○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2024年度入社</div>
+        </div>
+      </div>
+
+      <!-- 年代分布 + 職種分布 -->
+      <div class="two-col" style="margin-top:24px">
+        <div class="chart-block">
+          <div class="chart-head">
+            <span class="chart-title">年代分布</span>
+          </div>
+          <div class="chart-area">
+            <div class="bar-list">
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">20代</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:35%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">30代</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:48%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">40代</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">50代以上</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:3%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-head">
+            <span class="chart-title">職種分布</span>
+          </div>
+          <div class="chart-area">
+            <div class="bar-list">
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">エンジニア</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">ビジネス</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:30%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">コーポレート</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">デザイナー</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ ダイバーシティ SECTION -->
+  <section class="section-block">
+    <div class="wrap">
+
+      <div class="three-col">
+        <div class="stat-card">
+          <div class="stat-card-label">女性社員比率</div>
+          <div class="stat-card-val">○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2025年○月現在</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">女性管理職比率</div>
+          <div class="stat-card-val">○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2025年○月現在</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">外国籍社員比率</div>
+          <div class="stat-card-val">○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2025年○月現在</div>
+        </div>
+      </div>
+
+      <!-- 国籍分布チャート -->
+      <div class="two-col">
+        <div class="chart-block">
+          <div class="chart-head">
+            <span class="chart-title">出身国籍分布（上位）</span>
+          </div>
+          <div class="chart-area">
+            <div class="bar-list">
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">日本</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">中国</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">ベトナム</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:4%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-item-head"><span class="bar-item-label">その他</span><span class="bar-item-val">○○%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-head">
+            <span class="chart-title">女性管理職比率推移</span>
+          </div>
+          <div class="chart-area">
+            <div class="ph light" style="height:180px">
+              <span class="ph-label">Bar Chart — 女性管理職比率推移</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ 働き方 SECTION -->
+  <section class="section-block alt">
+    <div class="wrap">
+
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card-label">月平均残業時間</div>
+          <div class="stat-card-val">○○<span class="unit">時間</span></div>
+          <div class="stat-card-sub">2024年度実績</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">有給取得率</div>
+          <div class="stat-card-val">○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2024年度実績</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">リモートワーク利用率</div>
+          <div class="stat-card-val">○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2025年○月時点</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">育休取得率（男性）</div>
+          <div class="stat-card-val">○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2024年度実績</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">育休取得率（女性）</div>
+          <div class="stat-card-val">○○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2024年度実績</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">育休後復職率</div>
+          <div class="stat-card-val">○○○<span class="unit">%</span></div>
+          <div class="stat-card-sub">2024年度実績</div>
+        </div>
+      </div>
+
+      <!-- 職場写真 -->
+      <div class="photo-row">
+        <div class="ph"><span class="ph-label">Office Photo</span></div>
+        <div class="ph"><span class="ph-label">Team Photo</span></div>
+        <div class="ph"><span class="ph-label">Event Photo</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ カルチャー SECTION -->
+  <section class="section-block">
+    <div class="wrap">
+
+      <div class="two-col">
+        <div class="chart-block">
+          <div class="chart-head">
+            <span class="chart-title">エンゲージメントスコア推移</span>
+            <span class="chart-note">eNPS / 四半期</span>
+          </div>
+          <div class="chart-area">
+            <div class="ph light" style="height:200px">
+              <span class="ph-label">Line Chart — エンゲージメント推移</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="stat-card" style="margin:0">
+            <div class="stat-card-label">社内異動・社内公募実施件数</div>
+            <div class="stat-card-val">○○<span class="unit">件</span></div>
+            <div class="stat-card-sub">2024年度</div>
+          </div>
+          <div class="stat-card" style="margin:0">
+            <div class="stat-card-label">社内勉強会・イベント実施回数</div>
+            <div class="stat-card-val">○○○<span class="unit">回</span></div>
+            <div class="stat-card-sub">2024年度</div>
+          </div>
+          <div class="stat-card" style="margin:0">
+            <div class="stat-card-label">副業・兼業許可制度</div>
+            <div class="stat-card-val" style="font-size:24px">あり</div>
+            <div class="stat-card-sub">申請ベースで許可</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ 注記 -->
+  <section class="section-block" style="padding:40px 0 60px">
+    <div class="wrap">
+      <p style="font-size:11px;color:var(--g400);font-family:var(--serif);line-height:2;letter-spacing:0.04em">
+        ※ 数値はすべてUrumo（株式会社フェズ）単体または対象グループの実績です。<br>
+        ※ 各数値の対象期間・集計範囲は各指標に記載の通りです。<br>
+        ※ 数値は定期的に更新されます。
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══ FOOTER CTA ══ -->
+<div class="footer-cta">
+  <div class="wrap">
+    <div class="footer-cta-inner">
+      <h2>Urumoでは新たな仲間を<br>募集しています。</h2>
+      <p>Urumoでは多数のポジションでメンバーを募集しています。<br>まずはカジュアルにお話しましょう。</p>
+      <div class="footer-cta-actions">
+        <a href="mf-recruit-wireframe.html#jobs" class="btn-primary-w">求人を探す →</a>
+        <a href="#" class="btn-ghost-w">採用に関するお問い合わせ →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="mark"><span></span></div>
+          Urumo
+        </div>
+        <p>採用サイト</p>
+      </div>
+      <div class="footer-col">
+        <h4>会社について</h4>
+        <ul>
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>働く環境</h4>
+        <ul>
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>その他</h4>
+        <ul>
+          <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+          <li><a href="students.html">新卒採用</a></li>
+          <li><a href="qa.html">Q&amp;A</a></li>
+          <li><a href="mf-recruit-wireframe.html#jobs">募集職種・エントリー</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Urumo, Inc.</span>
+      <div class="legal">
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">利用規約</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="wf-badge">
+  Wireframe
+  <div class="sub">Numbers — 2025.06</div>
+</div>
+
+<script>
+  // ドロップダウン: クリックでも開閉できるようにする
+  document.querySelectorAll('.nav-links > li.has-dd > a').forEach(a => {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      const li = this.closest('li.has-dd');
+      const isOpen = li.classList.contains('dd-open');
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+      if (!isOpen) li.classList.add('dd-open');
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.has-dd')) {
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+    }
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const id = this.getAttribute('href').slice(1);
+      if (!id) { e.preventDefault(); return; }
+      const target = document.getElementById(id);
+      if (target) {
+        e.preventDefault();
+        document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+        const navH = document.querySelector('nav.site-nav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.scrollY - navH - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+<script>
+window.PAGE_ANNOTATIONS = [
+  {
+    label: 'ページ見出し',
+    section: 'ヒーロー',
+    selector: '.page-hero h1',
+    desc: '「数字で見るUrumo」など、ページの目的を一言で表すタイトル。',
+    chars: '10〜26文字',
+  },
+  {
+    label: 'ヒーロー リード文',
+    section: 'ヒーロー',
+    selector: 'section.section-block:first-of-type .section-lede',
+    desc: 'このページが何を伝えるページかを説明する一文。組織・働き方・カルチャーのデータを数字で紹介する旨を。',
+    chars: '30〜55文字',
+  },
+  {
+    label: 'KPI ① 数値',
+    section: '主要KPI',
+    selector: '.stat-hero-cell:nth-child(1) .stat-hero-val',
+    desc: 'グループ全従業員数などの主要数値。実際の数字に置き換える。',
+    chars: '3〜6文字（数字）',
+  },
+  {
+    label: 'KPI ① ラベル',
+    section: '主要KPI',
+    selector: '.stat-hero-cell:nth-child(1) .stat-hero-label',
+    desc: '数値の説明ラベル。何の数字かを一目でわかるように。',
+    chars: '5〜14文字',
+  },
+  {
+    label: 'KPI ② 数値',
+    section: '主要KPI',
+    selector: '.stat-hero-cell:nth-child(2) .stat-hero-val',
+    desc: 'エンジニア・デザイナー比率など。',
+    chars: '3〜6文字（数字）',
+  },
+  {
+    label: 'KPI ② ラベル',
+    section: '主要KPI',
+    selector: '.stat-hero-cell:nth-child(2) .stat-hero-label',
+    desc: 'KPI②の説明ラベル。',
+    chars: '5〜14文字',
+  },
+  {
+    label: 'KPI ③ 数値',
+    section: '主要KPI',
+    selector: '.stat-hero-cell:nth-child(3) .stat-hero-val',
+    desc: 'メンバーの出身国籍数など。',
+    chars: '3〜6文字（数字）',
+  },
+  {
+    label: 'KPI ③ ラベル',
+    section: '主要KPI',
+    selector: '.stat-hero-cell:nth-child(3) .stat-hero-label',
+    desc: 'KPI③の説明ラベル。',
+    chars: '5〜14文字',
+  },
+  {
+    label: 'KPI ④ 数値',
+    section: '主要KPI',
+    selector: '.stat-hero-cell:nth-child(4) .stat-hero-val',
+    desc: '創業年・設立周年など。',
+    chars: '3〜6文字（数字）',
+  },
+  {
+    label: 'KPI ④ ラベル',
+    section: '主要KPI',
+    selector: '.stat-hero-cell:nth-child(4) .stat-hero-label',
+    desc: 'KPI④の説明ラベル。',
+    chars: '5〜14文字',
+  }
+];
+</script>
+<script src="anno.js?v=2"></script>
+
+</body>
+</html>

@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新卒採用 — Urumo 採用サイト Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  :root{
+    --ink:#0A0A0A;
+    --g900:#161616;
+    --g800:#262626;
+    --g700:#3D3D3D;
+    --g600:#555555;
+    --g500:#777777;
+    --g400:#A0A0A0;
+    --g300:#C8C8C8;
+    --g200:#E0E0E0;
+    --g100:#EFEFEF;
+    --g50:#F7F7F7;
+    --paper:#FAFAFA;
+    --white:#FFFFFF;
+    --serif:'Inter','Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;
+    --jp:'Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--jp);color:var(--ink);background:var(--white);line-height:1.75;font-size:15px;font-feature-settings:"palt";letter-spacing:0.02em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.wrap{padding:0 20px}}
+
+  /* ══ GLOBAL NAV ══ */
+  nav.site-nav{
+    position:fixed;top:0;left:0;right:0;z-index:300;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--g100);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;max-width:1200px;margin:0 auto;padding:0 48px;
+  }
+  @media(max-width:768px){.nav-inner{padding:0 20px}}
+  .nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .nav-logo .mark{width:30px;height:30px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .nav-logo .mark span{width:12px;height:12px;border-radius:50%;background:var(--white);display:block}
+  .nav-logo .text{font-family:var(--serif);font-size:13px;font-weight:700;letter-spacing:0.01em;color:var(--ink);white-space:nowrap}
+  .nav-logo .text small{display:block;font-size:9px;font-weight:500;color:var(--g500);letter-spacing:0.1em;margin-top:1px}
+  .nav-links{display:flex;gap:4px;align-items:center;list-style:none;margin:0 24px}
+  .nav-links > li{position:relative}
+  .nav-links > li > a{font-size:13px;font-weight:500;color:var(--g600);transition:color .2s;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border-radius:6px}
+  .nav-links > li > a:hover{color:var(--ink);background:var(--g50)}
+  .nav-links > li.has-dd > a::after{content:'▾';font-size:9px;color:var(--g400);transition:transform .2s;display:inline-block}
+  .nav-links > li.has-dd:hover > a::after{transform:rotate(180deg);color:var(--ink)}
+  .nav-dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--white);border:1px solid var(--g200);border-radius:10px;padding:6px;min-width:160px;list-style:none;box-shadow:0 16px 40px -12px rgba(0,0,0,0.14);opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s,transform .18s;z-index:400}
+  .nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:11px;height:11px;background:var(--white);border-left:1px solid var(--g200);border-top:1px solid var(--g200)}
+  .nav-links > li.has-dd:hover .nav-dropdown,
+  .nav-links > li.has-dd.dd-open .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .nav-dropdown li a{display:block;padding:9px 14px;font-size:13px;color:var(--g700);border-radius:6px;transition:background .12s,color .12s;white-space:nowrap}
+  .nav-dropdown li a:hover{background:var(--g50);color:var(--ink)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .nav-cta{background:var(--ink);color:var(--white) !important;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:0.02em;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:background .2s,transform .2s}
+  .nav-cta:hover{background:var(--g700);transform:translateY(-1px)}
+
+  /* ══ COMMON ══ */
+  section.block{padding:96px 0}
+  section.block.alt{background:var(--paper)}
+  section.block.dark{background:var(--ink);color:var(--white)}
+  .section-eyebrow{font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);margin-bottom:16px}
+  .section-h2{font-size:clamp(24px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.01em;color:var(--ink);margin-bottom:16px}
+  .section-lede{font-size:15px;line-height:1.95;color:var(--g600);margin-bottom:40px}
+  .more-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--ink);letter-spacing:0.04em;border-bottom:2px solid var(--ink);padding-bottom:4px;transition:gap .2s}
+  .more-link:hover{gap:12px}
+  .btn-primary{background:var(--ink);color:var(--white);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,0.25)}
+  .btn-ghost{color:var(--ink);padding:14px 8px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--g300);transition:gap .2s,border-color .2s}
+  .btn-ghost:hover{gap:12px;border-color:var(--ink)}
+  .btn-primary-w{background:var(--white);color:var(--ink);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s}
+  .btn-primary-w:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,0.4)}
+  .btn-ghost-w{color:var(--white);padding:14px 8px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.4);transition:gap .2s}
+  .btn-ghost-w:hover{gap:12px}
+
+  /* ══ PLACEHOLDER ══ */
+  .ph{background:var(--g800);border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .ph::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(255,255,255,0.07),transparent 70%)}
+  .ph-label{font-family:var(--serif);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);z-index:1;position:relative;text-align:center}
+
+  /* ══ SCROLL REVEAL ══ */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+  .reveal.is-visible{opacity:1;transform:none}
+  .reveal-d1{transition-delay:.12s}
+  .reveal-d2{transition-delay:.24s}
+  .reveal-d3{transition-delay:.36s}
+
+  /* ══ HERO ══ */
+  .recruit-hero{padding-top:64px;position:relative;background:var(--white)}
+  .recruit-hero-inner{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    align-items:stretch;
+    border-bottom:1px solid var(--g100);
+  }
+  @media(max-width:900px){.recruit-hero-inner{grid-template-columns:1fr}}
+  .recruit-hero-text{
+    padding:72px 64px 64px 48px;
+    display:flex;flex-direction:column;justify-content:center;
+    border-right:1px solid var(--g100);
+  }
+  @media(max-width:900px){.recruit-hero-text{padding:48px 20px;border-right:none;border-bottom:1px solid var(--g100)}}
+  .recruit-hero-eyebrow{
+    font-family:var(--serif);font-size:10px;font-weight:700;
+    letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);
+    margin-bottom:20px;
+  }
+  .recruit-hero h1{
+    font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1.25;
+    letter-spacing:-0.02em;color:var(--ink);margin-bottom:24px;
+  }
+  .recruit-hero-lede{font-size:15px;line-height:2;color:var(--g600);margin-bottom:36px;max-width:44ch}
+  .recruit-hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .recruit-hero-photo{overflow:hidden}
+  .recruit-hero-photo .ph{width:100%;height:100%;border-radius:0;min-height:440px}
+  @media(max-width:900px){.recruit-hero-photo{display:none}}
+
+  /* ══ STATS ══ */
+  .stats-wrap{background:var(--white);border-bottom:1px solid var(--g100)}
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--g200);border-radius:8px;overflow:hidden;
+    margin:32px 0;
+  }
+  @media(max-width:900px){.stats-grid{grid-template-columns:1fr 1fr}}
+  .stat-cell{padding:32px 28px;display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--g200)}
+  .stat-cell:last-child{border-right:none}
+  @media(max-width:900px){
+    .stat-cell:nth-child(2n){border-right:none}
+    .stat-cell:nth-child(n+3){border-top:1px solid var(--g200)}
+  }
+  .stat-num{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--ink);letter-spacing:-0.03em;line-height:1}
+  .stat-num .unit{font-size:16px;font-weight:600;color:var(--g600)}
+  .stat-label{font-size:13px;color:var(--g500);margin-top:4px}
+
+  /* ══ PAGE SUB-NAV ══ */
+  .sub-nav{position:sticky;top:64px;z-index:200;background:rgba(255,255,255,0.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--g100)}
+  .sub-nav-inner{display:flex;gap:0;overflow-x:auto;max-width:1200px;margin:0 auto;padding:0 48px;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  @media(max-width:768px){.sub-nav-inner{padding:0 20px}}
+  .sub-nav-link{font-size:12px;font-weight:600;color:var(--g500);padding:16px 18px;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;letter-spacing:0.04em}
+  .sub-nav-link:hover{color:var(--ink)}
+  .sub-nav-link.is-active{color:var(--ink);border-bottom-color:var(--ink)}
+
+  /* ══ WHY SECTION ══ */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  @media(max-width:900px){.why-grid{grid-template-columns:1fr;gap:40px}}
+  .why-photo{aspect-ratio:4/3;border-radius:8px;overflow:hidden}
+  .values-list{margin-top:32px;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--g200)}
+  .value-item{display:flex;align-items:flex-start;gap:20px;padding:20px 0;border-bottom:1px solid var(--g200)}
+  .value-num{font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g400);letter-spacing:0.1em;padding-top:3px;flex-shrink:0;width:24px}
+  .value-text h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .value-text p{font-size:13px;color:var(--g600);line-height:1.8}
+
+  /* ══ JOB CARDS ══ */
+  .jobs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:900px){.jobs-grid{grid-template-columns:1fr}}
+  .job-card{border:1px solid var(--g200);border-radius:8px;background:var(--white);padding:32px 28px;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
+  .job-card:hover{transform:translateY(-3px);box-shadow:0 20px 40px -20px rgba(0,0,0,0.12);border-color:var(--g400)}
+  .job-cat{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g400);margin-bottom:14px}
+  .job-card h4{font-size:clamp(16px,1.8vw,20px);font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-0.01em;margin-bottom:12px}
+  .job-card p{font-size:13px;color:var(--g600);line-height:1.9;flex:1}
+  .job-card-foot{margin-top:20px;padding-top:16px;border-top:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between}
+  .job-card-foot span{font-family:var(--serif);font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--g500)}
+  .job-card-arrow{font-size:14px;color:var(--g300);transition:color .15s,transform .15s;transform:translateX(-3px)}
+  .job-card:hover .job-card-arrow{color:var(--ink);transform:translateX(0)}
+
+  /* ══ VOICE ══ */
+  .voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:900px){.voice-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.voice-grid{grid-template-columns:1fr}}
+  .voice-card{border:1px solid var(--g200);border-radius:8px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+  .voice-card:hover{transform:translateY(-3px);box-shadow:0 20px 40px -20px rgba(0,0,0,0.12)}
+  .voice-thumb{aspect-ratio:4/3}
+  .voice-body{padding:20px 20px 24px;display:flex;flex-direction:column;gap:8px}
+  .voice-dept-tag{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--g500)}
+  .voice-quote{font-size:14px;font-weight:700;line-height:1.6;color:var(--ink)}
+  .voice-name{font-size:12px;color:var(--g500)}
+
+  /* ══ FLOW TIMELINE ══ */
+  .flow-track{display:grid;grid-template-columns:repeat(5,1fr);position:relative}
+  .flow-track::before{content:'';position:absolute;top:27px;left:calc(10% + 16px);right:calc(10% + 16px);height:1px;background:var(--g200);z-index:0}
+  @media(max-width:900px){.flow-track{grid-template-columns:1fr}.flow-track::before{display:none}}
+  .flow-step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10px;position:relative;z-index:1}
+  .flow-dot{width:56px;height:56px;border-radius:50%;background:var(--white);border:1px solid var(--g200);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:12px;font-weight:700;color:var(--g500);letter-spacing:0.08em;flex-shrink:0;margin-bottom:18px;transition:background .2s,border-color .2s,color .2s}
+  .flow-step:hover .flow-dot{background:var(--ink);border-color:var(--ink);color:var(--white)}
+  .flow-step strong{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;display:block;line-height:1.4}
+  .flow-step span{font-size:12px;color:var(--g500);line-height:1.7}
+  @media(max-width:900px){
+    .flow-step{flex-direction:row;align-items:flex-start;text-align:left;gap:20px;padding:20px 0;border-bottom:1px solid var(--g100)}
+    .flow-dot{margin-bottom:0;flex-shrink:0}
+    .flow-step-text{display:flex;flex-direction:column;gap:4px}
+  }
+
+  /* ══ SCHEDULE ══ */
+  .schedule-row{display:grid;grid-template-columns:160px 200px 1fr;gap:0;border-bottom:1px solid var(--g100);transition:background .15s}
+  .schedule-row:first-child{border-top:1px solid var(--g100)}
+  .schedule-row:hover{background:var(--g50)}
+  .schedule-cell{padding:22px 28px}
+  .schedule-row .when{font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g500);letter-spacing:0.06em;display:flex;align-items:center}
+  .schedule-row .what{font-size:14px;font-weight:700;color:var(--ink);display:flex;align-items:center;border-left:1px solid var(--g100);border-right:1px solid var(--g100)}
+  .schedule-row .desc{font-size:13px;color:var(--g600);line-height:1.85;display:flex;align-items:center}
+  @media(max-width:768px){
+    .schedule-row{grid-template-columns:1fr}
+    .schedule-cell{padding:12px 0}
+    .schedule-row .what,.schedule-row .desc{border:none}
+  }
+
+  /* ══ FAQ ══ */
+  .faq details{border-bottom:1px solid var(--g200);overflow:hidden}
+  .faq details:first-of-type{border-top:1px solid var(--g200)}
+  .faq summary{list-style:none;cursor:pointer;font-size:15px;font-weight:600;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 0;transition:color .2s;user-select:none}
+  .faq summary:hover{color:var(--g500)}
+  .faq summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:2px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq-icon{width:26px;height:26px;border-radius:50%;border:1px solid var(--g300);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-weight:400;color:var(--g500);line-height:1;transition:background .2s,border-color .2s,color .2s,transform .3s cubic-bezier(0.4,0,0.2,1)}
+  .faq details[open] .faq-icon{background:var(--ink);border-color:var(--ink);color:var(--white);transform:rotate(45deg)}
+  .faq details p{padding:0 0 22px;color:var(--g600);font-size:14px;line-height:2;max-width:100%}
+
+  /* ══ FOOTER CTA ══ */
+  .footer-cta{background:var(--ink);color:var(--white);padding:100px 0;text-align:center;position:relative;overflow:hidden}
+  .footer-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 75% 20%,rgba(255,255,255,0.05),transparent 60%),radial-gradient(ellipse 50% 50% at 20% 80%,rgba(255,255,255,0.04),transparent 60%)}
+  .footer-cta-inner{position:relative;z-index:1}
+  .footer-cta h2{font-size:clamp(24px,4vw,44px);font-weight:800;line-height:1.32;margin-bottom:16px;letter-spacing:-0.01em}
+  .footer-cta p{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:36px;max-width:44ch;margin-left:auto;margin-right:auto;line-height:2}
+  .footer-cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+  /* ══ FOOTER ══ */
+  footer.site-foot{background:var(--g900);color:rgba(255,255,255,0.7);padding:64px 0 28px;font-size:13px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08)}
+  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+  .footer-brand{display:flex;flex-direction:column;gap:16px}
+  .footer-brand .logo{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:800;font-size:13px;color:var(--white)}
+  .footer-brand .logo .mark{width:26px;height:26px;background:var(--white);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .footer-brand .logo .mark span{width:10px;height:10px;background:var(--g900);border-radius:50%;display:block}
+  .footer-brand p{font-size:12px;line-height:1.9;color:rgba(255,255,255,0.45)}
+  .footer-col h4{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g500);margin-bottom:14px}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .footer-col a{font-size:12px;color:rgba(255,255,255,0.6);transition:color .2s}
+  .footer-col a:hover{color:var(--white)}
+  .footer-bottom{padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.3)}
+  .footer-bottom .legal{display:flex;gap:20px}
+
+  /* ══ WF BADGE ══ */
+  .wf-badge{position:fixed;right:20px;bottom:20px;z-index:500;background:var(--ink);color:var(--white);border-radius:6px;padding:8px 14px;font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;box-shadow:0 6px 20px -6px rgba(0,0,0,0.4)}
+  .wf-badge .sub{color:rgba(255,255,255,0.45);font-weight:400;font-size:9px;margin-top:1px}
+</style>
+</head>
+<body>
+
+<!-- ══════════ GLOBAL NAV ══════════ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="mf-recruit-wireframe.html" class="nav-logo">
+      <div class="mark"><span></span></div>
+      <div class="text">Urumo<small>採用サイト</small></div>
+    </a>
+    <ul class="nav-links">
+      <li class="has-dd">
+        <a href="#">会社について</a>
+        <ul class="nav-dropdown">
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </li>
+      <li class="has-dd">
+        <a href="#">働く環境</a>
+        <ul class="nav-dropdown">
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </li>
+      <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+      <li><a href="students.html" style="color:var(--ink);font-weight:700">新卒採用</a></li>
+      <li><a href="qa.html">Q&amp;A</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#entry" class="nav-cta">エントリーする →</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════ HERO ══════════ -->
+<section class="recruit-hero" id="top">
+  <div class="wrap" style="padding:0">
+    <div class="recruit-hero-inner">
+      <div class="recruit-hero-text">
+        <div class="recruit-hero-eyebrow">New Graduate Recruitment 2026</div>
+        <h1>リテールの未来を、<br>一緒につくろう。</h1>
+        <p class="recruit-hero-lede">160兆円規模のリテール産業をデータとテクノロジーで変革する。入社1年目から事業の中心に立てるフィールドが、ここにあります。</p>
+        <div class="recruit-hero-actions">
+          <a href="#entry" class="btn-primary">エントリーする →</a>
+          <a href="#schedule" class="btn-ghost">採用スケジュールを見る</a>
+        </div>
+      </div>
+      <div class="recruit-hero-photo">
+        <div class="ph" style="width:100%;height:100%;border-radius:0;min-height:440px">
+          <span class="ph-label">Hero Photo /<br>社員・オフィス写真</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ STATS ══════════ -->
+<div class="stats-wrap">
+  <div class="wrap">
+    <div class="stats-grid reveal">
+      <div class="stat-cell">
+        <div class="stat-num">160<span class="unit">兆円</span></div>
+        <div class="stat-label">リテール産業の市場規模</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">32<span class="unit">歳</span></div>
+        <div class="stat-label">社員の平均年齢</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">68<span class="unit">%</span></div>
+        <div class="stat-label">20〜30代が占める割合</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">3<span class="unit">年連続</span></div>
+        <div class="stat-label">新卒採用を継続</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ══════════ WHY URUMO ══════════ -->
+<section class="block" id="why">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Why Urumo</div>
+    <h2 class="section-h2 reveal reveal-d1">Urumoで働く、3つの理由</h2>
+    <p class="section-lede reveal reveal-d2">スタートアップのスピードと、確かな事業基盤。その両方が揃う環境であなたのキャリアを加速させてください。</p>
+    <div class="why-grid reveal reveal-d2">
+      <div class="why-photo">
+        <div class="ph" style="width:100%;height:100%"><span class="ph-label">Culture / Office Photo</span></div>
+      </div>
+      <div>
+        <div class="values-list">
+          <div class="value-item">
+            <div class="value-num">01</div>
+            <div class="value-text">
+              <h4>急成長市場でインパクトを出せる</h4>
+              <p>リテール産業は160兆円の巨大市場。デジタル化が遅れているからこそ、テクノロジーで解決できる課題が無数に存在します。若いうちから産業規模のインパクトを実感できます。</p>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-num">02</div>
+            <div class="value-text">
+              <h4>入社直後から事業の中心に立てる</h4>
+              <p>年次や肩書きに関係なく、成果で評価される文化があります。新卒1年目からプロジェクトリードやクライアントへの直接提案など、意欲があれば大きな裁量を持って働けます。</p>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-num">03</div>
+            <div class="value-text">
+              <h4>多様なプロと毎日議論しながら成長する</h4>
+              <p>メーカー・小売・テック・コンサルなど多様なバックグラウンドを持つプロフェッショナルたちと日々議論しながら仕事ができます。刺激的な環境があなたのスキルを急速に伸ばします。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ POSITIONS ══════════ -->
+<section class="block alt" id="positions">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Open Positions</div>
+    <h2 class="section-h2 reveal reveal-d1">新卒採用ポジション</h2>
+    <p class="section-lede reveal reveal-d2">あなたの強みと興味に合わせて、4つのポジションでエントリーを受け付けています。</p>
+    <div class="jobs-grid reveal reveal-d2">
+      <a href="#" class="job-card">
+        <div class="job-cat">Business</div>
+        <h4>ビジネス職</h4>
+        <p>メーカー・小売企業へのコンサルティング営業。データ活用の提案から導入支援まで一気通貫で担当し、クライアントの売上向上に直接貢献します。文系・理系問わず歓迎。</p>
+        <div class="job-card-foot"><span>View Details</span><span class="job-card-arrow">→</span></div>
+      </a>
+      <a href="#" class="job-card">
+        <div class="job-cat">Engineering</div>
+        <h4>エンジニア職</h4>
+        <p>リテールデータプラットフォーム「Urumo」の開発に携わります。バックエンド・フロントエンド・インフラ、興味とスキルに応じてキャリアパスを設計できます。</p>
+        <div class="job-card-foot"><span>View Details</span><span class="job-card-arrow">→</span></div>
+      </a>
+      <a href="#" class="job-card">
+        <div class="job-cat">Data Science</div>
+        <h4>データサイエンス職</h4>
+        <p>小売・メーカーのPOSデータや行動データを分析し、事業価値に変換します。機械学習・統計の知識を実際のビジネス課題に応用したい方に最適な環境です。</p>
+        <div class="job-card-foot"><span>View Details</span><span class="job-card-arrow">→</span></div>
+      </a>
+      <a href="#" class="job-card">
+        <div class="job-cat">Corporate</div>
+        <h4>コーポレート職</h4>
+        <p>HR・法務・経理・広報など、会社の基盤を支えるコーポレート部門。スタートアップのコーポレートは裁量が大きく、組織づくりそのものを担えるポジションです。</p>
+        <div class="job-card-foot"><span>View Details</span><span class="job-card-arrow">→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ VOICES ══════════ -->
+<section class="block" id="voices">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Employee Voices</div>
+    <h2 class="section-h2 reveal reveal-d1">先輩社員の声</h2>
+    <p class="section-lede reveal reveal-d2">Urumoで活躍する若手メンバーたちのリアルな声をお届けします。</p>
+    <div class="voice-grid reveal reveal-d2">
+      <div class="voice-card">
+        <div class="voice-thumb ph"><span class="ph-label">社員写真 01</span></div>
+        <div class="voice-body">
+          <div class="voice-dept-tag">Business / 2022年入社</div>
+          <div class="voice-quote">入社半年で、クライアントの担当として一人立ちできた。</div>
+          <div class="voice-name">田中 ◯◯ / ビジネス本部</div>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-thumb ph"><span class="ph-label">社員写真 02</span></div>
+        <div class="voice-body">
+          <div class="voice-dept-tag">Engineering / 2023年入社</div>
+          <div class="voice-quote">データが実際に使われる瞬間の達成感が、たまらない。</div>
+          <div class="voice-name">山田 ◯◯ / プロダクト開発部</div>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-thumb ph"><span class="ph-label">社員写真 03</span></div>
+        <div class="voice-body">
+          <div class="voice-dept-tag">Data Science / 2022年入社</div>
+          <div class="voice-quote">分析結果がそのまま経営判断に使われる、緊張感と喜び。</div>
+          <div class="voice-name">佐藤 ◯◯ / データサイエンス部</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FLOW ══════════ -->
+<section class="block alt" id="flow">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Selection Process</div>
+    <h2 class="section-h2 reveal reveal-d1">選考フロー</h2>
+    <p class="section-lede reveal reveal-d2">カジュアルな面談からスタート。選考を通じてUrumoのことを深く知ってもらえれば嬉しいです。</p>
+    <div class="reveal reveal-d2">
+      <div class="flow-track">
+        <div class="flow-step">
+          <div class="flow-dot">01</div>
+          <div class="flow-step-text">
+            <strong>エントリー</strong>
+            <span>フォームよりエントリー、またはカジュアル面談をお申し込みください</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">02</div>
+          <div class="flow-step-text">
+            <strong>書類選考</strong>
+            <span>履歴書・職歴書をもとに選考します（通常1週間以内）</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">03</div>
+          <div class="flow-step-text">
+            <strong>1次面接</strong>
+            <span>現場社員との面接。ご自身の経験・志向をお聞かせください</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">04</div>
+          <div class="flow-step-text">
+            <strong>最終面接</strong>
+            <span>役員・マネージャーとの面接。Urumoのビジョンについて議論します</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">05</div>
+          <div class="flow-step-text">
+            <strong>内定・オファー</strong>
+            <span>合否のご連絡後、入社条件についてすり合わせを行います</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ SCHEDULE ══════════ -->
+<section class="block" id="schedule">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Schedule</div>
+    <h2 class="section-h2 reveal reveal-d1">2026年度 採用スケジュール</h2>
+    <p class="section-lede reveal reveal-d2">本採用のほか、インターンシップや会社説明会も随時開催しています。</p>
+    <div class="reveal reveal-d2">
+      <div class="schedule-row">
+        <div class="schedule-cell when">2025年 6月〜</div>
+        <div class="schedule-cell what">インターンシップ（夏）</div>
+        <div class="schedule-cell desc">3日間〜2週間の短期・長期インターンを実施。エンジニア・ビジネス・データ職種ごとにコースをご用意しています。</div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-cell when">2025年 9月〜</div>
+        <div class="schedule-cell what">秋冬インターンシップ</div>
+        <div class="schedule-cell desc">就職活動本格化前に、Urumoの仕事をリアルに体験できるプログラム。内定直結コースも設置予定です。</div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-cell when">2025年 12月〜</div>
+        <div class="schedule-cell what">本採用エントリー開始</div>
+        <div class="schedule-cell desc">2026年4月入社を対象とした本採用の受付を開始。職種ごとに随時選考を進めていきます。早期エントリー優遇制度あり。</div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-cell when">2026年 2月〜</div>
+        <div class="schedule-cell what">内定出し（順次）</div>
+        <div class="schedule-cell desc">選考を通過した方へ順次内定をお出しします。入社前研修・懇親会なども実施予定です。</div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-cell when">2026年 4月</div>
+        <div class="schedule-cell what">入社</div>
+        <div class="schedule-cell desc">約2週間のオリエンテーション後、配属部署へ。メンター制度により先輩社員がサポートします。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="block alt" id="faq">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">FAQ</div>
+    <h2 class="section-h2 reveal reveal-d1">よくある質問</h2>
+    <div class="faq reveal reveal-d1">
+      <details>
+        <summary>文系でも応募できますか？<span class="faq-icon">+</span></summary>
+        <p>はい、ビジネス職・コーポレート職は文系出身者が多く活躍しています。データや技術への興味と、課題を論理的に解決する思考力があれば、専攻は問いません。エンジニア・データサイエンス職では理系・情報系が中心ですが、独学でプログラミングを学んだ方のエントリーも歓迎しています。</p>
+      </details>
+      <details>
+        <summary>インターンシップから本採用への切り替えはありますか？<span class="faq-icon">+</span></summary>
+        <p>あります。長期インターン（2週間以上）への参加者は、選考の一部を免除した早期内定コースへの案内をすることがあります。インターン中の成果・姿勢をもとに判断しています。</p>
+      </details>
+      <details>
+        <summary>リモートワークは可能ですか？<span class="faq-icon">+</span></summary>
+        <p>週2〜3日のリモートワークが可能です（職種・チームによって異なります）。入社後しばらくはオンボーディングのため出社頻度が高くなる場合があります。詳細は選考時にご確認ください。</p>
+      </details>
+      <details>
+        <summary>配属先はどのように決まりますか？<span class="faq-icon">+</span></summary>
+        <p>面接での会話や適性をもとに、本人の希望を最大限尊重して決定します。希望職種以外の配属はほぼありません。また入社後もジョブチェンジの機会があります。</p>
+      </details>
+      <details>
+        <summary>選考にかかる期間はどのくらいですか？<span class="faq-icon">+</span></summary>
+        <p>エントリーから内定まで平均3〜4週間程度です。スピード選考（最短2週間）のご希望がある場合は、エントリー時にその旨をお知らせください。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FOOTER CTA ══════════ -->
+<div class="footer-cta" id="entry">
+  <div class="wrap">
+    <div class="footer-cta-inner">
+      <h2>一緒に、リテールの<br>未来をつくりませんか。</h2>
+      <p>まずはカジュアルにお話ししましょう。選考とは関係なく、Urumoのことを知りたい方も大歓迎です。</p>
+      <div class="footer-cta-actions">
+        <a href="#" class="btn-primary-w">エントリーする →</a>
+        <a href="#" class="btn-ghost-w">カジュアル面談を申し込む →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><div class="mark"><span></span></div>Urumo</div>
+        <p>採用サイト</p>
+      </div>
+      <div class="footer-col">
+        <h4>会社について</h4>
+        <ul>
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>働く環境</h4>
+        <ul>
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>その他</h4>
+        <ul>
+          <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+          <li><a href="students.html">新卒採用</a></li>
+          <li><a href="qa.html">Q&amp;A</a></li>
+          <li><a href="mf-recruit-wireframe.html#jobs">募集職種・エントリー</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Urumo, Inc.</span>
+      <div class="legal"><a href="#">プライバシーポリシー</a><a href="#">利用規約</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="wf-badge">Wireframe<div class="sub">新卒採用 — 2025.06</div></div>
+
+<script>
+(function(){
+  // Dropdown
+  document.querySelectorAll('.nav-links > li.has-dd > a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var li = this.closest('li.has-dd');
+      var isOpen = li.classList.contains('dd-open');
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(function(el){ el.classList.remove('dd-open'); });
+      if(!isOpen) li.classList.add('dd-open');
+    });
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.has-dd')){
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(function(el){ el.classList.remove('dd-open'); });
+    }
+  });
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if(revealEls.length){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  // Sub-nav active state
+  var sections = ['why','positions','voices','flow','schedule','faq'];
+  var subLinks = document.querySelectorAll('.sub-nav-link');
+  function updateSubNav(){
+    var scrollY = window.scrollY + 140;
+    var active = '';
+    sections.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.offsetTop <= scrollY) active = id;
+    });
+    subLinks.forEach(function(link){
+      link.classList.toggle('is-active', link.getAttribute('href').replace('#','') === active);
+    });
+  }
+  window.addEventListener('scroll', updateSubNav, {passive:true});
+  updateSubNav();
+
+  // FAQ accordion — smooth animation + one-open-at-a-time
+  function faqClose(det) {
+    var startH = det.scrollHeight;
+    var endH   = det.querySelector('summary').offsetHeight;
+    det.style.overflow = 'hidden';
+    det.animate([{height: startH + 'px'}, {height: endH + 'px'}],
+      {duration: 280, easing: 'cubic-bezier(0.4,0,0.2,1)'}).onfinish = function() {
+      det.removeAttribute('open');
+      det.style.height = '';
+      det.style.overflow = '';
+    };
+  }
+  function faqOpen(det) {
+    det.setAttribute('open', '');
+    var endH = det.scrollHeight;
+    var startH = det.querySelector('summary').offsetHeight;
+    det.style.overflow = 'hidden';
+    det.animate([{height: startH + 'px'}, {height: endH + 'px'}],
+      {duration: 300, easing: 'cubic-bezier(0.4,0,0.2,1)'}).onfinish = function() {
+      det.style.height = '';
+      det.style.overflow = '';
+    };
+  }
+  document.querySelectorAll('.faq details').forEach(function(det) {
+    det.querySelector('summary').addEventListener('click', function(e) {
+      e.preventDefault();
+      var isOpen = det.hasAttribute('open');
+      det.closest('.faq').querySelectorAll('details[open]').forEach(function(other) {
+        if(other !== det) faqClose(other);
+      });
+      isOpen ? faqClose(det) : faqOpen(det);
+    });
+  });
+})();
+</script>
+
+<script>
+window.PAGE_ANNOTATIONS = [
+  {
+    label: 'ヒーロー キャッチコピー',
+    section: 'ヒーロー',
+    selector: '.recruit-hero h1',
+    desc: '新卒採用ページのメインコピー。「なぜ新卒でUrumoに入るのか」という問いへの答えになる言葉。学生が共感・ワクワクできる表現。',
+    chars: '10〜26文字',
+  },
+  {
+    label: 'ヒーロー リード文',
+    section: 'ヒーロー',
+    selector: '.recruit-hero-lede',
+    desc: 'キャッチコピーを補足する文章。Urumoで新卒として働く意味・環境・可能性を具体的に伝える。',
+    chars: '30〜55文字',
+  },
+  {
+    label: 'Why Urumo 01 タイトル',
+    section: 'Why Urumo',
+    selector: '.value-item:nth-child(1) h4',
+    desc: 'Urumoを選ぶ理由①のタイトル。端的に魅力を表す見出し。',
+    chars: '4〜16文字',
+  },
+  {
+    label: 'Why Urumo 01 説明文',
+    section: 'Why Urumo',
+    selector: '.value-item:nth-child(1) p',
+    desc: '理由①の補足説明。具体的なエピソードや数字を交えて説得力を持たせる。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'Why Urumo 02 タイトル',
+    section: 'Why Urumo',
+    selector: '.value-item:nth-child(2) h4',
+    desc: 'Urumoを選ぶ理由②のタイトル。',
+    chars: '4〜16文字',
+  },
+  {
+    label: 'Why Urumo 02 説明文',
+    section: 'Why Urumo',
+    selector: '.value-item:nth-child(2) p',
+    desc: '理由②の補足説明。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'Why Urumo 03 タイトル',
+    section: 'Why Urumo',
+    selector: '.value-item:nth-child(3) h4',
+    desc: 'Urumoを選ぶ理由③のタイトル。',
+    chars: '4〜16文字',
+  },
+  {
+    label: 'Why Urumo 03 説明文',
+    section: 'Why Urumo',
+    selector: '.value-item:nth-child(3) p',
+    desc: '理由③の補足説明。',
+    chars: '40〜100文字',
+  },
+  {
+    label: '先輩の声 コメント（1人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(1) .voice-quote',
+    desc: '社員インタビューから引用する印象的な一言。読んだ人が「話を聞いてみたい」と思えるコメント。',
+    chars: '60〜130文字',
+  },
+  {
+    label: '先輩の声 コメント（2人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(2) .voice-quote',
+    desc: '2人目の社員コメント。1人目と異なる視点・職種からの声にすると幅が出る。',
+    chars: '60〜130文字',
+  },
+  {
+    label: '先輩の声 コメント（3人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(3) .voice-quote',
+    desc: '3人目の社員コメント。',
+    chars: '60〜130文字',
+  },
+  {
+    label: 'Why Urumo セクション 見出し',
+    section: 'Why Urumo',
+    selector: '#why .section-h2',
+    desc: '「Urumoで働く、○つの理由」など、Why Urumoセクションの大見出し。',
+    chars: '8〜24文字',
+  },
+  {
+    label: 'Why Urumo セクション リード文',
+    section: 'Why Urumo',
+    selector: '#why .section-lede',
+    desc: 'Urumoを選ぶ理由を紹介するセクションの補足文。スタートアップの魅力と環境を伝える一文。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '採用ポジション セクション 見出し',
+    section: '採用ポジション',
+    selector: '#positions .section-h2',
+    desc: '「新卒採用ポジション」など、募集職種を紹介するセクションの大見出し。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '採用ポジション セクション リード文',
+    section: '採用ポジション',
+    selector: '#positions .section-lede',
+    desc: 'ポジション数・対象者などを端的に説明する補足文。',
+    chars: '25〜65文字',
+  },
+  {
+    label: 'ビジネス職 タイトル',
+    section: '採用ポジション',
+    selector: '.job-card:nth-child(1) h4',
+    desc: 'ビジネス職カードのポジション名。',
+    chars: '4〜16文字',
+  },
+  {
+    label: 'ビジネス職 説明文',
+    section: '採用ポジション',
+    selector: '.job-card:nth-child(1) p',
+    desc: 'ビジネス職の仕事内容・魅力を伝える説明文。どんな人が向いているかも触れると良い。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'エンジニア職 タイトル',
+    section: '採用ポジション',
+    selector: '.job-card:nth-child(2) h4',
+    desc: 'エンジニア職カードのポジション名。',
+    chars: '4〜16文字',
+  },
+  {
+    label: 'エンジニア職 説明文',
+    section: '採用ポジション',
+    selector: '.job-card:nth-child(2) p',
+    desc: 'エンジニア職の開発内容・キャリアパスを伝える説明文。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'データサイエンス職 タイトル',
+    section: '採用ポジション',
+    selector: '.job-card:nth-child(3) h4',
+    desc: 'データサイエンス職カードのポジション名。',
+    chars: '4〜16文字',
+  },
+  {
+    label: 'データサイエンス職 説明文',
+    section: '採用ポジション',
+    selector: '.job-card:nth-child(3) p',
+    desc: 'データサイエンス職の業務内容・求める人物像を説明する文。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'コーポレート職 タイトル',
+    section: '採用ポジション',
+    selector: '.job-card:nth-child(4) h4',
+    desc: 'コーポレート職カードのポジション名。',
+    chars: '4〜16文字',
+  },
+  {
+    label: 'コーポレート職 説明文',
+    section: '採用ポジション',
+    selector: '.job-card:nth-child(4) p',
+    desc: 'コーポレート職の役割・裁量の大きさを伝える説明文。',
+    chars: '40〜100文字',
+  },
+  {
+    label: '先輩社員の声 セクション 見出し',
+    section: '先輩の声',
+    selector: '#voices .section-h2',
+    desc: '先輩社員インタビューセクションの大見出し。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '先輩社員の声 セクション リード文',
+    section: '先輩の声',
+    selector: '#voices .section-lede',
+    desc: '若手メンバーのリアルな声を届けるセクションの補足文。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '先輩の声 所属タグ（1人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(1) .voice-dept-tag',
+    desc: '1人目社員の職種・入社年。「Business / 2022年入社」のような形式で。',
+    chars: '6〜16文字',
+  },
+  {
+    label: '先輩の声 所属タグ（2人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(2) .voice-dept-tag',
+    desc: '2人目社員の職種・入社年。',
+    chars: '6〜16文字',
+  },
+  {
+    label: '先輩の声 所属タグ（3人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(3) .voice-dept-tag',
+    desc: '3人目社員の職種・入社年。',
+    chars: '6〜16文字',
+  },
+  {
+    label: '先輩の声 名前・所属（1人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(1) .voice-name',
+    desc: '1人目社員の名前と所属部署。「田中 ◯◯ / ビジネス本部」のような形式で。',
+    chars: '6〜20文字',
+  },
+  {
+    label: '先輩の声 名前・所属（2人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(2) .voice-name',
+    desc: '2人目社員の名前と所属部署。',
+    chars: '6〜20文字',
+  },
+  {
+    label: '先輩の声 名前・所属（3人目）',
+    section: '先輩の声',
+    selector: '.voice-card:nth-child(3) .voice-name',
+    desc: '3人目社員の名前と所属部署。',
+    chars: '6〜20文字',
+  },
+  {
+    label: '選考フロー セクション 見出し',
+    section: '選考フロー',
+    selector: '#flow .section-h2',
+    desc: '選考ステップを紹介するセクションの大見出し。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '選考フロー セクション リード文',
+    section: '選考フロー',
+    selector: '#flow .section-lede',
+    desc: '選考の流れ・期間の目安などを補足する一文。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '選考ステップ①タイトル',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(1) strong',
+    desc: '1番目のステップ名。「エントリー」「書類選考」など。',
+    chars: '4〜12文字',
+  },
+  {
+    label: '選考ステップ①説明',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(1) span',
+    desc: '1番目のステップの補足説明。',
+    chars: '12〜40文字',
+  },
+  {
+    label: '選考ステップ②タイトル',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(2) strong',
+    desc: '2番目のステップ名。',
+    chars: '4〜12文字',
+  },
+  {
+    label: '選考ステップ②説明',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(2) span',
+    desc: '2番目のステップの補足説明。',
+    chars: '12〜40文字',
+  },
+  {
+    label: '選考ステップ③タイトル',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(3) strong',
+    desc: '3番目のステップ名。',
+    chars: '4〜12文字',
+  },
+  {
+    label: '選考ステップ③説明',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(3) span',
+    desc: '3番目のステップの補足説明。',
+    chars: '12〜40文字',
+  },
+  {
+    label: '選考ステップ④タイトル',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(4) strong',
+    desc: '4番目のステップ名。',
+    chars: '4〜12文字',
+  },
+  {
+    label: '選考ステップ④説明',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(4) span',
+    desc: '4番目のステップの補足説明。',
+    chars: '12〜40文字',
+  },
+  {
+    label: '選考ステップ⑤タイトル',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(5) strong',
+    desc: '5番目のステップ名。「内定」など最終ステップ。',
+    chars: '4〜12文字',
+  },
+  {
+    label: '選考ステップ⑤説明',
+    section: '選考フロー',
+    selector: '.flow-step:nth-child(5) span',
+    desc: '5番目のステップの補足説明。',
+    chars: '12〜40文字',
+  },
+  {
+    label: '採用スケジュール セクション 見出し',
+    section: '採用スケジュール',
+    selector: '#schedule .section-h2',
+    desc: '採用スケジュールセクションの大見出し。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '採用スケジュール セクション リード文',
+    section: '採用スケジュール',
+    selector: '#schedule .section-lede',
+    desc: '募集期間・選考時期の概要を伝える補足文。',
+    chars: '25〜65文字',
+  },
+  {
+    label: 'スケジュール①時期',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(1) .what',
+    desc: 'スケジュール1行目の時期・フェーズ名。「3〜4月：エントリー受付」など。',
+    chars: '4〜12文字',
+  },
+  {
+    label: 'スケジュール①内容',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(1) .desc',
+    desc: 'スケジュール1行目の詳細説明。',
+    chars: '20〜70文字',
+  },
+  {
+    label: 'スケジュール②時期',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(2) .what',
+    desc: 'スケジュール2行目の時期・フェーズ名。',
+    chars: '4〜12文字',
+  },
+  {
+    label: 'スケジュール②内容',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(2) .desc',
+    desc: 'スケジュール2行目の詳細説明。',
+    chars: '20〜70文字',
+  },
+  {
+    label: 'スケジュール③時期',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(3) .what',
+    desc: 'スケジュール3行目の時期・フェーズ名。',
+    chars: '4〜12文字',
+  },
+  {
+    label: 'スケジュール③内容',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(3) .desc',
+    desc: 'スケジュール3行目の詳細説明。',
+    chars: '20〜70文字',
+  },
+  {
+    label: 'スケジュール④時期',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(4) .what',
+    desc: 'スケジュール4行目の時期・フェーズ名。',
+    chars: '4〜12文字',
+  },
+  {
+    label: 'スケジュール④内容',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(4) .desc',
+    desc: 'スケジュール4行目の詳細説明。',
+    chars: '20〜70文字',
+  },
+  {
+    label: 'スケジュール⑤時期',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(5) .what',
+    desc: 'スケジュール5行目の時期・フェーズ名。',
+    chars: '4〜12文字',
+  },
+  {
+    label: 'スケジュール⑤内容',
+    section: '採用スケジュール',
+    selector: '.schedule-row:nth-child(5) .desc',
+    desc: 'スケジュール5行目の詳細説明。',
+    chars: '20〜70文字',
+  },
+  {
+    label: 'FAQ セクション 見出し',
+    section: 'FAQ',
+    selector: '#faq .section-h2',
+    desc: 'よくある質問セクションの大見出し。',
+    chars: '8〜24文字',
+  },
+  {
+    label: 'FAQ①質問',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(1) summary',
+    desc: '1問目のよくある質問文。学生が実際に気になる疑問を。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'FAQ①回答',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(1) p',
+    desc: '1問目の回答文。正確かつ安心感を与える内容で。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'FAQ②質問',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(2) summary',
+    desc: '2問目のよくある質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'FAQ②回答',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(2) p',
+    desc: '2問目の回答文。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'FAQ③質問',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(3) summary',
+    desc: '3問目のよくある質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'FAQ③回答',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(3) p',
+    desc: '3問目の回答文。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'FAQ④質問',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(4) summary',
+    desc: '4問目のよくある質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'FAQ④回答',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(4) p',
+    desc: '4問目の回答文。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'FAQ⑤質問',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(5) summary',
+    desc: '5問目のよくある質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'FAQ⑤回答',
+    section: 'FAQ',
+    selector: '#faq details:nth-child(5) p',
+    desc: '5問目の回答文。',
+    chars: '60〜200文字',
+  }
+];
+</script>
+<script src="anno.js?v=2"></script>
+
+</body>
+</html>

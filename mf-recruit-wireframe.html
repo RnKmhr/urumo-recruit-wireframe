@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urumo 採用サイト — Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  :root{
+    --ink:#0A0A0A;
+    --g900:#161616;
+    --g800:#262626;
+    --g700:#3D3D3D;
+    --g600:#555555;
+    --g500:#777777;
+    --g400:#A0A0A0;
+    --g300:#C8C8C8;
+    --g200:#E0E0E0;
+    --g100:#EFEFEF;
+    --g50:#F7F7F7;
+    --paper:#FAFAFA;
+    --white:#FFFFFF;
+    --serif:'Inter','Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;
+    --jp:'Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--jp);color:var(--ink);background:var(--white);line-height:1.75;font-size:15px;font-feature-settings:"palt";letter-spacing:0.02em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.wrap{padding:0 20px}}
+
+  /* ──────────────────────────────────────
+     NAV
+  ────────────────────────────────────── */
+  nav.site-nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--g100);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;max-width:1200px;margin:0 auto;padding:0 48px;
+  }
+  @media(max-width:768px){.nav-inner{padding:0 20px}}
+  .nav-logo{
+    display:flex;align-items:center;gap:8px;flex-shrink:0;
+  }
+  .nav-logo .mark{
+    width:30px;height:30px;background:var(--ink);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .nav-logo .mark span{width:12px;height:12px;border-radius:50%;background:var(--white);display:block}
+  .nav-logo .text{
+    font-family:var(--serif);font-size:13px;font-weight:700;
+    letter-spacing:0.01em;color:var(--ink);white-space:nowrap;
+  }
+  .nav-logo .text small{
+    display:block;font-size:9px;font-weight:500;color:var(--g500);
+    letter-spacing:0.1em;margin-top:1px;
+  }
+  .nav-links{
+    display:flex;gap:4px;align-items:center;list-style:none;
+    margin:0 24px;
+  }
+  .nav-links > li{position:relative}
+  .nav-links > li > a{
+    font-size:13px;font-weight:500;color:var(--g600);
+    transition:color .2s;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:5px;
+    padding:8px 12px;border-radius:6px;
+  }
+  .nav-links > li > a:hover{color:var(--ink);background:var(--g50)}
+  .nav-links > li.has-dd > a::after{
+    content:'▾';font-size:9px;color:var(--g400);
+    transition:transform .2s;display:inline-block;
+  }
+  .nav-links > li.has-dd:hover > a::after{transform:rotate(180deg);color:var(--ink)}
+
+  /* Dropdown */
+  .nav-dropdown{
+    position:absolute;top:calc(100% + 8px);left:50%;
+    transform:translateX(-50%) translateY(-6px);
+    background:var(--white);border:1px solid var(--g200);border-radius:10px;
+    padding:6px;min-width:160px;list-style:none;
+    box-shadow:0 16px 40px -12px rgba(0,0,0,0.14);
+    opacity:0;visibility:hidden;
+    transition:opacity .18s,visibility .18s,transform .18s;
+    z-index:300;
+  }
+  .nav-dropdown::before{
+    content:'';position:absolute;top:-6px;left:50%;
+    transform:translateX(-50%) rotate(45deg);
+    width:11px;height:11px;background:var(--white);
+    border-left:1px solid var(--g200);border-top:1px solid var(--g200);
+  }
+  .nav-links > li.has-dd:hover .nav-dropdown,
+  .nav-links > li.has-dd:focus-within .nav-dropdown,
+  .nav-links > li.has-dd.dd-open .nav-dropdown{
+    opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
+  }
+  .nav-dropdown li a{
+    display:block;padding:9px 14px;
+    font-size:13px;color:var(--g700);
+    border-radius:6px;
+    transition:background .12s,color .12s;white-space:nowrap;
+  }
+  .nav-dropdown li a:hover{background:var(--g50);color:var(--ink)}
+
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .nav-cta{
+    background:var(--ink);color:var(--white) !important;
+    padding:10px 20px;border-radius:999px;
+    font-size:13px;font-weight:600;letter-spacing:0.02em;
+    display:inline-flex;align-items:center;gap:6px;
+    white-space:nowrap;transition:background .2s,transform .2s;
+  }
+  .nav-cta:hover{background:var(--g700);transform:translateY(-1px)}
+
+  /* ──────────────────────────────────────
+     COMMON
+  ────────────────────────────────────── */
+  section.block{padding:96px 0}
+  section.block.alt{background:var(--paper)}
+  section.block.dark{background:var(--ink);color:var(--white)}
+  .section-eyebrow{
+    font-family:var(--serif);font-size:10px;font-weight:700;
+    letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);
+    margin-bottom:16px;
+  }
+  .section-h2{
+    font-size:clamp(24px,3.6vw,40px);font-weight:800;line-height:1.28;
+    letter-spacing:-0.01em;color:var(--ink);margin-bottom:16px;
+  }
+  .section-lede{font-size:15px;line-height:1.95;color:var(--g600);margin-bottom:40px}
+  .more-link{
+    display:inline-flex;align-items:center;gap:8px;
+    font-weight:700;font-size:13px;color:var(--ink);letter-spacing:0.04em;
+    border-bottom:2px solid var(--ink);padding-bottom:4px;transition:gap .2s;
+  }
+  .more-link:hover{gap:12px}
+
+  /* img placeholder */
+  .ph{
+    background:var(--g800);border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;position:relative;
+  }
+  .ph::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(255,255,255,0.07),transparent 70%);
+  }
+  .ph-label{
+    font-family:var(--serif);font-size:9px;font-weight:600;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:rgba(255,255,255,0.28);z-index:1;position:relative;text-align:center;
+  }
+  .ph.light{background:var(--g200)}
+  .ph.light .ph-label{color:var(--g500)}
+
+  /* ──────────────────────────────────────
+     HERO — モザイク写真グリッド
+  ────────────────────────────────────── */
+  .hero{
+    padding-top:64px;/* nav height */
+    position:relative;background:var(--white);
+  }
+  .hero-photo-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    grid-template-rows:200px 200px;
+    gap:4px;
+  }
+  @media(max-width:900px){
+    .hero-photo-grid{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,140px)}
+  }
+  .hero-photo-grid .ph{border-radius:0}
+  .hero-photo-grid .ph:nth-child(1){grid-column:1/2;grid-row:1/3}
+  .hero-photo-grid .ph:nth-child(2){grid-column:2/4;grid-row:1/2}
+  .hero-photo-grid .ph:nth-child(3){grid-column:4/5;grid-row:1/2}
+  .hero-photo-grid .ph:nth-child(4){grid-column:5/6;grid-row:1/2}
+  .hero-photo-grid .ph:nth-child(5){grid-column:2/3;grid-row:2/3}
+  .hero-photo-grid .ph:nth-child(6){grid-column:3/4;grid-row:2/3}
+  .hero-photo-grid .ph:nth-child(7){grid-column:4/6;grid-row:2/3}
+  .hero-copy{
+    text-align:center;padding:56px 48px 48px;
+    border-bottom:1px solid var(--g100);
+  }
+  .hero-copy h1{
+    font-size:clamp(26px,3.6vw,44px);font-weight:800;line-height:1.5;
+    letter-spacing:0.01em;color:var(--ink);margin-bottom:20px;
+  }
+  .hero-copy p{
+    font-size:15px;line-height:2;color:var(--g600);
+    max-width:52ch;margin:0 auto 32px;
+  }
+  .hero-copy .btn-primary{
+    background:var(--ink);color:var(--white);padding:14px 28px;border-radius:999px;
+    font-weight:700;font-size:14px;letter-spacing:0.04em;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .hero-copy .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,0.25)}
+
+  /* ──────────────────────────────────────
+     わたしたちが大切にしていること
+  ────────────────────────────────────── */
+  .values-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  }
+  @media(max-width:900px){.values-grid{grid-template-columns:1fr;gap:40px}}
+  .values-list{margin-top:32px;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--g200)}
+  .value-item{
+    display:flex;align-items:flex-start;gap:20px;
+    padding:20px 0;border-bottom:1px solid var(--g200);
+  }
+  .value-num{
+    font-family:var(--serif);font-size:11px;font-weight:700;
+    color:var(--g400);letter-spacing:0.1em;padding-top:3px;
+    flex-shrink:0;width:24px;
+  }
+  .value-text h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .value-text p{font-size:13px;color:var(--g600);line-height:1.8}
+
+  /* ──────────────────────────────────────
+     提供サービス
+  ────────────────────────────────────── */
+  .service-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  @media(max-width:900px){.service-grid{grid-template-columns:1fr;gap:40px}}
+  .service-logos{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px;
+  }
+  .service-logo-card{
+    border:1px solid var(--g200);border-radius:8px;padding:20px 16px;
+    display:flex;flex-direction:column;gap:8px;
+    transition:border-color .2s;
+  }
+  .service-logo-card:hover{border-color:var(--g400)}
+  .service-logo-bar{height:20px;background:var(--g300);border-radius:3px;width:70%}
+  .service-logo-card span{font-size:11px;color:var(--g500)}
+
+  /* ──────────────────────────────────────
+     会社の様子
+  ────────────────────────────────────── */
+  .company-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+  @media(max-width:768px){.company-photos{grid-template-columns:1fr}}
+  .company-photo-card{display:flex;flex-direction:column;gap:12px}
+  .company-photo-card .ph{aspect-ratio:4/3}
+  .company-photo-card p{font-size:13px;color:var(--g600);line-height:1.7}
+
+  /* ──────────────────────────────────────
+     活躍するメンバー
+  ────────────────────────────────────── */
+  .members-2col{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  @media(max-width:900px){.members-2col{grid-template-columns:1fr;gap:40px}}
+  .members-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:0}
+  @media(max-width:600px){.members-grid{grid-template-columns:1fr}}
+  .member-card{
+    border:1px solid var(--g200);border-radius:8px;overflow:hidden;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .member-card:hover{transform:translateY(-3px);box-shadow:0 20px 40px -20px rgba(0,0,0,0.12)}
+  .member-thumb{aspect-ratio:4/3}
+  .member-body{padding:20px 20px 24px;display:flex;flex-direction:column;gap:6px}
+  .member-dept{
+    font-family:var(--serif);font-size:9px;font-weight:700;
+    letter-spacing:0.18em;text-transform:uppercase;color:var(--g500);
+  }
+  .member-name{font-size:12px;color:var(--g500)}
+  .member-quote{font-size:14px;font-weight:700;line-height:1.6;color:var(--ink)}
+
+  /* ──────────────────────────────────────
+     公式コンテンツ  ← #official-contents
+  ────────────────────────────────────── */
+  .official-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+  @media(max-width:900px){.official-grid{grid-template-columns:1fr 1fr}}
+  .official-card{
+    border:1px solid var(--g200);border-radius:8px;overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:border-color .2s,transform .2s;
+  }
+  .official-card:hover{border-color:var(--g400);transform:translateY(-3px)}
+  .official-card-top{
+    padding:24px 20px 16px;display:flex;flex-direction:column;gap:10px;
+  }
+  .official-logo-ph{
+    height:32px;background:var(--g300);border-radius:4px;
+    display:flex;align-items:center;padding:0 10px;
+  }
+  .official-logo-ph span{
+    font-family:var(--serif);font-size:10px;font-weight:700;
+    color:var(--g600);letter-spacing:0.08em;
+  }
+  .official-card-title{font-size:13px;font-weight:700;color:var(--ink);line-height:1.5}
+  .official-card-desc{font-size:12px;color:var(--g600);line-height:1.7}
+  .official-card-thumb{
+    aspect-ratio:16/9;background:var(--g800);margin:0 0 0;
+    position:relative;overflow:hidden;flex-shrink:0;
+  }
+  .official-card-thumb::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 40% 40%,rgba(255,255,255,0.07),transparent 60%);
+  }
+  .official-card-foot{
+    padding:12px 20px 14px;border-top:1px solid var(--g100);
+    font-family:var(--serif);font-size:10px;font-weight:600;
+    letter-spacing:0.12em;text-transform:uppercase;color:var(--g500);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+
+  /* SNSタイムライン（タイムズマネフォ） */
+  .times-section{margin-top:64px;padding-top:56px;border-top:1px solid var(--g200)}
+  .times-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+  .times-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:768px){.times-grid{grid-template-columns:1fr}}
+  .times-card{
+    border:1px solid var(--g200);border-radius:8px;overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .times-card:hover{transform:translateY(-2px);box-shadow:0 16px 32px -16px rgba(0,0,0,0.10)}
+  .times-thumb{aspect-ratio:16/9}
+  .times-body{padding:18px 18px 20px;flex:1;display:flex;flex-direction:column;gap:8px}
+  .times-tag{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--g500)}
+  .times-title{font-size:14px;font-weight:700;line-height:1.55;color:var(--ink)}
+  .times-meta{font-size:11px;color:var(--g500);font-family:var(--serif);margin-top:auto;padding-top:12px;border-top:1px solid var(--g100)}
+
+  /* ──────────────────────────────────────
+     福利厚生
+  ────────────────────────────────────── */
+  .benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  @media(max-width:900px){.benefits-grid{grid-template-columns:1fr;gap:40px}}
+  .benefit-list{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .benefit-item{
+    background:var(--paper);border:1px solid var(--g200);border-radius:6px;
+    padding:18px 16px;display:flex;flex-direction:column;gap:6px;
+  }
+  .benefit-item .icon{font-size:20px}
+  .benefit-item h4{font-size:13px;font-weight:700;color:var(--ink)}
+  .benefit-item p{font-size:11px;color:var(--g600);line-height:1.7}
+
+  /* ──────────────────────────────────────
+     本社オフィスツアー
+  ────────────────────────────────────── */
+  .office-tour{}
+  .office-tour-head{margin-bottom:32px}
+  /* メイン表示 */
+  .office-main{
+    aspect-ratio:16/9;border-radius:8px;overflow:hidden;
+    position:relative;transition:opacity .3s;
+  }
+  /* サムネイルトラック */
+  .office-thumb-outer{
+    margin-top:12px;overflow:hidden;position:relative;
+  }
+  .office-thumb-track{
+    display:flex;gap:10px;
+    width:max-content;
+    animation:officeScroll 18s linear infinite;
+  }
+  .office-thumb-track:hover{animation-play-state:paused}
+  @keyframes officeScroll{
+    0%  {transform:translateX(0)}
+    100%{transform:translateX(calc(-50%))}
+  }
+  .office-thumb{
+    width:200px;height:130px;flex-shrink:0;
+    border-radius:6px;overflow:hidden;cursor:pointer;
+    border:2px solid transparent;
+    transition:border-color .2s,opacity .2s;
+    position:relative;
+  }
+  .office-thumb .ph{width:100%;height:100%;border-radius:0}
+  .office-thumb.is-active{border-color:var(--ink)}
+  .office-thumb:not(.is-active){opacity:.65}
+  .office-thumb:hover{opacity:1}
+
+  /* ──────────────────────────────────────
+     募集職種
+  ────────────────────────────────────── */
+  .jobs-section{}
+  .jobs-2col{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:start}
+  @media(max-width:900px){.jobs-2col{grid-template-columns:1fr;gap:40px}}
+  .job-categories{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--g200);margin-top:24px}
+  .job-cat-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 0;border-bottom:1px solid var(--g200);
+    font-size:14px;font-weight:600;color:var(--ink);
+    transition:padding .15s;cursor:pointer;
+  }
+  .job-cat-row:hover{padding-left:8px}
+  .job-cat-row .count{
+    font-family:var(--serif);font-size:11px;font-weight:600;
+    color:var(--g500);letter-spacing:0.06em;
+  }
+  .job-list-table{
+    border:1px solid var(--g200);border-radius:8px;overflow:hidden;
+  }
+  .job-list-head{
+    display:grid;grid-template-columns:2fr 1fr 1fr;
+    padding:12px 20px;background:var(--paper);
+    border-bottom:1px solid var(--g200);
+    font-family:var(--serif);font-size:10px;font-weight:700;
+    letter-spacing:0.14em;text-transform:uppercase;color:var(--g500);
+    gap:16px;
+  }
+  .job-list-row{
+    display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;
+    padding:18px 20px;border-bottom:1px solid var(--g100);
+    align-items:center;transition:background .15s;
+  }
+  .job-list-row:last-child{border-bottom:none}
+  .job-list-row:hover{background:var(--paper)}
+  .job-list-row .title{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
+  .job-list-row .dept{font-size:12px;color:var(--g600)}
+  .job-list-row .type{
+    font-size:11px;padding:4px 10px;border:1px solid var(--g200);
+    border-radius:999px;color:var(--g600);width:fit-content;
+  }
+  .job-list-row .loc{font-size:11px;color:var(--g500)}
+
+  /* ── 記事カルーセル ── */
+  .article-carousel-wrap{display:flex;align-items:center;gap:20px}
+  .article-carousel-viewport{overflow:hidden;flex:1}
+  .article-carousel-track{display:flex;gap:24px;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+  .article-card{
+    flex:0 0 calc(50% - 12px);
+    border:1px solid var(--g200);border-radius:10px;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .article-thumb{aspect-ratio:3/2;border-radius:0}
+  .article-body{padding:20px;display:flex;flex-direction:column;gap:14px;flex:1;justify-content:space-between}
+  .article-body .article-read{align-self:flex-end}
+  .article-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.7}
+  .article-read{
+    font-size:12px;font-weight:600;color:var(--ink);
+    border-bottom:1px solid var(--g300);padding-bottom:2px;
+    width:fit-content;transition:gap .15s;display:inline-flex;align-items:center;gap:4px;
+  }
+  .article-read:hover{gap:8px}
+  .article-carousel-btn{
+    flex-shrink:0;width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--g300);background:var(--white);
+    font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .15s,border-color .15s;
+  }
+  .article-carousel-btn:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
+  .article-more-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 22px;border:1px solid var(--ink);border-radius:999px;
+    font-size:13px;font-weight:600;color:var(--ink);
+    transition:background .18s,color .18s,gap .18s;
+  }
+  .article-more-btn:hover{background:var(--ink);color:var(--white);gap:12px}
+  .media-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 12px 20px 0;
+    transition:background .15s,padding-left .15s;cursor:pointer;
+  }
+  .media-row-text{display:flex;flex-direction:column;gap:6px}
+  .media-row-desc{font-size:11px;color:var(--g500);line-height:1.7}
+  .media-row-arrow{
+    font-size:14px;color:var(--g300);flex-shrink:0;margin-left:12px;
+    transition:color .15s,transform .15s;
+  }
+  .media-row:hover .media-row-arrow{color:var(--g600);transform:translateX(3px)}
+  .media-row.is-active-media{background:var(--paper);padding-left:12px;border-left:3px solid var(--ink)}
+  .media-row.is-active-media .media-row-arrow{color:var(--ink)}
+
+  /* ──────────────────────────────────────
+     会社紹介資料
+  ────────────────────────────────────── */
+  .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  @media(max-width:900px){.profile-grid{grid-template-columns:1fr;gap:40px}}
+  .profile-doc{
+    aspect-ratio:4/3;border:1px solid var(--g200);border-radius:8px;overflow:hidden;
+    background:var(--paper);display:flex;flex-direction:column;
+  }
+  .profile-doc-cover{
+    flex:1;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;gap:12px;padding:32px;
+  }
+  .profile-doc-logo{height:24px;background:var(--g300);border-radius:3px;width:120px}
+  .profile-doc-title{
+    font-family:var(--serif);font-size:12px;font-weight:700;
+    letter-spacing:0.12em;color:var(--g600);text-align:center;
+  }
+  .profile-doc-foot{
+    padding:12px 20px;border-top:1px solid var(--g200);
+    font-family:var(--serif);font-size:10px;color:var(--g500);
+    display:flex;justify-content:space-between;
+  }
+
+  /* ──────────────────────────────────────
+     開業拠点
+  ────────────────────────────────────── */
+  .locations-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+  @media(max-width:768px){.locations-grid{grid-template-columns:1fr}}
+  .location-card{border-radius:8px;overflow:hidden;position:relative}
+  .location-card .ph{aspect-ratio:16/9}
+  .location-card-body{padding:16px 0 0}
+  .location-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .location-addr{font-size:12px;color:var(--g500)}
+
+  /* ──────────────────────────────────────
+     数字で見るUrumo
+  ────────────────────────────────────── */
+  .numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--g200);border-radius:8px;overflow:hidden;margin-top:48px}
+  @media(max-width:900px){.numbers-grid{grid-template-columns:1fr 1fr}}
+  .number-cell{
+    padding:36px 28px;border-right:1px solid var(--g200);
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .number-cell:nth-child(4n){border-right:none}
+  .number-cell:nth-child(n+5){border-top:1px solid var(--g200)}
+  @media(max-width:900px){
+    .number-cell:nth-child(2n){border-right:none}
+    .number-cell:nth-child(n+3){border-top:1px solid var(--g200)}
+  }
+  .number-val{
+    font-family:var(--serif);font-size:clamp(32px,4vw,52px);
+    font-weight:800;color:var(--ink);letter-spacing:-0.03em;line-height:1;
+  }
+  .number-val .unit{font-size:16px;font-weight:600;color:var(--g600)}
+  .number-label{font-size:13px;color:var(--g500);margin-top:4px}
+  .numbers-infographic{
+    margin-top:48px;border:1px solid var(--g200);border-radius:8px;
+    aspect-ratio:3/1;background:var(--paper);
+    display:flex;align-items:center;justify-content:center;
+  }
+  @media(max-width:768px){.numbers-infographic{aspect-ratio:2/1}}
+
+  /* ──────────────────────────────────────
+     FOOTER CTA
+  ────────────────────────────────────── */
+  .footer-cta{
+    background:var(--ink);color:var(--white);
+    padding:100px 0;text-align:center;position:relative;overflow:hidden;
+  }
+  .footer-cta::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 70% 60% at 75% 20%,rgba(255,255,255,0.05),transparent 60%),
+      radial-gradient(ellipse 50% 50% at 20% 80%,rgba(255,255,255,0.04),transparent 60%);
+  }
+  .footer-cta-inner{position:relative;z-index:1}
+  .footer-cta h2{font-size:clamp(24px,4vw,44px);font-weight:800;line-height:1.32;margin-bottom:16px;letter-spacing:-0.01em}
+  .footer-cta p{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:36px;max-width:44ch;margin-left:auto;margin-right:auto;line-height:2}
+  .footer-cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn-primary-w{
+    background:var(--white);color:var(--ink);padding:14px 28px;border-radius:999px;
+    font-weight:700;font-size:14px;letter-spacing:0.04em;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .btn-primary-w:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,0.4)}
+  .btn-ghost-w{
+    color:var(--white);padding:14px 8px;font-weight:600;font-size:14px;
+    display:inline-flex;align-items:center;gap:8px;
+    border-bottom:1px solid rgba(255,255,255,0.4);transition:gap .2s;
+  }
+  .btn-ghost-w:hover{gap:12px}
+
+  /* ──────────────────────────────────────
+     FOOTER
+  ────────────────────────────────────── */
+  footer.site-foot{background:var(--g900);color:rgba(255,255,255,0.7);padding:64px 0 28px;font-size:13px}
+  .footer-grid{
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
+    padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+  .footer-brand{display:flex;flex-direction:column;gap:16px}
+  .footer-brand .logo{
+    display:flex;align-items:center;gap:8px;
+    font-family:var(--serif);font-weight:800;font-size:13px;color:var(--white);
+  }
+  .footer-brand .logo .mark{
+    width:26px;height:26px;background:var(--white);border-radius:5px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .footer-brand .logo .mark span{width:10px;height:10px;background:var(--g900);border-radius:50%;display:block}
+  .footer-brand p{font-size:12px;line-height:1.9;color:rgba(255,255,255,0.45);max-width:28ch}
+  .footer-col h4{
+    font-family:var(--serif);font-size:9px;font-weight:700;
+    letter-spacing:0.2em;text-transform:uppercase;color:var(--g500);margin-bottom:14px;
+  }
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .footer-col a{font-size:12px;color:rgba(255,255,255,0.6);transition:color .2s}
+  .footer-col a:hover{color:var(--white)}
+  .footer-bottom{
+    padding-top:24px;display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--serif);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.3);
+  }
+  .footer-bottom .legal{display:flex;gap:20px}
+
+  /* ──────────────────────────────────────
+     SCROLL REVEAL
+  ────────────────────────────────────── */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+  .reveal.is-visible{opacity:1;transform:none}
+  .reveal-d1{transition-delay:.12s}
+  .reveal-d2{transition-delay:.24s}
+  .reveal-d3{transition-delay:.36s}
+
+  /* ──────────────────────────────────────
+     HERO SCROLL CUE
+  ────────────────────────────────────── */
+  .hero-scroll-cue{
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    padding:16px 0 40px;
+  }
+  .hero-scroll-cue span{
+    font-family:var(--serif);font-size:10px;font-weight:600;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--g400);
+  }
+  .hero-scroll-line{
+    width:1px;height:48px;overflow:hidden;position:relative;background:var(--g200);
+  }
+  .hero-scroll-line::after{
+    content:'';position:absolute;top:-100%;left:0;
+    width:100%;height:100%;
+    background:linear-gradient(to bottom,transparent,var(--g500) 50%,transparent);
+    animation:scrollDrop 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollDrop{0%{top:-100%}100%{top:200%}}
+
+  /* ──────────────────────────────────────
+     HOVER ENHANCEMENTS
+  ────────────────────────────────────── */
+  /* Article card lift */
+  .article-card{transition:transform .22s,box-shadow .22s,border-color .22s}
+  .article-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -16px rgba(0,0,0,0.12);border-color:var(--g300)}
+
+  /* Benefit item */
+  .benefit-item{transition:border-color .2s,box-shadow .2s}
+  .benefit-item:hover{border-color:var(--g400);box-shadow:0 8px 20px -8px rgba(0,0,0,0.08)}
+
+  /* Job row arrow indicator */
+  .job-list-row{position:relative;padding-right:40px}
+  .job-list-row::after{
+    content:'→';font-size:13px;color:var(--g300);
+    position:absolute;right:20px;top:50%;transform:translateY(-50%) translateX(-3px);
+    transition:color .15s,transform .15s;
+  }
+  .job-list-row:hover::after{color:var(--ink);transform:translateY(-50%) translateX(0)}
+  .job-list-row:hover{background:var(--g50)}
+
+  /* Wireframe badge */
+  .wf-badge{
+    position:fixed;right:20px;bottom:20px;z-index:500;
+    background:var(--ink);color:var(--white);
+    border-radius:6px;padding:8px 14px;
+    font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.12em;
+    text-transform:uppercase;box-shadow:0 6px 20px -6px rgba(0,0,0,0.4);
+  }
+  .wf-badge .sub{color:rgba(255,255,255,0.45);font-weight:400;font-size:9px;margin-top:1px}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     GLOBAL NAVIGATION
+══════════════════════════════════════ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <!-- Logo -->
+    <a href="mf-recruit-wireframe.html" class="nav-logo">
+      <div class="mark"><span></span></div>
+      <div class="text">
+        Urumo
+        <small>採用サイト</small>
+      </div>
+    </a>
+
+    <!-- Links -->
+    <ul class="nav-links">
+      <!-- 会社について (dropdown) -->
+      <li class="has-dd">
+        <a href="#">会社について</a>
+        <ul class="nav-dropdown">
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="#company-profile">会社紹介資料</a></li>
+        </ul>
+      </li>
+      <!-- 働く環境 (dropdown) -->
+      <li class="has-dd">
+        <a href="#">働く環境</a>
+        <ul class="nav-dropdown">
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </li>
+      <li><a href="#official-contents">公式コンテンツ</a></li>
+      <li><a href="students.html">新卒採用</a></li>
+      <li><a href="qa.html">Q&amp;A</a></li>
+    </ul>
+
+    <!-- Right -->
+    <div class="nav-right">
+      <a href="#jobs" class="nav-cta">募集職種・エントリー →</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════
+     HERO — モザイク写真グリッド
+══════════════════════════════════════ -->
+<section class="hero">
+  <!-- 写真モザイク -->
+  <div class="hero-photo-grid">
+    <div class="ph"><span class="ph-label">Photo</span></div>
+    <div class="ph"><span class="ph-label">Photo</span></div>
+    <div class="ph"><span class="ph-label">Photo</span></div>
+    <div class="ph"><span class="ph-label">Photo</span></div>
+    <div class="ph"><span class="ph-label">Photo</span></div>
+    <div class="ph"><span class="ph-label">Photo</span></div>
+    <div class="ph"><span class="ph-label">Photo</span></div>
+  </div>
+
+  <!-- キャッチコピー -->
+  <div class="hero-copy">
+    <h1>暮らしを支える小売の世界を、前進させる。</h1>
+    <p>
+      コンビニやスーパー、ドラッグストア、<br>
+      そこに並ぶ、食品や日用品、化粧品──<br>
+      私たちの生活を支える小売（リテール）の世界は、<br>
+      160兆円を超える巨大産業です。<br>
+      <br>
+      メーカーはより良い商品をつくり、小売はより良い売場を整える。<br>
+      けれど、そのつながりはまだアナログも多く、完全ではありません。<br>
+      <br>
+      フェズは、データとテクノロジーで<br>
+      小売の広告と売場の現場を「見える化し、つなぐ」ことで<br>
+      社会全体の購買体験をアップデートします。<br>
+      <br>
+      毎日の「買う」を、いまより少し、心地よく。<br>
+      その積み重ねで、もっと幸せな未来へ。
+    </p>
+    <a href="#jobs" class="btn-primary">求人を探す →</a>
+    <div class="hero-scroll-cue">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     わたしたちが大切にしていること
+══════════════════════════════════════ -->
+<section class="block alt" id="values">
+  <div class="wrap">
+    <div class="values-grid">
+      <div class="ph reveal" style="aspect-ratio:16/9;border-radius:8px">
+        <span class="ph-label">Key Visual /<br>社員・カルチャー写真</span>
+      </div>
+      <div>
+        <div class="section-eyebrow reveal">Culture</div>
+        <h2 class="section-h2 reveal reveal-d1">わたしたちが大切にしていること</h2>
+        <p class="section-lede reveal reveal-d2">UrumoのMission、Vision、Values、Cultureをご紹介します。</p>
+        <div style="margin-top:8px">
+          <a href="#" class="more-link">Culture Deck を見る →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     Urumoの提供サービス
+══════════════════════════════════════ -->
+<section class="block">
+  <div class="wrap">
+    <div class="service-grid">
+      <div>
+        <div class="section-eyebrow reveal">Services</div>
+        <h2 class="section-h2 reveal reveal-d1">Urumoの提供サービス</h2>
+        <p class="section-lede reveal reveal-d2">Urumoが提供するサービスと、提供組織をご紹介します。</p>
+        <div style="margin-top:32px">
+          <a href="#" class="more-link">事業紹介を見る →</a>
+        </div>
+      </div>
+      <div class="ph reveal" style="aspect-ratio:16/9;border-radius:8px">
+        <span class="ph-label">Service Visual /<br>プロダクト・データ図</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- ══════════════════════════════════════
+     記事コンテンツ
+══════════════════════════════════════ -->
+<section class="block alt" id="official-contents">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Owned Media</div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:16px">
+      <div>
+        <h2 class="section-h2 reveal reveal-d1">記事コンテンツ</h2>
+        <p class="section-lede reveal reveal-d2">Urumoのリアルをお届けするオウンドメディアたちです。ぜひご覧ください。</p>
+      </div>
+    </div>
+
+    <div class="jobs-2col">
+      <!-- オウンドメディア一覧 -->
+      <div>
+        <p style="font-size:12px;color:var(--g500);margin-bottom:8px;font-family:var(--serif);letter-spacing:0.1em;text-transform:uppercase">オウンドメディア一覧</p>
+        <div class="job-categories">
+          <div class="job-cat-row media-row is-active-media" data-media="Recruiting Blog">
+            <div class="media-row-text"><span>Recruiting Blog</span><span class="media-row-desc">Urumoの日常や仕事など、リアルを知ることができるNote</span></div>
+            <span class="media-row-arrow">→</span>
+          </div>
+          <div class="job-cat-row media-row" data-media="Wantedly">
+            <div class="media-row-text"><span>Wantedly</span><span class="media-row-desc">Urumoで働く若手社員から見たUrumoを知ることができるストーリーを掲載</span></div>
+            <span class="media-row-arrow">→</span>
+          </div>
+          <div class="job-cat-row media-row" data-media="Developer Blog">
+            <div class="media-row-text"><span>Developer Blog</span><span class="media-row-desc">Urumoで働くエンジニアの叡智がつまった技術ブログ</span></div>
+            <span class="media-row-arrow">→</span>
+          </div>
+          <div class="job-cat-row media-row" data-media="Re:CoLab">
+            <div class="media-row-text"><span>Re:CoLab</span><span class="media-row-desc">Urumoが運営するリテール産業の未来を共に創るオウンドメディア</span></div>
+            <span class="media-row-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 注目記事カルーセル -->
+      <div>
+        <p id="articleSectionLabel" style="font-size:12px;color:var(--g500);margin-bottom:24px;font-family:var(--serif);letter-spacing:0.1em;text-transform:uppercase">Recruiting Blogの注目記事</p>
+        <div class="article-carousel-wrap">
+          <div class="article-carousel-viewport">
+            <div class="article-carousel-track" id="articleTrack">
+              <div class="article-card"><div class="ph article-thumb"><span class="ph-label">Article 1</span></div><div class="article-body"><div class="article-title">記事タイトルが入ります。サンプルテキスト</div><a href="#" class="article-read">記事を読む →</a></div></div>
+              <div class="article-card"><div class="ph article-thumb"><span class="ph-label">Article 2</span></div><div class="article-body"><div class="article-title">記事タイトルが入ります。サンプルテキスト</div><a href="#" class="article-read">記事を読む →</a></div></div>
+              <div class="article-card"><div class="ph article-thumb"><span class="ph-label">Article 3</span></div><div class="article-body"><div class="article-title">記事タイトルが入ります。サンプルテキスト</div><a href="#" class="article-read">記事を読む →</a></div></div>
+              <div class="article-card"><div class="ph article-thumb"><span class="ph-label">Article 4</span></div><div class="article-body"><div class="article-title">記事タイトルが入ります。サンプルテキスト</div><a href="#" class="article-read">記事を読む →</a></div></div>
+              <div class="article-card"><div class="ph article-thumb"><span class="ph-label">Article 5</span></div><div class="article-body"><div class="article-title">記事タイトルが入ります。サンプルテキスト</div><a href="#" class="article-read">記事を読む →</a></div></div>
+              <div class="article-card"><div class="ph article-thumb"><span class="ph-label">Article 6</span></div><div class="article-body"><div class="article-title">記事タイトルが入ります。サンプルテキスト</div><a href="#" class="article-read">記事を読む →</a></div></div>
+            </div>
+          </div>
+          <button class="article-carousel-btn" id="articleNext" aria-label="次の記事">→</button>
+        </div>
+        <div style="margin-top:20px;display:flex;justify-content:flex-start">
+          <a href="#" id="articleMediaLink" class="article-more-btn">Recruiting Blogをもっと見る →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     福利厚生
+══════════════════════════════════════ -->
+<section class="block">
+  <div class="wrap">
+    <div class="benefits-grid">
+      <div class="ph reveal" style="aspect-ratio:16/9;border-radius:8px">
+        <span class="ph-label">Benefits Image</span>
+      </div>
+      <div>
+        <div class="section-eyebrow reveal">Benefits</div>
+        <h2 class="section-h2 reveal reveal-d1">福利厚生・制度</h2>
+        <p class="section-lede reveal reveal-d2">メンバー全員が安心して、自分らしく働けるための充実した制度を常にアップデートしています。</p>
+        <div style="margin-top:28px">
+          <a href="benefits.html" class="more-link">すべての制度を見る →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- ══════════════════════════════════════
+     募集職種
+══════════════════════════════════════ -->
+<section class="block alt" id="jobs">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">Open Positions</div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:16px">
+      <div>
+        <h2 class="section-h2 reveal reveal-d1">募集職種</h2>
+        <p class="section-lede reveal reveal-d2">現在多数のポジションを公開中。あなたのスキルと情熱を活かせる場所がここにあります。</p>
+      </div>
+      <a href="#" class="more-link">すべての求人を見る →</a>
+    </div>
+
+    <div class="jobs-2col">
+      <!-- カテゴリリスト -->
+      <div>
+        <p style="font-size:12px;color:var(--g500);margin-bottom:8px;font-family:var(--serif);letter-spacing:0.1em;text-transform:uppercase">職種カテゴリ</p>
+        <div class="job-categories">
+          <div class="job-cat-row">
+            <span>エンジニア</span>
+            <span class="count">32 ポジション →</span>
+          </div>
+          <div class="job-cat-row">
+            <span>ビジネス</span>
+            <span class="count">18 ポジション →</span>
+          </div>
+          <div class="job-cat-row">
+            <span>デザイナー</span>
+            <span class="count">7 ポジション →</span>
+          </div>
+          <div class="job-cat-row">
+            <span>コーポレート</span>
+            <span class="count">12 ポジション →</span>
+          </div>
+          <div class="job-cat-row">
+            <span>新卒採用</span>
+            <span class="count">エントリー受付中 →</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 求人リスト -->
+      <div>
+        <p style="font-size:12px;color:var(--g500);margin-bottom:8px;font-family:var(--serif);letter-spacing:0.1em;text-transform:uppercase">注目のポジション</p>
+        <div class="job-list-table">
+          <div class="job-list-head">
+            <span>ポジション</span>
+            <span>雇用形態</span>
+            <span>勤務地</span>
+          </div>
+          <a href="#" class="job-list-row">
+            <div>
+              <div class="title">バックエンドエンジニア</div>
+              <div class="dept">Engineering / MFクラウド</div>
+            </div>
+            <span class="type">正社員</span>
+            <span class="loc">東京 / 大阪</span>
+          </a>
+          <a href="#" class="job-list-row">
+            <div>
+              <div class="title">プロダクトデザイナー（UXリード）</div>
+              <div class="dept">Product Design</div>
+            </div>
+            <span class="type">正社員</span>
+            <span class="loc">東京</span>
+          </a>
+          <a href="#" class="job-list-row">
+            <div>
+              <div class="title">データサイエンティスト（ML）</div>
+              <div class="dept">Data / AI</div>
+            </div>
+            <span class="type">正社員</span>
+            <span class="loc">東京</span>
+          </a>
+          <a href="#" class="job-list-row">
+            <div>
+              <div class="title">法人営業（SMB / エンタープライズ）</div>
+              <div class="dept">Business Development</div>
+            </div>
+            <span class="type">正社員</span>
+            <span class="loc">全国</span>
+          </a>
+          <a href="#" class="job-list-row">
+            <div>
+              <div class="title">HRビジネスパートナー</div>
+              <div class="dept">Corporate / HR</div>
+            </div>
+            <span class="type">正社員</span>
+            <span class="loc">東京</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     会社紹介資料
+══════════════════════════════════════ -->
+<section class="block" id="company-profile">
+  <div class="wrap">
+    <div class="profile-grid">
+      <div class="profile-doc">
+        <div class="profile-doc-cover">
+          <div class="profile-doc-logo"></div>
+          <div class="profile-doc-title">Company Profile 2025<br>株式会社Urumo</div>
+          <div class="ph light" style="width:100%;height:120px;border-radius:4px">
+            <span class="ph-label">Cover Image</span>
+          </div>
+        </div>
+        <div class="profile-doc-foot">
+          <span>PDF / 約○MB</span>
+          <span>2025年度版</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-eyebrow reveal">Company Profile</div>
+        <h2 class="section-h2 reveal reveal-d1">会社紹介資料</h2>
+        <p class="section-lede reveal reveal-d2">
+          Urumoの事業・カルチャー・組織をまとめた会社紹介資料をダウンロードいただけます。
+          選考前の情報収集にお役立てください。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ══════════════════════════════════════
+     数字で見るUrumo
+══════════════════════════════════════ -->
+<section class="block alt">
+  <div class="wrap">
+    <div class="section-eyebrow reveal">By the Numbers</div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <h2 class="section-h2 reveal reveal-d1">数字で見るUrumo</h2>
+      <a href="#" class="more-link">詳細ページへ →</a>
+    </div>
+    <div class="numbers-infographic">
+      <span style="font-family:var(--serif);font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--g400)">Infographic Placeholder — 組織・カルチャー指標ビジュアライゼーション</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     本社オフィスツアー
+══════════════════════════════════════ -->
+<section class="block" id="office-tour">
+  <div class="wrap">
+    <div class="office-tour-head">
+      <div class="section-eyebrow reveal">Office Tour</div>
+      <h2 class="section-h2 reveal reveal-d1">本社オフィスツアー</h2>
+    </div>
+
+    <!-- メイン大画像 -->
+    <div class="office-main ph" id="officerMain">
+      <span class="ph-label" id="officeMainLabel">エントランス</span>
+    </div>
+
+    <!-- 自動スクロールサムネイルトラック（6枚×2ループ） -->
+    <div class="office-thumb-outer">
+      <div class="office-thumb-track" id="officeTrack">
+        <!-- オリジナル6枚 -->
+        <div class="office-thumb is-active" data-label="エントランス">
+          <div class="ph"><span class="ph-label">エントランス</span></div>
+        </div>
+        <div class="office-thumb" data-label="執務スペース">
+          <div class="ph"><span class="ph-label">執務スペース</span></div>
+        </div>
+        <div class="office-thumb" data-label="ミーティングルーム">
+          <div class="ph"><span class="ph-label">ミーティングルーム</span></div>
+        </div>
+        <div class="office-thumb" data-label="カフェテリア">
+          <div class="ph"><span class="ph-label">カフェテリア</span></div>
+        </div>
+        <div class="office-thumb" data-label="MF Bar">
+          <div class="ph"><span class="ph-label">MF Bar</span></div>
+        </div>
+        <div class="office-thumb" data-label="テラス・共有スペース">
+          <div class="ph"><span class="ph-label">テラス・共有スペース</span></div>
+        </div>
+        <!-- ループ用コピー6枚 -->
+        <div class="office-thumb" data-label="エントランス">
+          <div class="ph"><span class="ph-label">エントランス</span></div>
+        </div>
+        <div class="office-thumb" data-label="執務スペース">
+          <div class="ph"><span class="ph-label">執務スペース</span></div>
+        </div>
+        <div class="office-thumb" data-label="ミーティングルーム">
+          <div class="ph"><span class="ph-label">ミーティングルーム</span></div>
+        </div>
+        <div class="office-thumb" data-label="カフェテリア">
+          <div class="ph"><span class="ph-label">カフェテリア</span></div>
+        </div>
+        <div class="office-thumb" data-label="MF Bar">
+          <div class="ph"><span class="ph-label">MF Bar</span></div>
+        </div>
+        <div class="office-thumb" data-label="テラス・共有スペース">
+          <div class="ph"><span class="ph-label">テラス・共有スペース</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  const thumbs = document.querySelectorAll('.office-thumb');
+  const mainLabel = document.getElementById('officeMainLabel');
+
+  function setActive(thumb) {
+    thumbs.forEach(t => t.classList.remove('is-active'));
+    // 同じlabelのものも全部active
+    const label = thumb.dataset.label;
+    thumbs.forEach(t => { if(t.dataset.label === label) t.classList.add('is-active'); });
+    mainLabel.textContent = label;
+  }
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => setActive(thumb));
+  });
+
+  // 中央判定：IntersectionObserver でビューポート中央付近のものをactive
+  const outer = document.querySelector('.office-thumb-outer');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && entry.intersectionRatio > 0.8) {
+        setActive(entry.target);
+      }
+    });
+  }, { root: outer, threshold: 0.8 });
+
+  thumbs.forEach(t => observer.observe(t));
+})();
+</script>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER CTA
+══════════════════════════════════════ -->
+<div class="footer-cta">
+  <div class="wrap">
+    <div class="footer-cta-inner">
+      <h2>Urumoでは新たな仲間を<br>募集しています。</h2>
+      <p>Urumoでは多数のポジションでメンバーを募集しています。<br>まずはカジュアルにお話しましょう。</p>
+      <div class="footer-cta-actions">
+        <a href="#jobs" class="btn-primary-w">求人を探す →</a>
+        <a href="#" class="btn-ghost-w">採用に関するお問い合わせ →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="mark"><span></span></div>
+          Urumo
+        </div>
+        <p>採用サイト</p>
+      </div>
+      <div class="footer-col">
+        <h4>会社について</h4>
+        <ul>
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="#company-profile">会社紹介資料</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>働く環境</h4>
+        <ul>
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>その他</h4>
+        <ul>
+          <li><a href="#official-contents">公式コンテンツ</a></li>
+          <li><a href="students.html">新卒採用</a></li>
+          <li><a href="qa.html">Q&amp;A</a></li>
+          <li><a href="#jobs">募集職種・エントリー</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Urumo, Inc.</span>
+      <div class="legal">
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">利用規約</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Wireframe badge -->
+<div class="wf-badge">
+  Wireframe
+  <div class="sub">MF Recruit — 2025.06</div>
+</div>
+
+<script>
+  // ページロード時・他ページからの #hash アクセスに対応
+  function scrollToHash(hash) {
+    if (!hash) return;
+    const target = document.querySelector(hash);
+    if (target) {
+      setTimeout(() => {
+        const navH = document.querySelector('nav.site-nav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.scrollY - navH - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 100);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', () => scrollToHash(window.location.hash));
+  window.addEventListener('hashchange', () => scrollToHash(window.location.hash));
+
+  // ドロップダウン: クリックでも開閉できるようにする
+  document.querySelectorAll('.nav-links > li.has-dd > a').forEach(a => {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      const li = this.closest('li.has-dd');
+      const isOpen = li.classList.contains('dd-open');
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+      if (!isOpen) li.classList.add('dd-open');
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.has-dd')) {
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+    }
+  });
+
+  // アンカーリンクのスムーススクロール（nav・footer共通）
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const id = this.getAttribute('href').slice(1);
+      if (!id) { e.preventDefault(); return; }
+      const target = document.getElementById(id);
+      if (target) {
+        e.preventDefault();
+        document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+        const navH = document.querySelector('nav.site-nav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.scrollY - navH - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // アクティブナビ ハイライト
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--ink)' : '';
+      a.style.fontWeight = a.getAttribute('href') === '#' + current ? '700' : '';
+    });
+  });
+</script>
+
+<script>
+(function(){
+  const track = document.getElementById('articleTrack');
+  const btn = document.getElementById('articleNext');
+  const label = document.getElementById('articleSectionLabel');
+  const mediaLink = document.getElementById('articleMediaLink');
+  const mediaRows = document.querySelectorAll('.media-row');
+  if (!track || !btn) return;
+
+  const TOTAL = 6, PER_PAGE = 2;
+  const pages = Math.ceil(TOTAL / PER_PAGE);
+  let current = 0;
+
+  function resetCarousel() {
+    current = 0;
+    track.style.transition = 'none';
+    track.style.transform = 'translateX(0)';
+    setTimeout(() => { track.style.transition = ''; }, 50);
+  }
+
+  function updateCarousel() {
+    const cardW = track.querySelector('.article-card').offsetWidth;
+    const offset = current * PER_PAGE * (cardW + 20);
+    track.style.transform = 'translateX(-' + offset + 'px)';
+  }
+
+  btn.addEventListener('click', function() {
+    current = (current + 1) % pages;
+    updateCarousel();
+  });
+
+  mediaRows.forEach(function(row) {
+    row.addEventListener('click', function() {
+      mediaRows.forEach(r => r.classList.remove('is-active-media'));
+      row.classList.add('is-active-media');
+      const mediaName = row.dataset.media;
+      label.textContent = mediaName + 'の注目記事';
+      if (mediaLink) mediaLink.textContent = mediaName + 'をもっと見る →';
+      // カードのph-labelを更新
+      track.querySelectorAll('.article-card').forEach(function(card, i) {
+        card.querySelector('.ph-label').textContent = mediaName + ' ' + (i + 1);
+      });
+      resetCarousel();
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+<script>
+window.PAGE_ANNOTATIONS = [
+  {
+    label: 'ヒーロー キャッチコピー',
+    section: 'TOPヒーロー',
+    selector: '.hero-copy h1',
+    desc: '採用サイトのメインメッセージ。Urumoのミッション・世界観が伝わる力強い一文。会社が何をしていて、何を目指しているかが凝縮された言葉。',
+    chars: '10〜26文字',
+  },
+  {
+    label: 'ヒーロー 本文コピー',
+    section: 'TOPヒーロー',
+    selector: '.hero-copy p',
+    desc: 'キャッチコピーを補足するストーリー文。Urumoが解決しようとしている課題や市場背景を語り、求職者の共感を引き出す。',
+    chars: '30〜55文字',
+  },
+  {
+    label: 'Culture セクション 見出し',
+    section: 'カルチャー',
+    selector: '#values .section-h2',
+    desc: 'Urumoのカルチャー・大切にしていることを紹介するセクションの見出し。Mission/Vision/Valuesにつながる導入文。',
+    chars: '8〜24文字',
+  },
+  {
+    label: 'Culture セクション リード文',
+    section: 'カルチャー',
+    selector: '#values .section-lede',
+    desc: 'カルチャーセクションの補足説明。このセクションで何が分かるかを1〜2文で説明する。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '提供サービス 見出し',
+    section: 'サービス',
+    selector: '.service-grid .section-h2',
+    desc: 'Urumoが提供するサービス・プロダクトを紹介するセクション見出し。事業内容が一言でわかる表現。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '提供サービス リード文',
+    section: 'サービス',
+    selector: '.service-grid .section-lede',
+    desc: 'サービスセクションの補足。プロダクトが何で、誰のためのものか簡潔に説明する。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '記事タイトル（例）',
+    section: '公式コンテンツ',
+    selector: '.article-title',
+    desc: '社員インタビューや会社紹介記事のタイトル。実際の記事タイトルが入る。ブログ・note等で公開しているコンテンツのタイトルをそのまま使用。',
+    chars: '4〜16文字',
+  },
+  {
+    label: '記事コンテンツ 見出し',
+    section: '記事コンテンツ',
+    selector: '#official-contents .section-h2',
+    desc: 'オウンドメディア紹介セクションの大見出し。Note・Wantedly・開発者ブログ等をまとめて紹介するエリアのタイトル。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '記事コンテンツ リード文',
+    section: '記事コンテンツ',
+    selector: '#official-contents .section-lede',
+    desc: '記事コンテンツセクションの補足説明。Urumoのリアルを届けるメディア群の趣旨を1〜2文で紹介する。',
+    chars: '25〜65文字',
+  },
+  {
+    label: 'Recruiting Blog 説明文',
+    section: '記事コンテンツ',
+    selector: '.media-row:nth-child(1) .media-row-desc',
+    desc: 'Recruiting Blogの説明文。日常・仕事・カルチャーなどリアルな雰囲気が伝わる一文。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'Wantedly 説明文',
+    section: '記事コンテンツ',
+    selector: '.media-row:nth-child(2) .media-row-desc',
+    desc: 'Wantedlyストーリーの説明文。若手社員視点のリアルを伝えるコンテンツとして紹介する。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'Developer Blog 説明文',
+    section: '記事コンテンツ',
+    selector: '.media-row:nth-child(3) .media-row-desc',
+    desc: '技術ブログの説明文。エンジニア向けにUrumoの技術スタック・取り組みを伝える場として紹介。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'Re:CoLab 説明文',
+    section: '記事コンテンツ',
+    selector: '.media-row:nth-child(4) .media-row-desc',
+    desc: 'Re:CoLabの説明文。リテール産業の未来を共に考えるオウンドメディアとして紹介。',
+    chars: '40〜100文字',
+  },
+  {
+    label: '福利厚生・制度 見出し',
+    section: '福利厚生',
+    selector: '.benefits-grid .section-h2',
+    desc: '福利厚生・制度セクションの見出し。安心して働ける環境を一言で表す。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '福利厚生・制度 リード文',
+    section: '福利厚生',
+    selector: '.benefits-grid .section-lede',
+    desc: '福利厚生セクションの補足文。メンバーが安心して働ける環境づくりへの想いを1〜2文で表現。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '募集職種 見出し',
+    section: '募集職種',
+    selector: '#jobs .section-h2',
+    desc: '現在募集中のポジションを紹介するセクションの見出し。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '募集職種 リード文',
+    section: '募集職種',
+    selector: '#jobs .section-lede',
+    desc: '募集職種セクションの補足文。多様なポジションに挑戦できることや、スキルを活かせる環境を伝える一文。',
+    chars: '25〜65文字',
+  },
+  {
+    label: '会社紹介資料 見出し',
+    section: '会社紹介資料',
+    selector: '#company-profile .section-h2',
+    desc: '会社紹介資料ダウンロードセクションの見出し。',
+    chars: '8〜24文字',
+  },
+  {
+    label: '会社紹介資料 説明文',
+    section: '会社紹介資料',
+    selector: '#company-profile .section-lede',
+    desc: '資料の内容と活用シーン（選考前の情報収集など）を説明する補足文。',
+    chars: '40〜100文字',
+  },
+  {
+    label: 'フッター CTA 見出し',
+    section: 'フッターCTA',
+    selector: '.footer-cta h2',
+    desc: 'ページ最下部の応募誘導エリアの大見出し。「一緒に働こう」という気持ちを引き出すメッセージ。',
+    chars: '12〜28文字',
+  },
+  {
+    label: 'フッター CTA 本文',
+    section: 'フッターCTA',
+    selector: '.footer-cta p',
+    desc: 'CTAの補足文。応募へのハードルを下げる一文。「まずは話を聞くだけでもOK」というニュアンスがあると良い。',
+    chars: '25〜60文字',
+  }
+];
+</script>
+<script src="anno.js?v=2"></script>
+
+</body>
+</html>

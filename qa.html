@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>よくある質問（Q&A） — Urumo 採用サイト Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  :root{
+    --ink:#0A0A0A;--g900:#161616;--g800:#262626;--g700:#3D3D3D;--g600:#555555;
+    --g500:#777777;--g400:#A0A0A0;--g300:#C8C8C8;--g200:#E0E0E0;--g100:#EFEFEF;
+    --g50:#F7F7F7;--paper:#FAFAFA;--white:#FFFFFF;
+    --serif:'Inter','Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;
+    --jp:'Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--jp);color:var(--ink);background:var(--white);line-height:1.75;font-size:15px;font-feature-settings:"palt";letter-spacing:0.02em}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.wrap{padding:0 20px}}
+
+  /* ══ NAV ══ */
+  nav.site-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.92);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--g100)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.nav-inner{padding:0 20px}}
+  .nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .nav-logo .mark{width:30px;height:30px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .nav-logo .mark span{width:12px;height:12px;border-radius:50%;background:var(--white);display:block}
+  .nav-logo .text{font-family:var(--serif);font-size:13px;font-weight:700;letter-spacing:0.01em;color:var(--ink);white-space:nowrap}
+  .nav-logo .text small{display:block;font-size:9px;font-weight:500;color:var(--g500);letter-spacing:0.1em;margin-top:1px}
+  .nav-links{display:flex;gap:4px;align-items:center;list-style:none;margin:0 24px}
+  .nav-links > li{position:relative}
+  .nav-links > li > a{font-size:13px;font-weight:500;color:var(--g600);transition:color .2s;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border-radius:6px}
+  .nav-links > li > a:hover{color:var(--ink);background:var(--g50)}
+  .nav-links > li.is-active > a{color:var(--ink);font-weight:700}
+  .nav-links > li.has-dd > a::after{content:'▾';font-size:9px;color:var(--g400);transition:transform .2s;display:inline-block}
+  .nav-links > li.has-dd:hover > a::after,.nav-links > li.has-dd.dd-open > a::after{transform:rotate(180deg);color:var(--ink)}
+  .nav-dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--white);border:1px solid var(--g200);border-radius:10px;padding:6px;min-width:160px;list-style:none;box-shadow:0 16px 40px -12px rgba(0,0,0,0.14);opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s,transform .18s;z-index:300}
+  .nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:11px;height:11px;background:var(--white);border-left:1px solid var(--g200);border-top:1px solid var(--g200)}
+  .nav-links > li.has-dd:hover .nav-dropdown,.nav-links > li.has-dd.dd-open .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .nav-dropdown li a{display:block;padding:9px 14px;font-size:13px;color:var(--g700);border-radius:6px;transition:background .12s,color .12s;white-space:nowrap}
+  .nav-dropdown li a:hover{background:var(--g50);color:var(--ink)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .nav-cta{background:var(--ink);color:var(--white) !important;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:0.02em;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:background .2s,transform .2s}
+  .nav-cta:hover{background:var(--g700);transform:translateY(-1px)}
+
+  /* ══ COMMON ══ */
+  section.block{padding:96px 0}
+  section.block.alt{background:var(--paper)}
+  .section-eyebrow{font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);margin-bottom:16px}
+  .section-h2{font-size:clamp(24px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.01em;color:var(--ink);margin-bottom:16px}
+  .section-lede{font-size:15px;line-height:1.95;color:var(--g600);margin-bottom:40px}
+
+  /* ══ SCROLL REVEAL ══ */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+  .reveal.is-visible{opacity:1;transform:none}
+  .reveal-d1{transition-delay:.12s}
+  .reveal-d2{transition-delay:.24s}
+
+  /* ══ PAGE HERO ══ */
+  .page-hero{padding-top:64px;background:var(--paper);border-bottom:1px solid var(--g100)}
+  .page-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:center}
+  @media(max-width:900px){.page-hero-inner{grid-template-columns:1fr}}
+  .page-hero-text{padding:56px 48px 56px 48px;display:flex;flex-direction:column;justify-content:center}
+  @media(max-width:900px){.page-hero-text{padding:48px 20px}}
+  .page-hero-eyebrow{font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);margin-bottom:16px}
+  .page-hero h1{font-size:clamp(36px,5vw,64px);font-weight:800;line-height:1.15;letter-spacing:-0.02em;color:var(--ink)}
+  .page-hero-right{padding:56px 48px 56px 56px;display:flex;flex-direction:column;justify-content:center}
+  @media(max-width:900px){.page-hero-right{padding:40px 20px}}
+  .page-hero-lede{font-size:14px;line-height:2;color:var(--g600)}
+
+  /* ══ FAQ カテゴリタブ ══ */
+  .faq-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:48px}
+  .faq-tab{font-family:var(--serif);font-size:11px;font-weight:700;letter-spacing:0.12em;padding:8px 18px;border-radius:999px;border:1px solid var(--g200);color:var(--g600);cursor:pointer;transition:background .15s,color .15s,border-color .15s;background:var(--white)}
+  .faq-tab:hover{border-color:var(--g400);color:var(--ink)}
+  .faq-tab.is-active{background:var(--ink);color:var(--white);border-color:var(--ink)}
+
+  /* ══ FAQ SECTION ══ */
+  .faq-section{margin-bottom:64px}
+  .faq-section-label{font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g400);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--g100)}
+  .faq details{border-bottom:1px solid var(--g200);overflow:hidden}
+  .faq details:first-of-type{border-top:1px solid var(--g200)}
+  .faq summary{list-style:none;cursor:pointer;font-size:15px;font-weight:600;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 0;transition:color .2s;user-select:none}
+  .faq summary:hover{color:var(--g500)}
+  .faq summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:2px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq-icon{width:26px;height:26px;border-radius:50%;border:1px solid var(--g300);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-weight:400;color:var(--g500);line-height:1;transition:background .2s,border-color .2s,color .2s,transform .3s cubic-bezier(0.4,0,0.2,1)}
+  .faq details[open] .faq-icon{background:var(--ink);border-color:var(--ink);color:var(--white);transform:rotate(45deg)}
+  .faq details p{padding:0 0 24px 0;color:var(--g600);font-size:14px;line-height:2;max-width:100%}
+
+  /* ══ CONTACT NUDGE ══ */
+  .qa-contact{margin-top:80px;padding:40px 48px;background:var(--paper);border-radius:12px;border:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+  .qa-contact-text h3{font-size:18px;font-weight:800;color:var(--ink);margin-bottom:6px}
+  .qa-contact-text p{font-size:13px;color:var(--g600);line-height:1.85}
+  .qa-contact-btn{background:var(--ink);color:var(--white);padding:13px 28px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:background .2s,transform .2s;flex-shrink:0}
+  .qa-contact-btn:hover{background:var(--g700);transform:translateY(-1px)}
+
+  /* ══ FOOTER CTA ══ */
+  .footer-cta{background:var(--ink);color:var(--white);padding:100px 0;text-align:center;position:relative;overflow:hidden}
+  .footer-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 75% 20%,rgba(255,255,255,0.05),transparent 60%),radial-gradient(ellipse 50% 50% at 20% 80%,rgba(255,255,255,0.04),transparent 60%)}
+  .footer-cta-inner{position:relative;z-index:1}
+  .footer-cta h2{font-size:clamp(24px,4vw,44px);font-weight:800;line-height:1.32;margin-bottom:16px;letter-spacing:-0.01em}
+  .footer-cta p{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:36px;max-width:44ch;margin-left:auto;margin-right:auto;line-height:2}
+  .footer-cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn-primary-w{background:var(--white);color:var(--ink);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s}
+  .btn-primary-w:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,0.4)}
+  .btn-ghost-w{color:var(--white);padding:14px 8px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.4);transition:gap .2s}
+  .btn-ghost-w:hover{gap:12px}
+
+  /* ══ FOOTER ══ */
+  footer.site-foot{background:var(--g900);color:rgba(255,255,255,0.7);padding:64px 0 28px;font-size:13px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08)}
+  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+  .footer-brand{display:flex;flex-direction:column;gap:16px}
+  .footer-brand .logo{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:800;font-size:13px;color:var(--white)}
+  .footer-brand .logo .mark{width:26px;height:26px;background:var(--white);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .footer-brand .logo .mark span{width:10px;height:10px;background:var(--g900);border-radius:50%;display:block}
+  .footer-brand p{font-size:12px;line-height:1.9;color:rgba(255,255,255,0.45)}
+  .footer-col h4{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g500);margin-bottom:14px}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .footer-col a{font-size:12px;color:rgba(255,255,255,0.6);transition:color .2s}
+  .footer-col a:hover{color:var(--white)}
+  .footer-bottom{padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.3)}
+  .footer-bottom .legal{display:flex;gap:20px}
+
+  /* ══ WF BADGE ══ */
+  .wf-badge{position:fixed;right:20px;bottom:20px;z-index:500;background:var(--ink);color:var(--white);border-radius:6px;padding:8px 14px;font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;box-shadow:0 6px 20px -6px rgba(0,0,0,0.4)}
+  .wf-badge .sub{color:rgba(255,255,255,0.45);font-weight:400;font-size:9px;margin-top:1px}
+</style>
+</head>
+<body>
+
+<!-- ══════════ GLOBAL NAV ══════════ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="mf-recruit-wireframe.html" class="nav-logo">
+      <div class="mark"><span></span></div>
+      <div class="text">Urumo<small>採用サイト</small></div>
+    </a>
+    <ul class="nav-links">
+      <li class="has-dd">
+        <a href="#">会社について</a>
+        <ul class="nav-dropdown">
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </li>
+      <li class="has-dd">
+        <a href="#">働く環境</a>
+        <ul class="nav-dropdown">
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </li>
+      <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+      <li><a href="students.html">新卒採用</a></li>
+      <li class="is-active"><a href="qa.html">Q&amp;A</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="mf-recruit-wireframe.html#jobs" class="nav-cta">募集職種・エントリー →</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════ PAGE HERO ══════════ -->
+<section class="page-hero">
+  <div class="wrap" style="padding:0">
+    <div class="page-hero-inner">
+      <div class="page-hero-text">
+        <div class="page-hero-eyebrow">FAQ</div>
+        <h1>よくある<br>質問</h1>
+      </div>
+      <div class="page-hero-right">
+        <p class="page-hero-lede">Urumoへの入社を検討されている方からよく寄せられる質問をまとめました。選考・働き方・職場環境など、気になる疑問をここで解消してください。掲載のない質問はお気軽にお問い合わせください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FAQ BODY ══════════ -->
+<section class="block">
+  <div class="wrap">
+
+    <!-- カテゴリタブ -->
+    <div class="faq-tabs reveal" id="faqTabs">
+      <button class="faq-tab is-active" data-target="all">すべて</button>
+      <button class="faq-tab" data-target="entry">応募・選考について</button>
+      <button class="faq-tab" data-target="work">働き方・環境について</button>
+      <button class="faq-tab" data-target="career">キャリア・成長について</button>
+      <button class="faq-tab" data-target="culture">カルチャーについて</button>
+      <button class="faq-tab" data-target="newgrad">新卒採用について</button>
+    </div>
+
+    <!-- 応募・選考 -->
+    <div class="faq-section reveal" id="cat-entry">
+      <div class="faq-section-label">応募・選考について</div>
+      <div class="faq">
+        <details>
+          <summary>応募にあたって必要な資格・経験はありますか？<span class="faq-icon">+</span></summary>
+          <p>ポジションによって異なります。エンジニア・データサイエンス職では実務経験や技術スキルを重視しますが、ビジネス職・コーポレート職では業界未経験の方も多数活躍しています。各求人票の応募要件をご確認ください。</p>
+        </details>
+        <details>
+          <summary>選考の流れを教えてください。<span class="faq-icon">+</span></summary>
+          <p>書類選考 → カジュアル面談（任意）→ 一次面接 → 二次面接 → 最終面接 → 内定、が標準的な流れです。ポジションや状況によって変わる場合があります。カジュアル面談はコミットメントなしにUrumoを知れる機会ですので、ぜひご活用ください。</p>
+        </details>
+        <details>
+          <summary>選考にかかる期間はどのくらいですか？<span class="faq-icon">+</span></summary>
+          <p>書類選考から内定まで平均3〜5週間程度です。ご都合に合わせて柔軟に対応できますので、スケジュールに希望がある場合は面接時にお知らせください。</p>
+        </details>
+        <details>
+          <summary>複数のポジションに同時応募できますか？<span class="faq-icon">+</span></summary>
+          <p>はい、複数ポジションへの同時応募が可能です。ただし選考途中で希望ポジションを変更する場合は採用担当までご連絡ください。</p>
+        </details>
+        <details>
+          <summary>カジュアル面談は選考に影響しますか？<span class="faq-icon">+</span></summary>
+          <p>影響しません。カジュアル面談はUrumoについてフラットに話せる場として設けています。選考とは切り離してご参加ください。</p>
+        </details>
+        <details>
+          <summary>過去に不採用になった場合、再応募はできますか？<span class="faq-icon">+</span></summary>
+          <p>不採用から1年以上が経過している場合、再応募を歓迎しています。その間にスキルアップや経験を積まれた方のエントリーも積極的に審査します。</p>
+        </details>
+      </div>
+    </div>
+
+    <!-- 働き方・環境 -->
+    <div class="faq-section reveal" id="cat-work">
+      <div class="faq-section-label">働き方・環境について</div>
+      <div class="faq">
+        <details>
+          <summary>リモートワークは可能ですか？<span class="faq-icon">+</span></summary>
+          <p>はい、週2〜3日のリモートワークが可能です（職種・チームによって異なります）。フルリモート・フル出社かはポジションにより変わりますので、選考過程でご確認ください。</p>
+        </details>
+        <details>
+          <summary>フレックスタイム制は全社員対象ですか？<span class="faq-icon">+</span></summary>
+          <p>原則全社員が対象です。コアタイムなしのフルフレックスを採用しており、自分のライフスタイルや集中できる時間帯に合わせた働き方が可能です。</p>
+        </details>
+        <details>
+          <summary>副業・兼業は認められていますか？<span class="faq-icon">+</span></summary>
+          <p>申請ベースで許可しています。本業への影響がなく、競合しない範囲での副業・兼業を認めています。詳細は就業規則をご参照ください。</p>
+        </details>
+        <details>
+          <summary>育休・産休制度はありますか？<span class="faq-icon">+</span></summary>
+          <p>法定を上回る育児・介護休業制度を整備しています。男性育休取得も積極的に推進しており、2024年度の男性育休取得率は○○%です。安心してライフイベントに備えられる環境です。</p>
+        </details>
+        <details>
+          <summary>勤務地はどこになりますか？<span class="faq-icon">+</span></summary>
+          <p>本社は東京です。一部ポジションは大阪・名古屋など全国拠点での勤務となる場合があります。リモートワーク勤務の場合は居住地不問のケースもありますので、求人票をご確認ください。</p>
+        </details>
+      </div>
+    </div>
+
+    <!-- キャリア・成長 -->
+    <div class="faq-section reveal" id="cat-career">
+      <div class="faq-section-label">キャリア・成長について</div>
+      <div class="faq">
+        <details>
+          <summary>入社後のキャリアパスについて教えてください。<span class="faq-icon">+</span></summary>
+          <p>専門性を深めるスペシャリストコースと、マネジメントに進むマネージャーコースを用意しています。どちらが向いているかは入社後の1on1や評価面談を通じてすり合わせていきます。自分の意志でコースを選択できます。</p>
+        </details>
+        <details>
+          <summary>社内異動・社内公募制度はありますか？<span class="faq-icon">+</span></summary>
+          <p>はい、あります。年1〜2回の社内公募制度を設けており、本人の希望と事業ニーズが合致した場合に異動が実現します。2024年度は○○件の社内異動が行われました。</p>
+        </details>
+        <details>
+          <summary>学習・成長支援の制度はありますか？<span class="faq-icon">+</span></summary>
+          <p>書籍購入支援、外部セミナー・カンファレンスへの参加費補助、社内勉強会など複数の学習支援制度があります。エンジニアには技術研究・OSS活動の時間を設ける取り組みも行っています。</p>
+        </details>
+        <details>
+          <summary>評価の仕組みについて教えてください。<span class="faq-icon">+</span></summary>
+          <p>半期ごとの目標設定と評価面談を実施しています。成果・行動・成長の3軸で公正に評価し、等級・給与への反映を透明なプロセスで行います。マネージャーとの定期1on1を通じて、継続的なフィードバックを受けられます。</p>
+        </details>
+      </div>
+    </div>
+
+    <!-- カルチャー -->
+    <div class="faq-section reveal" id="cat-culture">
+      <div class="faq-section-label">カルチャーについて</div>
+      <div class="faq">
+        <details>
+          <summary>社員の平均年齢・年齢層を教えてください。<span class="faq-icon">+</span></summary>
+          <p>平均年齢は○○歳で、20〜30代が中心です。経験豊富なシニアメンバーと若手が共存しており、年齢に関係なく裁量をもって働ける環境です。</p>
+        </details>
+        <details>
+          <summary>社内コミュニケーションはどのような雰囲気ですか？<span class="faq-icon">+</span></summary>
+          <p>フラットな雰囲気で、役職に関わらず気軽に意見を言い合える文化があります。社内SlackやAllハンズミーティング、ランチ会なども定期開催しており、部署を超えた交流が活発です。</p>
+        </details>
+        <details>
+          <summary>多様性（ダイバーシティ）への取り組みはありますか？<span class="faq-icon">+</span></summary>
+          <p>2024年に「えるぼし認定」3つ星・「PRIDE指標2024」ブロンズを取得しました。国籍・性別・バックグラウンドを問わず、誰もが活躍できる環境づくりを継続的に推進しています。</p>
+        </details>
+        <details>
+          <summary>Culture DeckやMission・Visionはどこで確認できますか？<span class="faq-icon">+</span></summary>
+          <p>採用サイトの「カルチャー」ページからCulture Deckをご覧いただけます。Urumoのミッション・ビジョン・バリューズを詳しく紹介しています。</p>
+        </details>
+      </div>
+    </div>
+
+    <!-- 新卒採用 -->
+    <div class="faq-section reveal" id="cat-newgrad">
+      <div class="faq-section-label">新卒採用について</div>
+      <div class="faq">
+        <details>
+          <summary>文系でも応募できますか？<span class="faq-icon">+</span></summary>
+          <p>はい、ビジネス職・コーポレート職は文系出身者が多く活躍しています。データや技術への興味と、課題を論理的に解決する思考力があれば、専攻は問いません。エンジニア・データサイエンス職では理系・情報系が中心ですが、独学でプログラミングを学んだ方のエントリーも歓迎しています。</p>
+        </details>
+        <details>
+          <summary>インターンシップから本採用への切り替えはありますか？<span class="faq-icon">+</span></summary>
+          <p>あります。長期インターン（2週間以上）への参加者は、選考の一部を免除した早期内定コースへの案内をすることがあります。インターン中の成果・姿勢をもとに判断しています。</p>
+        </details>
+        <details>
+          <summary>配属先はどのように決まりますか？<span class="faq-icon">+</span></summary>
+          <p>面接での会話や適性をもとに、本人の希望を最大限尊重して決定します。希望職種以外の配属はほぼありません。また入社後もジョブチェンジの機会があります。</p>
+        </details>
+        <details>
+          <summary>2026年度の採用スケジュールはいつですか？<span class="faq-icon">+</span></summary>
+          <p>詳細なスケジュールは新卒採用ページをご確認ください。インターンシップや会社説明会は随時開催しています。エントリーはいつでも受け付けています。</p>
+        </details>
+      </div>
+    </div>
+
+    <!-- 解決しない場合の誘導 -->
+    <div class="qa-contact reveal">
+      <div class="qa-contact-text">
+        <h3>解決しない質問はお気軽にご連絡ください。</h3>
+        <p>掲載のない疑問・ご不明点は採用担当が直接お答えします。<br>お気軽にお問い合わせください。</p>
+      </div>
+      <a href="#" class="qa-contact-btn">採用に関するお問い合わせ →</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════ FOOTER CTA ══════════ -->
+<div class="footer-cta">
+  <div class="wrap">
+    <div class="footer-cta-inner">
+      <h2>Urumoでは新たな仲間を<br>募集しています。</h2>
+      <p>Urumoでは多数のポジションでメンバーを募集しています。<br>まずはカジュアルにお話しましょう。</p>
+      <div class="footer-cta-actions">
+        <a href="mf-recruit-wireframe.html#jobs" class="btn-primary-w">求人を探す →</a>
+        <a href="#" class="btn-ghost-w">採用に関するお問い合わせ →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><div class="mark"><span></span></div>Urumo</div>
+        <p>採用サイト</p>
+      </div>
+      <div class="footer-col">
+        <h4>会社について</h4>
+        <ul>
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>働く環境</h4>
+        <ul>
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>その他</h4>
+        <ul>
+          <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+          <li><a href="students.html">新卒採用</a></li>
+          <li><a href="qa.html" style="color:var(--white);font-weight:700">Q&amp;A</a></li>
+          <li><a href="mf-recruit-wireframe.html#jobs">募集職種・エントリー</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Urumo, Inc.</span>
+      <div class="legal"><a href="#">プライバシーポリシー</a><a href="#">利用規約</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="wf-badge">Wireframe<div class="sub">Q&amp;A — 2025.06</div></div>
+
+<script>
+(function(){
+  /* ── nav dropdown ── */
+  document.querySelectorAll('.nav-links > li.has-dd > a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var li = this.closest('li.has-dd');
+      var isOpen = li.classList.contains('dd-open');
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(function(el){ el.classList.remove('dd-open'); });
+      if(!isOpen) li.classList.add('dd-open');
+    });
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.has-dd')){
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(function(el){ el.classList.remove('dd-open'); });
+    }
+  });
+
+  /* ── scroll reveal ── */
+  var revealEls = document.querySelectorAll('.reveal');
+  if(revealEls.length){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ── FAQ category tabs ── */
+  var tabs = document.querySelectorAll('.faq-tab');
+  var sections = {
+    entry: document.getElementById('cat-entry'),
+    work:  document.getElementById('cat-work'),
+    career:document.getElementById('cat-career'),
+    culture:document.getElementById('cat-culture'),
+    newgrad:document.getElementById('cat-newgrad')
+  };
+
+  function showAll(){
+    Object.values(sections).forEach(function(s){ if(s) s.style.display=''; });
+  }
+  function showOnly(key){
+    Object.keys(sections).forEach(function(k){
+      if(sections[k]) sections[k].style.display = (k === key) ? '' : 'none';
+    });
+  }
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('is-active'); });
+      this.classList.add('is-active');
+      var target = this.dataset.target;
+      if(target === 'all') showAll();
+      else showOnly(target);
+    });
+  });
+
+  // FAQ accordion — smooth animation + one-open-at-a-time
+  function faqClose(det) {
+    var startH = det.scrollHeight;
+    var endH   = det.querySelector('summary').offsetHeight;
+    det.style.overflow = 'hidden';
+    det.animate([{height: startH + 'px'}, {height: endH + 'px'}],
+      {duration: 280, easing: 'cubic-bezier(0.4,0,0.2,1)'}).onfinish = function() {
+      det.removeAttribute('open');
+      det.style.height = '';
+      det.style.overflow = '';
+    };
+  }
+  function faqOpen(det) {
+    det.setAttribute('open', '');
+    var endH = det.scrollHeight;
+    var startH = det.querySelector('summary').offsetHeight;
+    det.style.overflow = 'hidden';
+    det.animate([{height: startH + 'px'}, {height: endH + 'px'}],
+      {duration: 300, easing: 'cubic-bezier(0.4,0,0.2,1)'}).onfinish = function() {
+      det.style.height = '';
+      det.style.overflow = '';
+    };
+  }
+  document.querySelectorAll('.faq details').forEach(function(det) {
+    det.querySelector('summary').addEventListener('click', function(e) {
+      e.preventDefault();
+      var isOpen = det.hasAttribute('open');
+      det.closest('.faq').querySelectorAll('details[open]').forEach(function(other) {
+        if(other !== det) faqClose(other);
+      });
+      isOpen ? faqClose(det) : faqOpen(det);
+    });
+  });
+})();
+</script>
+
+<script>
+window.PAGE_ANNOTATIONS = [
+  {
+    label: 'ページタイトル',
+    section: 'ヒーロー',
+    selector: '.page-hero h1',
+    desc: 'よくある質問ページのタイトル。シンプルに「よくある質問」等。',
+    chars: '10〜26文字',
+  },
+  {
+    label: 'ヒーロー リード文',
+    section: 'ヒーロー',
+    selector: '.page-hero-lede',
+    desc: 'FAQページのイントロ文。どんな質問が掲載されているか、掲載外の質問の問い合わせ先も案内する。',
+    chars: '80〜120文字',
+  },
+  {
+    label: '問い合わせ誘導 見出し',
+    section: '問い合わせ誘導',
+    selector: '.qa-contact-text h3',
+    desc: '一覧で解決しなかった場合の問い合わせ誘導ブロックの見出し。気軽さ・親切さを伝える。',
+    chars: '12〜28文字',
+  },
+  {
+    label: '問い合わせ誘導 説明文',
+    section: '問い合わせ誘導',
+    selector: '.qa-contact-text p',
+    desc: '採用担当が直接対応することを伝える補足文。',
+    chars: '25〜60文字',
+  },
+  /* ── 応募・選考について ── */
+  {
+    label: '応募・選考 セクション ラベル',
+    section: '応募・選考について',
+    selector: '#cat-entry .faq-section-label',
+    desc: 'カテゴリ見出しラベル。「応募・選考について」等。',
+    chars: '6〜16文字',
+  },
+  {
+    label: '応募・選考 Q1 質問',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(1) summary',
+    desc: '必要な資格・経験に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '応募・選考 Q1 回答',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(1) p',
+    desc: '資格・経験要件の回答。職種ごとの違いを丁寧に説明する。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '応募・選考 Q2 質問',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(2) summary',
+    desc: '選考フローに関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '応募・選考 Q2 回答',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(2) p',
+    desc: '選考ステップを順を追って説明する回答。カジュアル面談の位置づけも明記。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '応募・選考 Q3 質問',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(3) summary',
+    desc: '選考期間に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '応募・選考 Q3 回答',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(3) p',
+    desc: '平均的な選考期間と柔軟対応を伝える回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '応募・選考 Q4 質問',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(4) summary',
+    desc: '複数ポジションへの同時応募に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '応募・選考 Q4 回答',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(4) p',
+    desc: '同時応募可否と変更時の対応を説明する回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '応募・選考 Q5 質問',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(5) summary',
+    desc: 'カジュアル面談の影響に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '応募・選考 Q5 回答',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(5) p',
+    desc: 'カジュアル面談は選考と切り離されていることを伝える回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '応募・選考 Q6 質問',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(6) summary',
+    desc: '再応募可否に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '応募・選考 Q6 回答',
+    section: '応募・選考について',
+    selector: '#cat-entry details:nth-child(6) p',
+    desc: '不採用後の再応募条件を前向きに伝える回答。',
+    chars: '60〜200文字',
+  },
+
+  /* ── 働き方・環境について ── */
+  {
+    label: '働き方・環境 セクション ラベル',
+    section: '働き方・環境について',
+    selector: '#cat-work .faq-section-label',
+    desc: 'カテゴリ見出しラベル。「働き方・環境について」等。',
+    chars: '6〜16文字',
+  },
+  {
+    label: '働き方・環境 Q1 質問',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(1) summary',
+    desc: 'リモートワーク可否に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '働き方・環境 Q1 回答',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(1) p',
+    desc: 'リモートワークの頻度・条件を説明する回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '働き方・環境 Q2 質問',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(2) summary',
+    desc: 'フレックスタイム制に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '働き方・環境 Q2 回答',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(2) p',
+    desc: 'フルフレックスの仕組みを伝える回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '働き方・環境 Q3 質問',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(3) summary',
+    desc: '副業・兼業の可否に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '働き方・環境 Q3 回答',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(3) p',
+    desc: '副業許可の条件・範囲を説明する回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '働き方・環境 Q4 質問',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(4) summary',
+    desc: '育休・産休制度に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '働き方・環境 Q4 回答',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(4) p',
+    desc: '育児・介護休業制度と男性育休の実績を伝える回答。取得率の数字を入れる。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '働き方・環境 Q5 質問',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(5) summary',
+    desc: '勤務地に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '働き方・環境 Q5 回答',
+    section: '働き方・環境について',
+    selector: '#cat-work details:nth-child(5) p',
+    desc: '本社所在地と拠点情報を説明する回答。',
+    chars: '60〜200文字',
+  },
+
+  /* ── キャリア・成長について ── */
+  {
+    label: 'キャリア・成長 セクション ラベル',
+    section: 'キャリア・成長について',
+    selector: '#cat-career .faq-section-label',
+    desc: 'カテゴリ見出しラベル。「キャリア・成長について」等。',
+    chars: '6〜16文字',
+  },
+  {
+    label: 'キャリア・成長 Q1 質問',
+    section: 'キャリア・成長について',
+    selector: '#cat-career details:nth-child(1) summary',
+    desc: 'キャリアパスに関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'キャリア・成長 Q1 回答',
+    section: 'キャリア・成長について',
+    selector: '#cat-career details:nth-child(1) p',
+    desc: 'スペシャリスト・マネージャーコースを説明する回答。自己選択できることも伝える。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'キャリア・成長 Q2 質問',
+    section: 'キャリア・成長について',
+    selector: '#cat-career details:nth-child(2) summary',
+    desc: '社内異動・公募制度に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'キャリア・成長 Q2 回答',
+    section: 'キャリア・成長について',
+    selector: '#cat-career details:nth-child(2) p',
+    desc: '社内公募制度の仕組みと実績件数を伝える回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'キャリア・成長 Q3 質問',
+    section: 'キャリア・成長について',
+    selector: '#cat-career details:nth-child(3) summary',
+    desc: '学習・成長支援制度に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'キャリア・成長 Q3 回答',
+    section: 'キャリア・成長について',
+    selector: '#cat-career details:nth-child(3) p',
+    desc: '書籍購入・セミナー補助・勉強会など複数の制度を紹介する回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'キャリア・成長 Q4 質問',
+    section: 'キャリア・成長について',
+    selector: '#cat-career details:nth-child(4) summary',
+    desc: '評価制度に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'キャリア・成長 Q4 回答',
+    section: 'キャリア・成長について',
+    selector: '#cat-career details:nth-child(4) p',
+    desc: '半期評価・3軸評価・1on1フィードバックの仕組みを説明する回答。',
+    chars: '60〜200文字',
+  },
+
+  /* ── カルチャーについて ── */
+  {
+    label: 'カルチャー セクション ラベル',
+    section: 'カルチャーについて',
+    selector: '#cat-culture .faq-section-label',
+    desc: 'カテゴリ見出しラベル。「カルチャーについて」等。',
+    chars: '6〜16文字',
+  },
+  {
+    label: 'カルチャー Q1 質問',
+    section: 'カルチャーについて',
+    selector: '#cat-culture details:nth-child(1) summary',
+    desc: '社員の平均年齢・年齢層に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'カルチャー Q1 回答',
+    section: 'カルチャーについて',
+    selector: '#cat-culture details:nth-child(1) p',
+    desc: '平均年齢と年齢構成・裁量の大きさを伝える回答。数字を具体的に入れる。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'カルチャー Q2 質問',
+    section: 'カルチャーについて',
+    selector: '#cat-culture details:nth-child(2) summary',
+    desc: '社内コミュニケーションの雰囲気に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'カルチャー Q2 回答',
+    section: 'カルチャーについて',
+    selector: '#cat-culture details:nth-child(2) p',
+    desc: 'フラットな社風・Slack・Allハンズ・ランチ会などを紹介する回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'カルチャー Q3 質問',
+    section: 'カルチャーについて',
+    selector: '#cat-culture details:nth-child(3) summary',
+    desc: 'ダイバーシティへの取り組みに関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'カルチャー Q3 回答',
+    section: 'カルチャーについて',
+    selector: '#cat-culture details:nth-child(3) p',
+    desc: '認定取得実績と多様性推進の姿勢を伝える回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: 'カルチャー Q4 質問',
+    section: 'カルチャーについて',
+    selector: '#cat-culture details:nth-child(4) summary',
+    desc: 'Culture Deck・Mission・Visionの確認方法に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: 'カルチャー Q4 回答',
+    section: 'カルチャーについて',
+    selector: '#cat-culture details:nth-child(4) p',
+    desc: 'カルチャーページへの誘導とMVVの説明を伝える回答。',
+    chars: '60〜200文字',
+  },
+
+  /* ── 新卒採用について ── */
+  {
+    label: '新卒採用 セクション ラベル',
+    section: '新卒採用について',
+    selector: '#cat-newgrad .faq-section-label',
+    desc: 'カテゴリ見出しラベル。「新卒採用について」等。',
+    chars: '6〜16文字',
+  },
+  {
+    label: '新卒採用 Q1 質問',
+    section: '新卒採用について',
+    selector: '#cat-newgrad details:nth-child(1) summary',
+    desc: '文系学生の応募可否に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '新卒採用 Q1 回答',
+    section: '新卒採用について',
+    selector: '#cat-newgrad details:nth-child(1) p',
+    desc: '文系・理系どちらも活躍できることを伝える回答。職種ごとの違いも説明。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '新卒採用 Q2 質問',
+    section: '新卒採用について',
+    selector: '#cat-newgrad details:nth-child(2) summary',
+    desc: 'インターンから本採用への切り替えに関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '新卒採用 Q2 回答',
+    section: '新卒採用について',
+    selector: '#cat-newgrad details:nth-child(2) p',
+    desc: '早期内定コースの仕組みを説明する回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '新卒採用 Q3 質問',
+    section: '新卒採用について',
+    selector: '#cat-newgrad details:nth-child(3) summary',
+    desc: '配属先の決め方に関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '新卒採用 Q3 回答',
+    section: '新卒採用について',
+    selector: '#cat-newgrad details:nth-child(3) p',
+    desc: '希望尊重の配属方針とジョブチェンジ制度を伝える回答。',
+    chars: '60〜200文字',
+  },
+  {
+    label: '新卒採用 Q4 質問',
+    section: '新卒採用について',
+    selector: '#cat-newgrad details:nth-child(4) summary',
+    desc: '採用スケジュールに関する質問文。',
+    chars: '15〜38文字',
+  },
+  {
+    label: '新卒採用 Q4 回答',
+    section: '新卒採用について',
+    selector: '#cat-newgrad details:nth-child(4) p',
+    desc: '新卒採用ページへの誘導とエントリー受付中であることを伝える回答。',
+    chars: '60〜200文字',
+  },
+
+  /* ── フッターCTA ── */
+];
+</script>
+<script src="anno.js?v=2"></script>
+
+</body>
+</html>
