@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>カルチャー — Urumo 採用サイト Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  :root{
+    --ink:#0A0A0A;
+    --g900:#161616;
+    --g800:#262626;
+    --g700:#3D3D3D;
+    --g600:#555555;
+    --g500:#777777;
+    --g400:#A0A0A0;
+    --g300:#C8C8C8;
+    --g200:#E0E0E0;
+    --g100:#EFEFEF;
+    --g50:#F7F7F7;
+    --paper:#FAFAFA;
+    --white:#FFFFFF;
+    --serif:'Inter','Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;
+    --jp:'Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--jp);color:var(--ink);background:var(--white);line-height:1.75;font-size:15px;font-feature-settings:"palt";letter-spacing:0.02em}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.wrap{padding:0 20px}}
+
+  /* ── NAV ── */
+  nav.site-nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--g100);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;max-width:1200px;margin:0 auto;padding:0 48px;
+  }
+  @media(max-width:768px){.nav-inner{padding:0 20px}}
+  .nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .nav-logo .mark{
+    width:30px;height:30px;background:var(--ink);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .nav-logo .mark span{width:12px;height:12px;border-radius:50%;background:var(--white);display:block}
+  .nav-logo .text{font-family:var(--serif);font-size:13px;font-weight:700;letter-spacing:0.01em;color:var(--ink);white-space:nowrap}
+  .nav-logo .text small{display:block;font-size:9px;font-weight:500;color:var(--g500);letter-spacing:0.1em;margin-top:1px}
+  .nav-links{display:flex;gap:4px;align-items:center;list-style:none;margin:0 24px}
+  .nav-links > li{position:relative}
+  .nav-links > li > a{
+    font-size:13px;font-weight:500;color:var(--g600);
+    transition:color .2s;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:5px;
+    padding:8px 12px;border-radius:6px;
+  }
+  .nav-links > li > a:hover{color:var(--ink);background:var(--g50)}
+  .nav-links > li.has-dd > a::after{
+    content:'▾';font-size:9px;color:var(--g400);
+    transition:transform .2s;display:inline-block;
+  }
+  .nav-links > li.has-dd:hover > a::after{transform:rotate(180deg);color:var(--ink)}
+  /* Dropdown */
+  .nav-dropdown{
+    position:absolute;top:calc(100% + 8px);left:50%;
+    transform:translateX(-50%) translateY(-6px);
+    background:var(--white);border:1px solid var(--g200);border-radius:10px;
+    padding:6px;min-width:160px;list-style:none;
+    box-shadow:0 16px 40px -12px rgba(0,0,0,0.14);
+    opacity:0;visibility:hidden;
+    transition:opacity .18s,visibility .18s,transform .18s;
+    z-index:300;
+  }
+  .nav-dropdown::before{
+    content:'';position:absolute;top:-6px;left:50%;
+    transform:translateX(-50%) rotate(45deg);
+    width:11px;height:11px;background:var(--white);
+    border-left:1px solid var(--g200);border-top:1px solid var(--g200);
+  }
+  .nav-links > li.has-dd:hover .nav-dropdown,
+  .nav-links > li.has-dd:focus-within .nav-dropdown,
+  .nav-links > li.has-dd.dd-open .nav-dropdown{
+    opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
+  }
+  .nav-dropdown li a{
+    display:block;padding:9px 14px;font-size:13px;color:var(--g700);
+    border-radius:6px;transition:background .12s,color .12s;white-space:nowrap;
+  }
+  .nav-dropdown li a:hover{background:var(--g50);color:var(--ink)}
+  .nav-dropdown li a.is-current{color:var(--ink);font-weight:700}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .nav-cta{
+    background:var(--ink);color:var(--white) !important;
+    padding:10px 20px;border-radius:999px;
+    font-size:13px;font-weight:600;letter-spacing:0.02em;
+    display:inline-flex;align-items:center;gap:6px;
+    white-space:nowrap;transition:background .2s,transform .2s;
+  }
+  .nav-cta:hover{background:var(--g700);transform:translateY(-1px)}
+
+  /* ── CONTENT AREA ── */
+  .page-content{
+    padding-top:64px; /* nav height */
+    min-height:calc(100vh - 64px - 280px);
+  }
+
+  /* ── MISSION SECTION ── */
+  .mission-section{
+    padding:120px 0;
+  }
+  .mission-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  }
+  @media(max-width:900px){.mission-grid{grid-template-columns:1fr;gap:48px}}
+  .mission-eyebrow{
+    font-family:var(--serif);font-size:clamp(36px,5vw,72px);font-weight:800;
+    color:var(--ink);letter-spacing:-0.02em;margin-bottom:24px;line-height:1;
+  }
+  .mission-tagline{
+    font-size:clamp(24px,3.2vw,40px);font-weight:800;
+    line-height:1.32;letter-spacing:-0.01em;color:var(--ink);
+    margin-bottom:40px;
+  }
+  .mission-body{
+    display:flex;flex-direction:column;gap:0;
+    padding-top:32px;
+  }
+  .mission-body p{
+    font-size:15px;line-height:2.1;color:var(--g600);
+    padding:8px 0;
+  }
+  .mission-body p.accent{
+    font-size:16px;font-weight:700;color:var(--ink);
+    padding:16px 0;
+    margin:8px 0;
+  }
+  .mission-visual{
+    aspect-ratio:4/3;border-radius:12px;overflow:hidden;
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta{
+    background:var(--ink);color:var(--white);
+    padding:100px 0;text-align:center;position:relative;overflow:hidden;
+  }
+  .footer-cta::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 70% 60% at 75% 20%,rgba(255,255,255,0.05),transparent 60%),
+      radial-gradient(ellipse 50% 50% at 20% 80%,rgba(255,255,255,0.04),transparent 60%);
+  }
+  .footer-cta-inner{position:relative;z-index:1}
+  .footer-cta h2{font-size:clamp(24px,4vw,44px);font-weight:800;line-height:1.32;margin-bottom:16px;letter-spacing:-0.01em}
+  .footer-cta p{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:36px;max-width:44ch;margin-left:auto;margin-right:auto;line-height:2}
+  .footer-cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn-primary-w{
+    background:var(--white);color:var(--ink);padding:14px 28px;border-radius:999px;
+    font-weight:700;font-size:14px;letter-spacing:0.04em;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .btn-primary-w:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,0.4)}
+  .btn-ghost-w{
+    color:var(--white);padding:14px 8px;font-weight:600;font-size:14px;
+    display:inline-flex;align-items:center;gap:8px;
+    border-bottom:1px solid rgba(255,255,255,0.4);transition:gap .2s;
+  }
+  .btn-ghost-w:hover{gap:12px}
+
+  /* ── FOOTER ── */
+  footer.site-foot{background:var(--g900);color:rgba(255,255,255,0.7);padding:64px 0 28px;font-size:13px}
+  .footer-grid{
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
+    padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+  .footer-brand{display:flex;flex-direction:column;gap:16px}
+  .footer-brand .logo{
+    display:flex;align-items:center;gap:8px;
+    font-family:var(--serif);font-weight:800;font-size:13px;color:var(--white);
+  }
+  .footer-brand .logo .mark{
+    width:26px;height:26px;background:var(--white);border-radius:5px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .footer-brand .logo .mark span{width:10px;height:10px;background:var(--g900);border-radius:50%;display:block}
+  .footer-brand p{font-size:12px;line-height:1.9;color:rgba(255,255,255,0.45)}
+  .footer-col h4{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g500);margin-bottom:14px}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .footer-col a{font-size:12px;color:rgba(255,255,255,0.6);transition:color .2s}
+  .footer-col a:hover{color:var(--white)}
+  .footer-bottom{
+    padding-top:24px;display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--serif);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.3);
+  }
+  .footer-bottom .legal{display:flex;gap:20px}
+
+  /* ── VALUE SECTION ── */
+  .value-section{padding:120px 0}
+  .value-section-head{margin-bottom:56px}
+  .value-section-head .mission-eyebrow{margin-bottom:0}
+  .value-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.value-cards{grid-template-columns:1fr}}
+  .value-card{
+    overflow:hidden;background:var(--white);
+    display:flex;flex-direction:column;
+  }
+  .value-card-title{
+    padding:24px 24px 16px;
+    font-size:18px;font-weight:800;letter-spacing:-0.01em;color:var(--ink);
+    text-align:center;
+  }
+  .value-card-title .sub{
+    display:block;
+    font-family:var(--serif);font-size:10px;font-weight:700;
+    letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--g500);margin-bottom:6px;
+  }
+  .value-card-img{
+    aspect-ratio:16/9;
+    flex-shrink:0;
+  }
+  .value-card-body{
+    padding:24px;display:flex;flex-direction:column;gap:16px;flex:1;
+    text-align:center;
+  }
+  .value-card-subhead{
+    font-size:13px;font-weight:700;color:var(--ink);
+    padding-bottom:10px;border-bottom:1px solid var(--g100);
+  }
+  .value-card-text{
+    font-size:13px;line-height:1.9;color:var(--g600);
+  }
+
+  /* ── placeholder ── */
+  .ph{
+    background:var(--g800);border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;position:relative;
+  }
+  .ph::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(255,255,255,0.07),transparent 70%);
+  }
+  .ph-label{
+    font-family:var(--serif);font-size:9px;font-weight:600;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:rgba(255,255,255,0.28);z-index:1;position:relative;text-align:center;
+  }
+
+  /* Wireframe badge */
+  .wf-badge{
+    position:fixed;right:20px;bottom:20px;z-index:500;
+    background:var(--ink);color:var(--white);
+    border-radius:6px;padding:8px 14px;
+    font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.12em;
+    text-transform:uppercase;box-shadow:0 6px 20px -6px rgba(0,0,0,0.4);
+  }
+  .wf-badge .sub{color:rgba(255,255,255,0.45);font-weight:400;font-size:9px;margin-top:1px}
+</style>
+</head>
+<body>
+
+<!-- ══ GLOBAL NAV ══ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="mf-recruit-wireframe.html" class="nav-logo">
+      <div class="mark"><span></span></div>
+      <div class="text">
+        Urumo
+        <small>採用サイト</small>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li class="has-dd">
+        <a href="#">会社について</a>
+        <ul class="nav-dropdown">
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </li>
+      <li class="has-dd">
+        <a href="#">働く環境</a>
+        <ul class="nav-dropdown">
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </li>
+      <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+      <li><a href="students.html">新卒採用</a></li>
+      <li><a href="qa.html">Q&amp;A</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="mf-recruit-wireframe.html#jobs" class="nav-cta">募集職種・エントリー →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE CONTENT ══ -->
+<div class="page-content">
+
+  <!-- Mission -->
+  <section class="mission-section">
+    <div class="wrap">
+      <div class="mission-grid">
+        <!-- 左：テキスト -->
+        <div>
+          <div class="mission-eyebrow">Mission</div>
+          <h2 class="mission-tagline">リテール産業に<br>新しい常識をつくる</h2>
+          <div class="mission-body">
+            <p>わたしたちの生活に必要不可欠なリテール産業<br>
+            たくさんの想いと努力が折り重なり、日々の暮らしを支えています</p>
+            <p class="accent">わたしたちの生活を、もっと豊かに、もっと楽しく</p>
+            <p>フェズは、データとテクノロジーの力で新しい常識をつくり<br>
+            リテール産業の未来をひらきます</p>
+          </div>
+        </div>
+        <!-- 右：画像 -->
+        <div class="mission-visual ph">
+          <span class="ph-label">Mission Visual /<br>イラスト・キービジュアル</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Vision -->
+  <section class="mission-section" style="background:var(--paper)">
+    <div class="wrap">
+      <div class="mission-grid">
+        <!-- 左：画像 -->
+        <div class="mission-visual ph">
+          <span class="ph-label">Vision Visual /<br>イラスト・キービジュアル</span>
+        </div>
+        <!-- 右：テキスト -->
+        <div>
+          <div class="mission-eyebrow">Vision</div>
+          <h2 class="mission-tagline">情報、商品、店頭を科学し<br>売上に貢献する</h2>
+          <div class="mission-body">
+            <p>消費者の行動や価値観が多様化し、情報も商品もあふれる社会<br><br>
+            小売とメーカーが直面しているのは"売上への寄与が見えにくいマーケティング"という課題です</p>
+            <p class="accent">私たちは、誰もが求めている「売上への貢献」を実現することに存在意義を見出しています<br>
+            様々な中間指標はありますが、最終指標である売上にこだわり続けます</p>
+            <p>消費者の購買に関連するさまざまな「情報」、<br>
+            個性豊かな価値をもたらす「商品」、<br>
+            そして日々の暮らしに欠かせない「店頭」、<br>
+            売上と相関の強いこれらの要素を、データの科学によって捉え直し、<br>
+            断片的な施策を越えて、売上へと結びつけます<br><br>
+            その中核にあるのが、リテールデータプラットフォーム「Urumo（ウルモ）」<br>
+            私たちはUrumoを軸にソリューションを磨き、クライアントの売上に貢献し、<br>
+            社会の持続的な成長を支えていける存在になっていきます</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Value -->
+  <section class="value-section">
+    <div class="wrap">
+      <div class="value-section-head">
+        <div class="mission-eyebrow">Value</div>
+      </div>
+      <div class="value-cards">
+
+        <!-- Card 1 -->
+        <div class="value-card">
+          <div class="ph value-card-img"><span class="ph-label">Value Image 01</span></div>
+          <div class="value-card-title"><span class="sub">挑戦</span>常に一歩先へ</div>
+          <div class="value-card-body">
+            <div>
+              <div class="value-card-subhead">ゼロベース思考</div>
+              <p class="value-card-text">新しい価値を創造するために、前例や既存の方法に固執しない</p>
+            </div>
+            <div>
+              <div class="value-card-subhead">仮説思考</div>
+              <p class="value-card-text">課題解決のための仮説を持ち、成功率を高めるために必要な準備をする</p>
+            </div>
+            <div>
+              <div class="value-card-subhead">貪欲な吸収</div>
+              <p class="value-card-text">新しい技術や仕組みに疑問や興味を持ち、吸収していく</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="value-card">
+          <div class="ph value-card-img"><span class="ph-label">Value Image 02</span></div>
+          <div class="value-card-title"><span class="sub">One Team</span>議論を尽くし、最後は一つ</div>
+          <div class="value-card-body">
+            <div>
+              <div class="value-card-subhead">率直な発信</div>
+              <p class="value-card-text">役職や立場に関わらず、自身の価値観と根拠に基づき、意見を表明する。</p>
+            </div>
+            <div>
+              <div class="value-card-subhead">異見へのリスペクト</div>
+              <p class="value-card-text">自分と異なる意見を「対立」ではなく、より良い結論への「貴重な情報」として受け入れる。</p>
+            </div>
+            <div>
+              <div class="value-card-subhead">意思決定を明確に行う</div>
+              <p class="value-card-text">誰が意思決定者であるかを曖昧にせず、チームが迷わないように明確な判断、必要なアクションを定める。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="value-card">
+          <div class="ph value-card-img"><span class="ph-label">Value Image 03</span></div>
+          <div class="value-card-title"><span class="sub">結果</span>結果の積み上げが未来につながる</div>
+          <div class="value-card-body">
+            <div>
+              <div class="value-card-subhead">やりきる</div>
+              <p class="value-card-text">理想的ではなくても自分が今できる最大のアウトプットを出す。</p>
+            </div>
+            <div>
+              <div class="value-card-subhead">組織知化</div>
+              <p class="value-card-text">成功も失敗も要因を分析し、再現性のために言語化し蓄積する。</p>
+            </div>
+            <div>
+              <div class="value-card-subhead">未来価値</div>
+              <p class="value-card-text">短期的な価値だけでなく、会社の未来につながる長期的な価値を考える。</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══ FOOTER CTA ══ -->
+<div class="footer-cta">
+  <div class="wrap">
+    <div class="footer-cta-inner">
+      <h2>Urumoでは新たな仲間を<br>募集しています。</h2>
+      <p>Urumoでは多数のポジションでメンバーを募集しています。<br>まずはカジュアルにお話しましょう。</p>
+      <div class="footer-cta-actions">
+        <a href="mf-recruit-wireframe.html#jobs" class="btn-primary-w">求人を探す →</a>
+        <a href="#" class="btn-ghost-w">採用に関するお問い合わせ →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="mark"><span></span></div>
+          Urumo
+        </div>
+        <p>採用サイト</p>
+      </div>
+      <div class="footer-col">
+        <h4>会社について</h4>
+        <ul>
+          <li><a href="culture.html">カルチャー</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="mf-recruit-wireframe.html#company-profile">会社紹介資料</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>働く環境</h4>
+        <ul>
+          <li><a href="numbers.html">数字でみる</a></li>
+          <li><a href="benefits.html">福利厚生</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>その他</h4>
+        <ul>
+          <li><a href="mf-recruit-wireframe.html#official-contents">公式コンテンツ</a></li>
+          <li><a href="students.html">新卒採用</a></li>
+          <li><a href="qa.html">Q&amp;A</a></li>
+          <li><a href="mf-recruit-wireframe.html#jobs">募集職種・エントリー</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Urumo, Inc.</span>
+      <div class="legal">
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">利用規約</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Wireframe badge -->
+<div class="wf-badge">
+  Wireframe
+  <div class="sub">Culture — 2025.06</div>
+</div>
+
+<script>
+  // ドロップダウン: クリックでも開閉できるようにする
+  document.querySelectorAll('.nav-links > li.has-dd > a').forEach(a => {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      const li = this.closest('li.has-dd');
+      const isOpen = li.classList.contains('dd-open');
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+      if (!isOpen) li.classList.add('dd-open');
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.has-dd')) {
+      document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+    }
+  });
+
+  // スムーススクロール
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const id = this.getAttribute('href').slice(1);
+      if (!id) { e.preventDefault(); return; }
+      const target = document.getElementById(id);
+      if (target) {
+        e.preventDefault();
+        document.querySelectorAll('.nav-links > li.has-dd').forEach(el => el.classList.remove('dd-open'));
+        const navH = document.querySelector('nav.site-nav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.scrollY - navH - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
