@@ -162,18 +162,33 @@
   .value-text h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
   .value-text p{font-size:13px;color:var(--g600);line-height:1.8}
 
-  /* ══ JOB CARDS ══ */
-  .jobs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-  @media(max-width:900px){.jobs-grid{grid-template-columns:1fr}}
-  .job-card{border:1px solid var(--g200);border-radius:8px;background:var(--white);padding:32px 28px;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
-  .job-card:hover{transform:translateY(-3px);box-shadow:0 20px 40px -20px rgba(0,0,0,0.12);border-color:var(--g400)}
-  .job-cat{font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g400);margin-bottom:14px}
-  .job-card h4{font-size:clamp(16px,1.8vw,20px);font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-0.01em;margin-bottom:12px}
-  .job-card p{font-size:13px;color:var(--g600);line-height:1.9;flex:1}
-  .job-card-foot{margin-top:20px;padding-top:16px;border-top:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between}
-  .job-card-foot span{font-family:var(--serif);font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--g500)}
-  .job-card-arrow{font-size:14px;color:var(--g300);transition:color .15s,transform .15s;transform:translateX(-3px)}
-  .job-card:hover .job-card-arrow{color:var(--ink);transform:translateX(0)}
+  /* ══ JOB TABLE ══ */
+  .jobs-2col{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:start}
+  @media(max-width:900px){.jobs-2col{grid-template-columns:1fr;gap:40px}}
+  .job-categories{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--g200);margin-top:24px}
+  .job-cat-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--g200);font-size:14px;font-weight:600;color:var(--ink);transition:padding .15s;cursor:pointer}
+  .job-cat-row:hover{padding-left:8px}
+  .job-cat-row .count{font-family:var(--serif);font-size:11px;font-weight:600;color:var(--g500);letter-spacing:0.06em}
+  .job-list-table{border:1px solid var(--g200);border-radius:8px;overflow:hidden}
+  .job-list-head{display:grid;grid-template-columns:2fr 1fr 1fr;padding:12px 20px;background:var(--paper);border-bottom:1px solid var(--g200);font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--g500);gap:16px}
+  .job-list-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;padding:18px 20px;border-bottom:1px solid var(--g100);align-items:center;transition:background .15s;position:relative;padding-right:40px}
+  .job-list-row:last-child{border-bottom:none}
+  .job-list-row:hover{background:var(--g50)}
+  .job-list-row::after{content:'→';position:absolute;right:20px;top:50%;transform:translateY(-50%) translateX(-3px);font-size:13px;color:var(--g400);transition:color .15s,transform .15s}
+  .job-list-row:hover::after{color:var(--ink);transform:translateY(-50%) translateX(0)}
+  .job-list-row .title{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
+  .job-list-row .dept{font-size:12px;color:var(--g600)}
+  .job-list-row .type{font-size:11px;padding:4px 10px;border:1px solid var(--g200);border-radius:999px;color:var(--g600);width:fit-content}
+  .job-list-row .loc{font-size:11px;color:var(--g500)}
+  .job-cat-row.is-active{color:var(--ink);font-weight:700;background:var(--white);border-radius:6px;padding-left:12px}
+  .job-cat-row.is-active .count{color:var(--ink)}
+  .job-detail-panel{display:none}
+  .job-detail-panel.is-active{display:block}
+  .job-detail-table{width:100%;border-collapse:collapse;border:1px solid var(--g200);border-radius:8px;overflow:hidden}
+  .job-detail-table tr{border-bottom:1px solid var(--g200)}
+  .job-detail-table tr:last-child{border-bottom:none}
+  .job-detail-table th{width:100px;padding:14px 16px;font-size:12px;font-weight:700;color:var(--g700);background:var(--paper);vertical-align:top;white-space:nowrap;text-align:left}
+  .job-detail-table td{padding:14px 16px;font-size:13px;color:var(--g600);line-height:1.8;vertical-align:top}
 
   /* ══ VOICE ══ */
   .voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -385,33 +400,60 @@
 <section class="block alt" id="positions">
   <div class="wrap">
     <div class="section-eyebrow reveal">Open Positions</div>
-    <h2 class="section-h2 reveal reveal-d1">新卒採用ポジション</h2>
-    <p class="section-lede reveal reveal-d2">あなたの強みと興味に合わせて、4つのポジションでエントリーを受け付けています。</p>
-    <div class="jobs-grid reveal reveal-d2">
-      <a href="#" class="job-card">
-        <div class="job-cat">Business</div>
-        <h4>ビジネス職</h4>
-        <p>メーカー・小売企業へのコンサルティング営業。データ活用の提案から導入支援まで一気通貫で担当し、クライアントの売上向上に直接貢献します。文系・理系問わず歓迎。</p>
-        <div class="job-card-foot"><span>View Details</span><span class="job-card-arrow">→</span></div>
-      </a>
-      <a href="#" class="job-card">
-        <div class="job-cat">Engineering</div>
-        <h4>エンジニア職</h4>
-        <p>リテールデータプラットフォーム「Urumo」の開発に携わります。バックエンド・フロントエンド・インフラ、興味とスキルに応じてキャリアパスを設計できます。</p>
-        <div class="job-card-foot"><span>View Details</span><span class="job-card-arrow">→</span></div>
-      </a>
-      <a href="#" class="job-card">
-        <div class="job-cat">Data Science</div>
-        <h4>データサイエンス職</h4>
-        <p>小売・メーカーのPOSデータや行動データを分析し、事業価値に変換します。機械学習・統計の知識を実際のビジネス課題に応用したい方に最適な環境です。</p>
-        <div class="job-card-foot"><span>View Details</span><span class="job-card-arrow">→</span></div>
-      </a>
-      <a href="#" class="job-card">
-        <div class="job-cat">Corporate</div>
-        <h4>コーポレート職</h4>
-        <p>HR・法務・経理・広報など、会社の基盤を支えるコーポレート部門。スタートアップのコーポレートは裁量が大きく、組織づくりそのものを担えるポジションです。</p>
-        <div class="job-card-foot"><span>View Details</span><span class="job-card-arrow">→</span></div>
-      </a>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:16px">
+      <div>
+        <h2 class="section-h2 reveal reveal-d1">新卒採用ポジション</h2>
+        <p class="section-lede reveal reveal-d2" style="margin-bottom:0">あなたの強みと興味に合わせて、2つのポジションでエントリーを受け付けています。</p>
+      </div>
+      <a href="#" class="more-link">エントリーする →</a>
+    </div>
+    <div class="jobs-2col reveal">
+      <!-- カテゴリリスト -->
+      <div>
+        <p style="font-size:12px;color:var(--g500);margin-bottom:8px;font-family:var(--serif);letter-spacing:0.1em;text-transform:uppercase">職種カテゴリ</p>
+        <div class="job-categories">
+          <div class="job-cat-row is-active" data-job="business">
+            <span>ビジネス職</span>
+            <span class="count">エントリー受付中 →</span>
+          </div>
+          <div class="job-cat-row" data-job="engineering">
+            <span>エンジニア職</span>
+            <span class="count">エントリー受付中 →</span>
+          </div>
+        </div>
+      </div>
+      <!-- 詳細パネル -->
+      <div>
+        <p style="font-size:12px;color:var(--g500);margin-bottom:8px;font-family:var(--serif);letter-spacing:0.1em;text-transform:uppercase">募集要項</p>
+
+        <!-- ビジネス職 -->
+        <div class="job-detail-panel is-active" data-job="business">
+          <table class="job-detail-table">
+            <tr><th>応募資格</th><td>学部・専攻を問わず、2028年に四年制大学・大学院を卒業・修了(見込み)の方</td></tr>
+            <tr><th>勤務地</th><td>東京本社（東京都港区西新橋1丁目2-9 日比谷セントラルビル6階）<br>＜内幸町駅＞都営三田線 A8出口より徒歩1分<br>＜霞ヶ関駅＞東京メトロ千代田線/日比谷線/丸ノ内線 C3出口より徒歩5分<br>＜虎ノ門駅＞東京メトロ銀座線 9番出口より徒歩5分<br>＜新橋駅＞東京メトロ銀座線 7番出口より徒歩5分/JR 日比谷口（SL広場）より徒歩6分/新交通ゆりかもめ 東口より徒歩8分/都営浅草線 A2-2出口より徒歩9分</td></tr>
+            <tr><th>勤務時間</th><td>フルフレックス（コアタイム：無し）<br>1日の標準労働時間：8時間（休憩時間：60分）　月間所定労働時間：標準労働時間×実労働日数<br>※1日1時間以上勤務で出勤扱い<br>※深夜時間帯（22:00-翌06:00）に勤務する場合は、上長の事前許可が必要</td></tr>
+            <tr><th>給与</th><td>学士：470万円〜　修士：500万円〜　博士：530万円〜（年俸制）</td></tr>
+            <tr><th>昇給</th><td>年2回<br>※半期初めに目標を立て、半期末に目標の達成度を評価します。評価に応じて給与を見直します。</td></tr>
+            <tr><th>賞与</th><td>年1回（業績連動賞与）<br>その他、各種インセンティブ制度等の変更・拡充を検討中です。</td></tr>
+            <tr><th>休日休暇</th><td>完全週休2日制（土・日）、祝日、夏季休暇(7月〜9月で好きな4日間)、年末年始休暇、年次有給休暇(初年度10日間)、慶弔休暇、生理休暇(1ヶ月1回取得可能、無給)</td></tr>
+            <tr><th>福利厚生</th><td>雇用保険、健康保険、労災保険、厚生年金<br>フルフレックス制度、リモートワーク可（原則週3出社）、交通費支給（上限3万円）、各種オフサイト/全社会議、書籍購入制度(申請が受理されれば購入し放題)、育休/産休制度、時短勤務制度、表彰制度、慶弔見舞金、出産祝い金、PC選択(Windows or Mac)、集中スペース完備</td></tr>
+          </table>
+        </div>
+
+        <!-- エンジニア職 -->
+        <div class="job-detail-panel" data-job="engineering">
+          <table class="job-detail-table">
+            <tr><th>応募資格</th><td>学部・専攻を問わず、2028年に四年制大学・大学院またはそれらに相当する学校を卒業・修了(見込み)の方</td></tr>
+            <tr><th>勤務地</th><td>東京本社（東京都港区西新橋1丁目2-9 日比谷セントラルビル6階）<br>＜内幸町駅＞都営三田線 A8出口より徒歩1分<br>＜霞ヶ関駅＞東京メトロ千代田線/日比谷線/丸ノ内線 C3出口より徒歩5分<br>＜虎ノ門駅＞東京メトロ銀座線 9番出口より徒歩5分<br>＜新橋駅＞東京メトロ銀座線 7番出口より徒歩5分/JR 日比谷口（SL広場）より徒歩6分/新交通ゆりかもめ 東口より徒歩8分/都営浅草線 A2-2出口より徒歩9分</td></tr>
+            <tr><th>勤務時間</th><td>フルフレックス（コアタイム：無し）<br>1日の標準労働時間：8時間（休憩時間：60分）　月間所定労働時間：標準労働時間×実労働日数<br>※1日1時間以上勤務で出勤扱い<br>※深夜時間帯（22:00-翌06:00）に勤務する場合は、上長の事前許可が必要</td></tr>
+            <tr><th>給与</th><td>学士：495万円〜　修士：525万円〜　博士：555万円〜（年俸制）</td></tr>
+            <tr><th>昇給</th><td>年2回<br>※半期初めに目標を立て、半期末に目標の達成度を評価します。評価に応じて給与を見直します。</td></tr>
+            <tr><th>賞与</th><td>年1回（業績連動賞与）<br>その他、各種インセンティブ制度等の変更・拡充を検討中です。</td></tr>
+            <tr><th>休日休暇</th><td>完全週休2日制（土・日）、祝日、夏季休暇(7月〜9月で好きな4日間)、年末年始休暇、年次有給休暇(初年度10日間)、慶弔休暇、生理休暇(1ヶ月1回取得可能、無給)</td></tr>
+            <tr><th>福利厚生</th><td>雇用保険、健康保険、労災保険、厚生年金<br>フルフレックス制度、リモートワーク可（原則週1〜3出社）、交通費支給（上限3万円）、各種オフサイト/全社会議、書籍購入制度(申請が受理されれば購入し放題)、育休/産休制度、時短勤務制度、表彰制度、慶弔見舞金、出産祝い金、PC選択(Windows or Mac)、集中スペース完備</td></tr>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -643,6 +685,18 @@
     if(!e.target.closest('.has-dd')){
       document.querySelectorAll('.nav-links > li.has-dd').forEach(function(el){ el.classList.remove('dd-open'); });
     }
+  });
+
+  // Job category tab switch
+  document.querySelectorAll('.job-cat-row[data-job]').forEach(function(row){
+    row.addEventListener('click', function(){
+      var job = row.dataset.job;
+      document.querySelectorAll('.job-cat-row[data-job]').forEach(function(r){ r.classList.remove('is-active'); });
+      document.querySelectorAll('.job-detail-panel').forEach(function(p){ p.classList.remove('is-active'); });
+      row.classList.add('is-active');
+      var panel = document.querySelector('.job-detail-panel[data-job="'+job+'"]');
+      if(panel) panel.classList.add('is-active');
+    });
   });
 
   // Scroll reveal
