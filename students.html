@@ -206,8 +206,8 @@
   .voice-name{font-size:12px;color:var(--g500)}
 
   /* ══ FLOW TIMELINE ══ */
-  .flow-track{display:grid;grid-template-columns:repeat(5,1fr);position:relative}
-  .flow-track::before{content:'';position:absolute;top:27px;left:calc(10% + 16px);right:calc(10% + 16px);height:1px;background:var(--g200);z-index:0}
+  .flow-track{display:grid;grid-template-columns:repeat(6,1fr);position:relative}
+  .flow-track::before{content:'';position:absolute;top:27px;left:calc(8.33% + 16px);right:calc(8.33% + 16px);height:1px;background:var(--g200);z-index:0}
   @media(max-width:900px){.flow-track{grid-template-columns:1fr}.flow-track::before{display:none}}
   .flow-step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10px;position:relative;z-index:1}
   .flow-dot{width:56px;height:56px;border-radius:50%;background:var(--white);border:1px solid var(--g200);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:12px;font-weight:700;color:var(--g500);letter-spacing:0.08em;flex-shrink:0;margin-bottom:18px;transition:background .2s,border-color .2s,color .2s}
@@ -519,45 +519,53 @@
   <div class="wrap">
     <div class="section-eyebrow reveal">Selection Process</div>
     <h2 class="section-h2 reveal reveal-d1">選考フロー</h2>
-    <p class="section-lede reveal reveal-d2">カジュアルな面談からスタート。選考を通じてUrumoのことを深く知ってもらえれば嬉しいです。</p>
+    <p class="section-lede reveal reveal-d2">まずはインターンもしくは会社説明会へのご参加をお願いしております。<br>選考期間はエントリーから1カ月半程度を想定しております。</p>
     <div class="reveal reveal-d2">
       <div class="flow-track">
         <div class="flow-step">
           <div class="flow-dot">01</div>
           <div class="flow-step-text">
-            <strong>エントリー</strong>
-            <span>フォームよりエントリー、またはカジュアル面談をお申し込みください</span>
+            <strong>インターンシップ OR 会社説明会参加</strong>
+            <span></span>
           </div>
         </div>
         <div class="flow-step">
           <div class="flow-dot">02</div>
           <div class="flow-step-text">
             <strong>書類選考</strong>
-            <span>履歴書・職歴書をもとに選考します（通常1週間以内）</span>
+            <span></span>
           </div>
         </div>
         <div class="flow-step">
           <div class="flow-dot">03</div>
           <div class="flow-step-text">
-            <strong>1次面接</strong>
-            <span>現場社員との面接。ご自身の経験・志向をお聞かせください</span>
+            <strong>一次面接（オンライン）</strong>
+            <span></span>
           </div>
         </div>
         <div class="flow-step">
           <div class="flow-dot">04</div>
           <div class="flow-step-text">
-            <strong>最終面接</strong>
-            <span>役員・マネージャーとの面接。Urumoのビジョンについて議論します</span>
+            <strong>二次面接（オンライン）</strong>
+            <span></span>
           </div>
         </div>
         <div class="flow-step">
           <div class="flow-dot">05</div>
           <div class="flow-step-text">
-            <strong>内定・オファー</strong>
-            <span>合否のご連絡後、入社条件についてすり合わせを行います</span>
+            <strong>最終面接（対面）</strong>
+            <span></span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot">06</div>
+          <div class="flow-step-text">
+            <strong>内々定</strong>
+            <span></span>
           </div>
         </div>
       </div>
+      <p style="font-size:12px;color:var(--g500);margin-top:24px">※選考フローは変更になる場合があります。</p>
     </div>
   </div>
 </section>
