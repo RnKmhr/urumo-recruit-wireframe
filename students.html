@@ -96,6 +96,9 @@
   .reveal-d2{transition-delay:.24s}
   .reveal-d3{transition-delay:.36s}
 
+  @keyframes pulse-green{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+  @keyframes pulse-w{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,0.3)}70%{box-shadow:0 0 0 10px rgba(255,255,255,0)}}
+
   /* ══ HERO ══ */
   .recruit-hero{padding-top:64px;position:relative;background:var(--white)}
   .recruit-hero-inner{
@@ -180,8 +183,8 @@
   .job-list-row .dept{font-size:12px;color:var(--g600)}
   .job-list-row .type{font-size:11px;padding:4px 10px;border:1px solid var(--g200);border-radius:999px;color:var(--g600);width:fit-content}
   .job-list-row .loc{font-size:11px;color:var(--g500)}
-  .job-cat-row.is-active{color:var(--ink);font-weight:700;background:var(--white);border-radius:6px;padding-left:12px}
-  .job-cat-row.is-active .count{color:var(--ink)}
+  .job-cat-row.is-active{color:var(--ink);font-weight:700;background:var(--ink);color:var(--white) !important;border-radius:6px;padding:16px 16px}
+  .job-cat-row.is-active .count{color:rgba(255,255,255,0.7) !important}
   .job-detail-panel{display:none}
   .job-detail-panel.is-active{display:block}
   .job-detail-table{width:100%;border-collapse:collapse;border:1px solid var(--g200);border-radius:8px;overflow:hidden}
@@ -266,6 +269,15 @@
   .footer-bottom{padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.3)}
   .footer-bottom .legal{display:flex;gap:20px}
 
+  /* ══ PERSONA GRID ══ */
+  .persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+  @media(max-width:900px){.persona-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.persona-grid{grid-template-columns:1fr}}
+  .persona-card{border:1px solid var(--g200);border-radius:10px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;background:var(--white);transition:border-color .2s,box-shadow .2s}
+  .persona-card:hover{border-color:var(--g400);box-shadow:0 8px 24px -8px rgba(0,0,0,0.1)}
+  .persona-num{font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g400);letter-spacing:0.14em}
+  .persona-text{font-size:14px;font-weight:600;color:var(--ink);line-height:1.7}
+
   /* ══ WF BADGE ══ */
   .wf-badge{position:fixed;right:20px;bottom:20px;z-index:500;background:var(--ink);color:var(--white);border-radius:6px;padding:8px 14px;font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;box-shadow:0 6px 20px -6px rgba(0,0,0,0.4)}
   .wf-badge .sub{color:rgba(255,255,255,0.45);font-weight:400;font-size:9px;margin-top:1px}
@@ -312,6 +324,10 @@
   <div class="wrap" style="padding:0">
     <div class="recruit-hero-inner">
       <div class="recruit-hero-text">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;color:#16a34a;letter-spacing:0.08em;margin-bottom:20px">
+          <span style="width:7px;height:7px;border-radius:50%;background:#16a34a;flex-shrink:0;animation:pulse-green 1.8s ease-in-out infinite"></span>
+          2026年度 エントリー受付中
+        </div>
         <div class="recruit-hero-eyebrow">New Graduate Recruitment 2026</div>
         <h1>リテールの未来を、<br>一緒につくろう。</h1>
         <p class="recruit-hero-lede">160兆円規模のリテール産業をデータとテクノロジーで変革する。入社1年目から事業の中心に立てるフィールドが、ここにあります。</p>
@@ -355,6 +371,18 @@
 </div>
 
 
+<!-- ══ SUB-NAV ══ -->
+<nav class="sub-nav">
+  <div class="sub-nav-inner">
+    <a href="#why" class="sub-nav-link" data-section="why">Why Urumo</a>
+    <a href="#positions" class="sub-nav-link" data-section="positions">募集ポジション</a>
+    <a href="#voices" class="sub-nav-link" data-section="voices">社員の声</a>
+    <a href="#flow" class="sub-nav-link" data-section="flow">選考フロー</a>
+    <a href="#schedule" class="sub-nav-link" data-section="schedule">求める人物像</a>
+    <a href="#faq" class="sub-nav-link" data-section="faq">FAQ</a>
+  </div>
+</nav>
+
 
 <!-- ══════════ WHY URUMO ══════════ -->
 <section class="block" id="why">
@@ -364,9 +392,11 @@
     <div class="section-lede reveal reveal-d2" style="color:var(--g700)">
       <p style="margin-bottom:16px">あなたの情熱と好奇心、どこまでも高みを目指すそのエネルギーを、私たちUrumoで解き放ちませんか？</p>
       <p style="margin-bottom:16px">私たちは、リテール産業に新たな常識をつくるテックカンパニーです。AIやデータを駆使して、リテール産業における新しいマーケティングのあり方を共創する。この壮大なミッションを、共に楽しみながら成し遂げる仲間を求めています。</p>
-      <p style="margin-bottom:4px">「考える」だけで終わらせない。</p>
-      <p style="margin-bottom:4px">自ら動き、圧倒的なスピードで成果を生み出す。</p>
-      <p style="margin-bottom:16px">どんな壁も、最高のチームと「やり切る」責任感で乗り越える。</p>
+      <blockquote style="border-left:3px solid var(--ink);padding:20px 28px;margin:20px 0;background:var(--g50);border-radius:0 6px 6px 0">
+        <p style="margin-bottom:4px;font-weight:700;color:var(--ink);font-size:16px">「考える」だけで終わらせない。</p>
+        <p style="margin-bottom:4px;font-weight:700;color:var(--ink);font-size:16px">自ら動き、圧倒的なスピードで成果を生み出す。</p>
+        <p style="font-weight:700;color:var(--ink);font-size:16px">どんな壁も、最高のチームと「やり切る」責任感で乗り越える。</p>
+      </blockquote>
       <p style="margin-bottom:16px">「世の中に大きなインパクトを与えたい」「もっと早く成長したい」<br>そんな野心を持ったあなたを、私たちは全力でサポートします。</p>
       <p>さあ、私たちと一緒に、まだ誰も見たことのない未来をデザインし、日本のリテール産業を根底から変える挑戦を始めましょう。</p>
     </div>
@@ -473,6 +503,20 @@
 </section>
 
 
+<!-- ══ MID CTA ══ -->
+<div style="background:var(--g50);border-top:1px solid var(--g100);border-bottom:1px solid var(--g100);padding:48px 0;text-align:center">
+  <div class="wrap">
+    <p style="font-size:12px;font-family:var(--serif);font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--g500);margin-bottom:12px">Ready to join us?</p>
+    <p style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:8px;line-height:1.4">一緒に、リテールの未来をつくりませんか。</p>
+    <p style="font-size:14px;color:var(--g600);margin-bottom:28px">まずはカジュアルにお話ししましょう。選考とは関係なく、Urumoのことを知りたい方も大歓迎です。</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="#entry" class="btn-primary" style="animation:none">エントリーする →</a>
+      <a href="#entry" class="btn-ghost">カジュアル面談を申し込む →</a>
+    </div>
+  </div>
+</div>
+
+
 <!-- ══════════ FLOW ══════════ -->
 <section class="block alt" id="flow">
   <div class="wrap">
@@ -527,30 +571,30 @@
   <div class="wrap">
     <div class="section-eyebrow reveal">Who We're Looking For</div>
     <h2 class="section-h2 reveal reveal-d1">求める人物像</h2>
-    <div class="reveal reveal-d2" style="margin-top:40px;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--g200)">
-      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px 0;border-bottom:1px solid var(--g200)">
-        <span style="font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g400);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;width:24px">01</span>
-        <p style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.7">高い目標にも前向きに挑戦し、柔軟に考えながらやり抜ける方</p>
+    <div class="persona-grid reveal reveal-d2">
+      <div class="persona-card">
+        <div class="persona-num">01</div>
+        <div class="persona-text">高い目標にも前向きに挑戦し、柔軟に考えながらやり抜ける方</div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px 0;border-bottom:1px solid var(--g200)">
-        <span style="font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g400);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;width:24px">02</span>
-        <p style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.7">自分の想いや課題意識を持ち、主体的に動ける方</p>
+      <div class="persona-card">
+        <div class="persona-num">02</div>
+        <div class="persona-text">自分の想いや課題意識を持ち、主体的に動ける方</div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px 0;border-bottom:1px solid var(--g200)">
-        <span style="font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g400);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;width:24px">03</span>
-        <p style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.7">チームで成果を出すことを大切にできる方</p>
+      <div class="persona-card">
+        <div class="persona-num">03</div>
+        <div class="persona-text">チームで成果を出すことを大切にできる方</div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px 0;border-bottom:1px solid var(--g200)">
-        <span style="font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g400);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;width:24px">04</span>
-        <p style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.7">広い視野で考え、わかりやすく伝えられる方</p>
+      <div class="persona-card">
+        <div class="persona-num">04</div>
+        <div class="persona-text">広い視野で考え、わかりやすく伝えられる方</div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px 0;border-bottom:1px solid var(--g200)">
-        <span style="font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g400);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;width:24px">05</span>
-        <p style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.7">感謝とリスペクトを忘れず、前向きに対話できる方</p>
+      <div class="persona-card">
+        <div class="persona-num">05</div>
+        <div class="persona-text">感謝とリスペクトを忘れず、前向きに対話できる方</div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px 0;border-bottom:1px solid var(--g200)">
-        <span style="font-family:var(--serif);font-size:11px;font-weight:700;color:var(--g400);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;width:24px">06</span>
-        <p style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.7">Urumoの【Mission・Vision・Value】に共感いただける方</p>
+      <div class="persona-card">
+        <div class="persona-num">06</div>
+        <div class="persona-text">Urumoの【Mission・Vision・Value】に共感いただける方</div>
       </div>
     </div>
   </div>
@@ -595,7 +639,7 @@
       <h2>一緒に、リテールの<br>未来をつくりませんか。</h2>
       <p>まずはカジュアルにお話ししましょう。選考とは関係なく、Urumoのことを知りたい方も大歓迎です。</p>
       <div class="footer-cta-actions">
-        <a href="#" class="btn-primary-w">エントリーする →</a>
+        <a href="#" class="btn-primary-w" style="animation:pulse-w 2s ease-in-out infinite">エントリーする →</a>
         <a href="#" class="btn-ghost-w">カジュアル面談を申し込む →</a>
       </div>
     </div>
