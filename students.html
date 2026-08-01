@@ -102,30 +102,73 @@
   /* ══ HERO ══ */
   .recruit-hero{padding-top:64px;position:relative;background:var(--white)}
   .recruit-hero-inner{
-    display:grid;grid-template-columns:1fr 1fr;gap:0;
-    align-items:stretch;
-    border-bottom:1px solid var(--g100);
+    display:grid;grid-template-columns:55% 45%;gap:0;
+    align-items:stretch;min-height:calc(100vh - 64px);
   }
-  @media(max-width:900px){.recruit-hero-inner{grid-template-columns:1fr}}
+  @media(max-width:900px){.recruit-hero-inner{grid-template-columns:1fr;min-height:auto}}
   .recruit-hero-text{
-    padding:72px 64px 64px 48px;
+    padding:80px 72px 72px 56px;
     display:flex;flex-direction:column;justify-content:center;
+    position:relative;overflow:hidden;
     border-right:1px solid var(--g100);
   }
-  @media(max-width:900px){.recruit-hero-text{padding:48px 20px;border-right:none;border-bottom:1px solid var(--g100)}}
+  .recruit-hero-text::before{
+    content:'2028';
+    position:absolute;right:-20px;bottom:-32px;
+    font-family:var(--serif);font-size:220px;font-weight:800;
+    color:var(--g50);letter-spacing:-0.05em;line-height:1;
+    pointer-events:none;user-select:none;z-index:0;
+  }
+  .recruit-hero-text > *{position:relative;z-index:1}
+  @media(max-width:900px){.recruit-hero-text{padding:52px 24px 48px;border-right:none;border-bottom:1px solid var(--g100)}}
+  @media(max-width:900px){.recruit-hero-text::before{font-size:120px;right:-8px;bottom:-16px}}
+  .recruit-hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;
+    padding:6px 14px;font-size:11px;font-weight:700;color:#16a34a;
+    letter-spacing:0.08em;margin-bottom:28px;width:fit-content;
+  }
+  .recruit-hero-badge-dot{width:7px;height:7px;border-radius:50%;background:#16a34a;flex-shrink:0;animation:pulse-green 1.8s ease-in-out infinite}
   .recruit-hero-eyebrow{
     font-family:var(--serif);font-size:10px;font-weight:700;
-    letter-spacing:0.22em;text-transform:uppercase;color:var(--g500);
-    margin-bottom:20px;
+    letter-spacing:0.28em;text-transform:uppercase;color:var(--g400);
+    margin-bottom:18px;
   }
   .recruit-hero h1{
-    font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1.25;
-    letter-spacing:-0.02em;color:var(--ink);margin-bottom:24px;
+    font-size:clamp(36px,4.8vw,62px);font-weight:800;line-height:1.2;
+    letter-spacing:-0.03em;color:var(--ink);margin-bottom:28px;
   }
-  .recruit-hero-lede{font-size:15px;line-height:2;color:var(--g600);margin-bottom:36px;max-width:44ch}
+  .recruit-hero h1 em{font-style:normal;position:relative;display:inline-block}
+  .recruit-hero h1 em::after{
+    content:'';position:absolute;left:0;bottom:2px;width:100%;height:3px;
+    background:var(--ink);border-radius:2px;
+  }
+  .recruit-hero-lede{font-size:15px;line-height:1.95;color:var(--g600);margin-bottom:40px;max-width:40ch}
   .recruit-hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-  .recruit-hero-photo{overflow:hidden}
-  .recruit-hero-photo .ph{width:100%;height:100%;border-radius:0;min-height:440px}
+  .recruit-hero-scroll{
+    margin-top:auto;padding-top:48px;
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--serif);font-size:9px;font-weight:700;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--g400);
+  }
+  .recruit-hero-scroll-line{width:40px;height:1px;background:var(--g300)}
+  /* photo panel — dark */
+  .recruit-hero-photo{
+    background:var(--ink);position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .recruit-hero-photo .ph{
+    width:100%;flex:1;border-radius:0;min-height:480px;
+    background:rgba(255,255,255,0.04);
+  }
+  .recruit-hero-photo-meta{
+    padding:28px 36px;border-top:1px solid rgba(255,255,255,0.1);
+    display:flex;gap:32px;
+  }
+  .recruit-hero-stat{display:flex;flex-direction:column;gap:4px}
+  .recruit-hero-stat-num{font-family:var(--serif);font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1}
+  .recruit-hero-stat-num .unit{font-size:12px;font-weight:600;color:rgba(255,255,255,0.5)}
+  .recruit-hero-stat-label{font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:0.04em}
   @media(max-width:900px){.recruit-hero-photo{display:none}}
 
   /* ══ STATS ══ */
@@ -326,23 +369,39 @@
 
 <!-- ══════════ HERO ══════════ -->
 <section class="recruit-hero" id="top">
-  <div class="wrap" style="padding:0">
-    <div class="recruit-hero-inner">
-      <div class="recruit-hero-text">
-        <div style="display:inline-flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;color:#16a34a;letter-spacing:0.08em;margin-bottom:20px">
-          <span style="width:7px;height:7px;border-radius:50%;background:#16a34a;flex-shrink:0;animation:pulse-green 1.8s ease-in-out infinite"></span>
-          2028年度 エントリー受付中
-        </div>
-        <div class="recruit-hero-eyebrow">New Graduate Recruitment 2028</div>
-        <h1>リテールの未来を、<br>一緒につくろう。</h1>
-        <p class="recruit-hero-lede">160兆円規模のリテール産業をデータとテクノロジーで変革する。入社1年目から事業の中心に立てるフィールドが、ここにあります。</p>
-        <div class="recruit-hero-actions">
-          <a href="#entry" class="btn-primary">エントリーする →</a>
-        </div>
+  <div class="recruit-hero-inner">
+    <div class="recruit-hero-text">
+      <div class="recruit-hero-badge">
+        <span class="recruit-hero-badge-dot"></span>
+        2028年度 エントリー受付中
       </div>
-      <div class="recruit-hero-photo">
-        <div class="ph" style="width:100%;height:100%;border-radius:0;min-height:440px">
-          <span class="ph-label">Hero Photo /<br>社員・オフィス写真</span>
+      <div class="recruit-hero-eyebrow">New Graduate Recruitment 2028</div>
+      <h1>リテールの未来を、<br><em>一緒につくろう。</em></h1>
+      <p class="recruit-hero-lede">160兆円規模のリテール産業をデータとテクノロジーで変革する。入社1年目から事業の中心に立てるフィールドが、ここにあります。</p>
+      <div class="recruit-hero-actions">
+        <a href="#entry" class="btn-primary">エントリーする →</a>
+      </div>
+      <div class="recruit-hero-scroll">
+        <span class="recruit-hero-scroll-line"></span>
+        Scroll
+      </div>
+    </div>
+    <div class="recruit-hero-photo">
+      <div class="ph" style="width:100%;flex:1;border-radius:0;min-height:440px">
+        <span class="ph-label">Hero Photo /<br>社員・オフィス写真</span>
+      </div>
+      <div class="recruit-hero-photo-meta">
+        <div class="recruit-hero-stat">
+          <div class="recruit-hero-stat-num">32<span class="unit">歳</span></div>
+          <div class="recruit-hero-stat-label">社員の平均年齢</div>
+        </div>
+        <div class="recruit-hero-stat">
+          <div class="recruit-hero-stat-num">68<span class="unit">%</span></div>
+          <div class="recruit-hero-stat-label">20〜30代が占める割合</div>
+        </div>
+        <div class="recruit-hero-stat">
+          <div class="recruit-hero-stat-num">3<span class="unit">年連続</span></div>
+          <div class="recruit-hero-stat-label">新卒採用を継続</div>
         </div>
       </div>
     </div>
