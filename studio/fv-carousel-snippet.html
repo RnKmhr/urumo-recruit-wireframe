@@ -1,0 +1,60 @@
+<!--
+  URUMO Recruit / 新卒採用FVカルーセル：切り替えごとのフェードイン（PC・SP）
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    - PCのFVカルーセル（students_pc > kv > Carousel）に ID「fv-carousel」
+    - SPのFVカルーセル（students_sp > kv > image > Carousel）に ID「fv-carousel-sp」
+    - カルーセル：再生間隔5秒・自動再生・送り時間0.001秒、item は「絶対」配置で同じ位置に重ねている
+
+  公開サイトでのカルーセルの仕組み（2026-11-13 に公開サイトで確認）
+    - スライドは .sd-carousel__slide が7枚。aria-hidden="true" でないものが常に3枚並ぶ
+    - その3枚の真ん中が「今の画像」、左隣が「1つ前の画像」
+    - 再生間隔（5秒）ごとにスライドが1つずつずれ、真ん中には毎回新しい要素が来る
+    - item を重ねているので、このCSSがないと一番最後のスライドが常に上に見え、
+      「出現時」のアニメーションもページを開いたときに1回しか動かない
+    ※ Studioのプレビュー（preview.studio.site）は仕組みが違い、カスタムコードも動かないので確認は公開サイトで行う
+
+  動き（参考：aksball.co.jp/recruit のFV。Swiperの fade・1秒・ease、拡大なし）
+    - 今の画像を一番上に置き、1秒かけて ease でふわっとフェードイン
+    - その下に1つ前の画像を不透明のまま残す（背景が透けて白っぽくならない）
+    - 画像の拡大はしない（Studio側の「出現時」や拡大設定もこのCSSで打ち消して 100% に固定）
+    - それ以外のスライドは非表示
+    ※ フェードの秒数は :root の --urumo-fv-fade で変える
+-->
+<style>
+  :root {
+    --urumo-fv-fade: 1s;  /* フェードの時間 */
+    --urumo-fv-ease: cubic-bezier(.25, .1, .25, 1); /* ease */
+  }
+  #fv-carousel > .sd-carousel__slide,
+  #fv-carousel-sp > .sd-carousel__slide {
+    visibility: hidden !important; z-index: 0 !important;
+    transform: none !important; transition: none !important;
+  }
+  /* 画像は拡大しない */
+  #fv-carousel .image,
+  #fv-carousel-sp .image {
+    scale: 1 !important; transform: none !important;
+    animation: none !important; transition: none !important;
+  }
+  /* 1つ前の画像（下に敷く）：表示対象3枚の1枚目 */
+  #fv-carousel > .sd-carousel__slide:not([aria-hidden=true]):has(+ .sd-carousel__slide:not([aria-hidden=true]) + .sd-carousel__slide:not([aria-hidden=true])),
+  #fv-carousel-sp > .sd-carousel__slide:not([aria-hidden=true]):has(+ .sd-carousel__slide:not([aria-hidden=true]) + .sd-carousel__slide:not([aria-hidden=true])) {
+    visibility: visible !important; z-index: 1 !important;
+  }
+  #fv-carousel > .sd-carousel__slide:not([aria-hidden=true]):has(+ .sd-carousel__slide:not([aria-hidden=true]) + .sd-carousel__slide:not([aria-hidden=true])) > *,
+  #fv-carousel-sp > .sd-carousel__slide:not([aria-hidden=true]):has(+ .sd-carousel__slide:not([aria-hidden=true]) + .sd-carousel__slide:not([aria-hidden=true])) > * {
+    opacity: 1 !important; animation: none !important;
+  }
+  /* 今の画像：表示対象3枚の真ん中 */
+  #fv-carousel > .sd-carousel__slide:not([aria-hidden=true]) + .sd-carousel__slide:not([aria-hidden=true]):has(+ .sd-carousel__slide:not([aria-hidden=true])),
+  #fv-carousel-sp > .sd-carousel__slide:not([aria-hidden=true]) + .sd-carousel__slide:not([aria-hidden=true]):has(+ .sd-carousel__slide:not([aria-hidden=true])) {
+    visibility: visible !important; z-index: 2 !important;
+  }
+  #fv-carousel > .sd-carousel__slide:not([aria-hidden=true]) + .sd-carousel__slide:not([aria-hidden=true]):has(+ .sd-carousel__slide:not([aria-hidden=true])) > *,
+  #fv-carousel-sp > .sd-carousel__slide:not([aria-hidden=true]) + .sd-carousel__slide:not([aria-hidden=true]):has(+ .sd-carousel__slide:not([aria-hidden=true])) > * {
+    animation: urumo-fv-in var(--urumo-fv-fade) var(--urumo-fv-ease) both !important;
+  }
+  @keyframes urumo-fv-in { from { opacity: 0; } to { opacity: 1; } }
+</style>
