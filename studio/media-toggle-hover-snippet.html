@@ -1,0 +1,63 @@
+<!--
+  URUMO Recruit / TOP：URUMO公式コンテンツ一覧のトグルを閉じたら、オレンジの表示を元に戻す（PC・SP）
+  貼り付け先：Studio > サイト設定 > カスタムコード > <body>内の末尾
+  （<head>内の末尾は登録できる数の上限（10件）に達しているため）
+
+  Studio側の前提（設定済み）
+    - TOPのメディア一覧（section）に ID「media」
+    - 各トグルの input（ボタン）にホバー設定があり、ホバー中は
+      タイトル・説明文がオレンジ、丸ボタンがオレンジの画像に切り替わる（画像は1.1倍）
+
+  困っていたこと
+    閉じたあともカーソルがボタンの上に残る（PC）／タップした所にホバーが残る（スマホ）ため、
+    ホバーのオレンジが消えず、選択中のように見えていた
+
+  動き
+    - トグルを閉じた直後は、そのボタンのホバー表示を止めて、選ぶ前の表示に戻す
+    - PC：カーソルがボタンから離れたら、ホバー表示を元どおり有効にする
+    - スマホ：ほかの場所をタップしたら、ホバー表示を元どおり有効にする
+-->
+<style>
+  #media sd-toggle > [data-toggle-trigger].urumo-quiet p { color: rgb(36, 39, 45) !important; }
+  /* 丸ボタン：1枚目＝白い丸（ふだん手前）、2枚目＝オレンジの丸（ホバー時に手前） */
+  #media sd-toggle > [data-toggle-trigger].urumo-quiet img { scale: none !important; }
+  #media sd-toggle > [data-toggle-trigger].urumo-quiet img:first-child { z-index: 0 !important; }
+  #media sd-toggle > [data-toggle-trigger].urumo-quiet img:last-child:not(:first-child) { z-index: -1 !important; }
+</style>
+<script>
+  (function () {
+    if (window.__urumoMediaQuiet) return;
+    window.__urumoMediaQuiet = true;
+    var lastType = 'mouse';
+    document.addEventListener('pointerdown', function (e) { lastType = e.pointerType || 'mouse'; }, true);
+
+    function quiet(btn) {
+      btn.classList.add('urumo-quiet');
+      if (lastType === 'mouse') {
+        btn.addEventListener('mouseleave', function off() {
+          btn.classList.remove('urumo-quiet');
+          btn.removeEventListener('mouseleave', off);
+        });
+      } else {
+        document.addEventListener('pointerdown', function off(e) {
+          if (btn.contains(e.target)) return;
+          btn.classList.remove('urumo-quiet');
+          document.removeEventListener('pointerdown', off, true);
+        }, true);
+      }
+    }
+
+    // トグルの open が付いた／外れたタイミングで切り替える
+    // （閉じたときにホバーが残っているボタンだけ静かにする）
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        var t = m.target;
+        if (t.tagName !== 'SD-TOGGLE' || !t.closest('#media')) return;
+        var btn = t.querySelector(':scope > [data-toggle-trigger]');
+        if (!btn) return;
+        if (t.hasAttribute('open')) btn.classList.remove('urumo-quiet');
+        else if (btn.matches(':hover')) quiet(btn);
+      });
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['open'], subtree: true });
+  })();
+</script>
