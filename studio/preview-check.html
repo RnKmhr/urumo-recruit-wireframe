@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Header Preview Check</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#24272d;--card:#fff;--muted:#5d6370;--accent:#114ee7}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Noto Sans JP",system-ui,sans-serif;line-height:1.8}
+main{max-width:640px;margin:0 auto;padding:40px 16px}
+h1{font-size:20px;margin:0 0 8px} p{margin:0 0 16px;color:var(--muted)}
+.card{background:var(--card);border-radius:12px;padding:24px;margin-bottom:16px}
+.bm{display:inline-block;background:var(--accent);color:#fff;padding:12px 20px;border-radius:8px;font-weight:700;text-decoration:none;cursor:grab}
+ol{padding-left:20px;margin:0} li{margin-bottom:8px} code{background:#eef1f6;padding:2px 6px;border-radius:4px}
+</style></head><body><main>
+<h1>ヘッダー切り替えのプレビュー確認</h1>
+<p>Studioのライブプレビューではカスタムコードが動かないため、このボタンで同じコードを一時的に読み込ませて確認します。Studioのデータは変わりません。</p>
+<div class="card"><a class="bm" href="javascript:(function(){if(window.__urumoHeaderScroll){alert('%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%81%AF%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E6%B8%88%E3%81%BF%E3%81%A7%E3%81%99');return;}window.__urumoHeaderScroll=true;var%20s=document.createElement('style');s.textContent='%23header-fv,%23header-default{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%25!important;animation:none!important;transition:opacity%20.4s%20ease,visibility%200s%20linear%20.4s}%23header-fv{z-index:1001;opacity:1!important;visibility:visible;transition-delay:0s}%23header-default{z-index:1000;opacity:0!important;visibility:hidden;pointer-events:none;box-shadow:0%202px%2012px%20rgba(36,39,45,.08)}html.is-header-scrolled%20%23header-fv{opacity:0!important;visibility:hidden;pointer-events:none;transition:opacity%20.4s%20ease,visibility%200s%20linear%20.4s}html.is-header-scrolled%20%23header-default{opacity:1!important;visibility:visible;pointer-events:auto;transition:opacity%20.4s%20ease,visibility%200s%20linear%200s}';document.head.appendChild(s);function%20u(){var%20f=document.getElementById('fv');document.documentElement.classList.toggle('is-header-scrolled',!f||f.getBoundingClientRect().bottom<=70);}var%20t=false;function%20q(){if(t)return;t=true;requestAnimationFrame(function(){t=false;u();});}window.addEventListener('scroll',q,{passive:true});window.addEventListener('resize',q);new%20MutationObserver(q).observe(document.body,{childList:true,subtree:true});u();if(!document.getElementById('header-fv')||!document.getElementById('header-default')){alert('%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E3%81%AEID%EF%BC%88header-fv%20/%20header-default%EF%BC%89%E3%81%8C%E8%A6%8B%E3%81%A4%E3%81%8B%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93%E3%80%82PC%E5%B9%85%E3%81%A7%E9%96%8B%E3%81%84%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B%E7%A2%BA%E8%AA%8D%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84');}})();">ヘッダー確認</a></div>
+<div class="card"><ol>
+<li>上の「ヘッダー確認」ボタンを、ブラウザのブックマークバーへドラッグして登録する</li>
+<li>Studioのライブプレビュー（<code>preview.studio.site/live/…</code>）を<strong>PC幅</strong>で開く</li>
+<li>登録したブックマーク「ヘッダー確認」をクリック</li>
+<li>スクロールして、FVセクションを過ぎると白ヘッダーに切り替わるか確認</li>
+</ol></div>
+<p>ページを再読み込みすると元に戻ります。もう一度見るときは、再度ブックマークをクリックしてください。</p>
+</main></body></html>

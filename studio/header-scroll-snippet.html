@@ -1,0 +1,63 @@
+<!--
+  URUMO Recruit / PC ヘッダー切り替え（FV → default）
+  貼り付け先：Studio > TOPページ > ページ設定 > カスタムコード > </body>直前
+
+  Studio側の前提（設定済み）
+    - FVヘッダー（プロパティ1=FV）     … ID「header-fv」
+    - 白ヘッダー（header_pc / default） … ID「header-default」
+    - statement（FVセクション）          … ID「fv」
+      ※ statement_bg はStudio上で高さ約2,500pxあり切り替えが遅れるため、statementを基準にしている
+
+  動き
+    statement の下端がヘッダー(70px)まで来たら、
+    FVヘッダー → 白ヘッダー を 0.4秒でクロスフェード。戻すと逆になる。
+-->
+<style>
+  #header-fv,
+  #header-default {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    /* Studio側のスクロールアニメーション（FVヘッダーに付いている）が透明度を上書きするので止める */
+    animation: none !important;
+    transition: opacity .4s ease, visibility 0s linear .4s;
+  }
+  #header-fv      { z-index: 1001; opacity: 1 !important; visibility: visible; transition-delay: 0s; }
+  #header-default { z-index: 1000; opacity: 0 !important; visibility: hidden; pointer-events: none;
+                    box-shadow: 0 2px 12px rgba(36, 39, 45, .08); }
+
+  html.is-header-scrolled #header-fv      { opacity: 0 !important; visibility: hidden; pointer-events: none;
+                                            transition: opacity .4s ease, visibility 0s linear .4s; }
+  html.is-header-scrolled #header-default { opacity: 1 !important; visibility: visible; pointer-events: auto;
+                                            transition: opacity .4s ease, visibility 0s linear 0s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #header-fv, #header-default { transition: none !important; }
+  }
+</style>
+<script>
+  (function () {
+    if (window.__urumoHeaderScroll) return;
+    window.__urumoHeaderScroll = true;
+
+    function update() {
+      var fv = document.getElementById('fv');
+      // FVが無いページ（下層ページ）では常に白ヘッダー
+      var passed = !fv || fv.getBoundingClientRect().bottom <= 70;
+      document.documentElement.classList.toggle('is-header-scrolled', passed);
+    }
+    var ticking = false;
+    function schedule() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; update(); });
+    }
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    // Studioは描画やページ遷移でDOMが入れ替わるため、変化があったら再判定
+    new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+    update();
+  })();
+</script>

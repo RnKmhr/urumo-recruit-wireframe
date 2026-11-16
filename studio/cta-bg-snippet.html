@@ -1,0 +1,24 @@
+<!--
+  URUMO Recruit / CTA背景の上部見切れ対策（PC・SP）
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    - CTAの外枠（高さ800pxの箱）に ID「cta」
+        TOP：採用案内CTA・パンくず / カルチャー・働く環境・Q&A：ctaコンポーネント / 新卒採用：cta
+    - 背景画像の箱は #cta の直下の画像ボックス（TOPのみ ID「cta-bg」も付与）
+    - SP：cta&bread_list_sp コンポーネント（高さ700pxの箱）に ID「cta-sp」（全ページ共通）
+
+  動き
+    PC：CTAの高さを「画面幅 × 55.56%（背景画像 2880×1600 の比率）」にする。最低800px。
+    SP：CTAの高さを「画面幅 × 186.67%（背景画像 1500×2800 の比率）」にする。最低700px。
+    背景は cover・下揃えで、どの幅でも上の白いグラデーションが切れない。
+    背景は繰り返さない（高さの端数で画像の下端がCTAの上端に1pxはみ出し、オレンジの線に見えるのを防ぐ）。
+-->
+<style>
+  #cta { height: max(800px, 55.56vw) !important; }
+  #cta-bg, #cta > .image { height: 100% !important; }
+  #cta-bg::before, #cta > .image::before { background-size: cover !important; background-position: 50% 100% !important; background-repeat: no-repeat !important; }
+
+  #cta-sp, #cta-sp > .image { height: max(700px, 186.67vw) !important; }
+  #cta-sp > .image::before { background-size: cover !important; background-position: 50% 100% !important; background-repeat: no-repeat !important; }
+</style>
