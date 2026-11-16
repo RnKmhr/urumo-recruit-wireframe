@@ -1,0 +1,130 @@
+<!--
+  URUMO Recruit / 新卒採用：募集要項の職種タブ（ビジネス職 / エンジニア職）切り替え（PC・SP）
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    PC：open_positions > positions > tab > list > job_tab（2つ） に ID「job-tab-biz」「job-tab-eng」
+        open_positions > positions > table > Frame 2394（2つ） に ID「job-panel-biz」「job-panel-eng」
+    SP：同じ場所のタブ（job_tab_sp）に ID「job-tab-biz-sp」「job-tab-eng-sp」
+        表（Frame 2394）に ID「job-panel-biz-sp」「job-panel-eng-sp」
+    ※ job-panel-eng / job-panel-eng-sp は job-panel-biz を複製したもの。中身をエンジニア職の内容に書き換える
+
+  動き
+    - タブを押すと、対応する表だけを表示する（最初はビジネス職）。PCとSPは連動する
+    - 選択中のタブ：下線オレンジ（#EF852D）・文字 #24272D
+      選択していないタブ：下線グレー（rgba(157,165,173,.5)）・文字 #9DA5AD
+    - PCのタブと表の中の値はStudioの「入力欄」で作られているため、
+      文字を打ち込めないようにし（readonly）、Enterでフォームが送信されないようにする
+    - 表の中の入力欄（応募資格・給与・賞与）は1行しか表示できず長い文が切れるので、
+      入力欄を隠して、同じ文字・同じ見た目の文字に置き換えて表示する（折り返せる）
+    - キーボード操作（Tab で移動、Enter / Space で切り替え）と読み上げ用の role / aria-selected も付ける
+-->
+<style>
+  #job-tab-biz, #job-tab-eng, #job-tab-biz-sp, #job-tab-eng-sp { cursor: pointer; }
+  #job-tab-biz, #job-tab-eng { caret-color: transparent; }
+  #job-tab-biz:focus, #job-tab-eng:focus { outline: none; }
+  #job-tab-biz:focus-visible, #job-tab-eng:focus-visible,
+  #job-tab-biz-sp:focus-visible, #job-tab-eng-sp:focus-visible { outline: 2px solid #EF852D; outline-offset: 2px; }
+  [id^="job-panel-"] input { caret-color: transparent; pointer-events: none; }
+  .job-cell-text { margin: 0; width: 100%; box-sizing: border-box; white-space: normal; overflow-wrap: anywhere; }
+
+  /* 表示する表 */
+  html:not([data-job="eng"]) #job-panel-eng,
+  html:not([data-job="eng"]) #job-panel-eng-sp,
+  html[data-job="eng"] #job-panel-biz,
+  html[data-job="eng"] #job-panel-biz-sp { display: none !important; }
+
+  /* 選択中のタブ */
+  html:not([data-job="eng"]) #job-tab-biz, html:not([data-job="eng"]) #job-tab-biz-sp,
+  html[data-job="eng"] #job-tab-eng, html[data-job="eng"] #job-tab-eng-sp {
+    border-color: #EF852D !important; color: #24272D !important;
+  }
+  html:not([data-job="eng"]) #job-tab-biz::placeholder, html[data-job="eng"] #job-tab-eng::placeholder,
+  html:not([data-job="eng"]) #job-tab-biz-sp *, html[data-job="eng"] #job-tab-eng-sp * { color: #24272D !important; }
+
+  /* 選択していないタブ */
+  html:not([data-job="eng"]) #job-tab-eng, html:not([data-job="eng"]) #job-tab-eng-sp,
+  html[data-job="eng"] #job-tab-biz, html[data-job="eng"] #job-tab-biz-sp {
+    border-color: rgba(157, 165, 173, .5) !important; color: #9DA5AD !important;
+  }
+  html:not([data-job="eng"]) #job-tab-eng::placeholder, html[data-job="eng"] #job-tab-biz::placeholder,
+  html:not([data-job="eng"]) #job-tab-eng-sp *, html[data-job="eng"] #job-tab-biz-sp * { color: #9DA5AD !important; }
+</style>
+<script>
+  (function () {
+    if (window.__urumoJobTabs) return;
+    window.__urumoJobTabs = true;
+    var TABS = ['job-tab-biz', 'job-tab-eng', 'job-tab-biz-sp', 'job-tab-eng-sp'];
+    var root = document.documentElement;
+
+    function current() { return root.getAttribute('data-job') === 'eng' ? 'eng' : 'biz'; }
+
+    function sync() {
+      var cur = current();
+      TABS.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        var type = id.indexOf('-eng') > -1 ? 'eng' : 'biz';
+        el.setAttribute('role', 'tab');
+        el.setAttribute('aria-selected', type === cur ? 'true' : 'false');
+        el.setAttribute('aria-controls', 'job-panel-' + type + (id.slice(-3) === '-sp' ? '-sp' : ''));
+        if (el.tagName === 'INPUT') { el.readOnly = true; }
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+        if (el.parentElement) el.parentElement.setAttribute('role', 'tablist');
+      });
+      document.querySelectorAll('[id^="job-panel-"]').forEach(function (p) {
+        p.setAttribute('role', 'tabpanel');
+        p.querySelectorAll('input').forEach(toText);
+      });
+    }
+
+    // 表の中の入力欄は折り返せず長い文が切れるので、同じ見た目の文字に置き換えて表示する
+    function toText(i) {
+      if (i.dataset.jobText) return;
+      var cs = getComputedStyle(i), ph = getComputedStyle(i, '::placeholder');
+      var p = document.createElement('p');
+      p.className = 'job-cell-text';
+      p.textContent = i.placeholder || i.value;
+      ['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing',
+       'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'textAlign'].forEach(function (k) { p.style[k] = cs[k]; });
+      p.style.color = ph.color;
+      i.dataset.jobText = '1';
+      i.readOnly = true;
+      i.tabIndex = -1;
+      i.style.setProperty('display', 'none', 'important');
+      i.after(p);
+    }
+
+    function select(type) {
+      root.setAttribute('data-job', type);
+      sync();
+    }
+
+    function tabFrom(target) {
+      return target && target.closest && target.closest('#' + TABS.join(',#'));
+    }
+
+    document.addEventListener('click', function (e) {
+      var tab = tabFrom(e.target);
+      if (!tab) return;
+      e.preventDefault();
+      select(tab.id.indexOf('-eng') > -1 ? 'eng' : 'biz');
+    });
+
+    document.addEventListener('keydown', function (e) {
+      var tab = tabFrom(e.target);
+      if (tab && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        select(tab.id.indexOf('-eng') > -1 ? 'eng' : 'biz');
+      } else if (e.key === 'Enter' && e.target && e.target.closest && e.target.closest('[id^="job-panel-"]')) {
+        e.preventDefault();
+      }
+    });
+
+    root.setAttribute('data-job', current());
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sync); else sync();
+    new MutationObserver(function () {
+      if (document.getElementById('job-tab-biz') || document.getElementById('job-tab-biz-sp')) sync();
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  })();
+</script>
