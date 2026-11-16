@@ -1,0 +1,57 @@
+<!--
+  URUMO Recruit / SPヘッダーのメニュー（global menu_sp の Toggle）を使いやすくする
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    - コンポーネント global menu_sp の中に Toggle を置き、input に Group14（二本線のアイコン）、
+      Box にメニュー（暗い背景＋白いパネル）を入れている
+    - Toggle はヘッダーの行（ロゴ・エントリー）と重なる位置にあり、Studioの重なり順では下にある
+
+  動き
+    - Toggle を手前に出し、タップを受けるのはアイコンと開いたメニューだけにする
+      （ロゴ・エントリーのリンクはそのまま押せる）
+    - アイコンのタップ範囲を上下14px・左右10px広げる（見た目は変えない）
+    - 開いている間は二本線を「×」に変える（0.3秒）
+    - 開いている間は後ろのページをスクロールさせない
+    - 暗い背景をタップするか、メニューのリンクを押したら閉じる（白いパネルの余白をタップしても閉じない）
+-->
+<style>
+  header sd-toggle, header sd-toggle > [data-toggle-trigger] { pointer-events: none !important; }
+  header sd-toggle { z-index: 2 !important; }
+  header sd-toggle > [data-toggle-trigger] > *,
+  header sd-toggle > [data-toggle-content] { pointer-events: auto !important; }
+
+  /* タップ範囲を広げる */
+  header sd-toggle > [data-toggle-trigger] > * { padding: 14px 10px; margin: -14px -10px; box-sizing: content-box; }
+
+  /* 二本線 → ×（線＝中に何も入っていない箱。線を包む箱が何段あっても線だけを回す） */
+  header sd-toggle > [data-toggle-trigger] > * :not(:has(*)) {
+    transition: transform .3s cubic-bezier(.4, .4, 0, 1);
+    transform-origin: center;
+  }
+  header sd-toggle[open] > [data-toggle-trigger] > * :not(:has(*)):first-child { transform: translateY(2px) rotate(45deg); }
+  header sd-toggle[open] > [data-toggle-trigger] > * :not(:has(*)):last-child  { transform: translateY(-2px) rotate(-45deg); }
+
+  /* 開いている間は後ろをスクロールさせない */
+  html:has(header sd-toggle[open]) { overflow: hidden; }
+</style>
+<script>
+  (function () {
+    if (window.__urumoSpMenu) return;
+    window.__urumoSpMenu = true;
+    document.addEventListener('click', function (e) {
+      var c = e.target.closest && e.target.closest('header sd-toggle > [data-toggle-content]');
+      if (!c) return;
+      var t = c.parentElement;
+      if (!t.hasAttribute('open')) return;
+      var link = e.target.closest('a');
+      var r = e.target.getBoundingClientRect();
+      // 画面ほぼ全体を覆う要素＝暗い背景
+      var backdrop = r.width >= window.innerWidth * 0.9 && r.height >= window.innerHeight * 0.8;
+      if (link || backdrop) {
+        var b = t.querySelector('[data-toggle-trigger]');
+        if (b) b.click();
+      }
+    });
+  })();
+</script>
