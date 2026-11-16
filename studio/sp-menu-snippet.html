@@ -17,7 +17,8 @@
 -->
 <style>
   header sd-toggle, header sd-toggle > [data-toggle-trigger] { pointer-events: none !important; }
-  header sd-toggle { z-index: 2 !important; }
+  /* 手前に出す。Toggle自体の白背景はロゴ・エントリーを隠すので透明にする */
+  header sd-toggle { z-index: 2 !important; background: transparent !important; }
   header sd-toggle > [data-toggle-trigger] > *,
   header sd-toggle > [data-toggle-content] { pointer-events: auto !important; }
 

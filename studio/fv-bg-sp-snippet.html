@@ -1,0 +1,18 @@
+<!--
+  URUMO Recruit / ホーム（SP）：FVの青い背景が画面の左外に出て消えるのを防ぐ
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    - ホーム > top_sp > statement > statement_bg に ID「fv-bg-sp」
+    - statement_bg は位置「絶対」、左 -431・右 -314、幅 auto（左右の値で引き伸ばす）
+
+  原因
+    公開サイトでは Studio が箱に max-width:100% を付けるため、背景の箱が画面幅（375pxなど）に縮み、
+    左 -431px だけが効いて画面の左外に出てしまう（エディタでは max-width が付かないので気づきにくい）。
+
+  動き
+    - この箱だけ max-width を外し、左右の値どおりの大きさ（375pxの画面で1120px）にする
+-->
+<style>
+  #fv-bg-sp { max-width: none !important; }
+</style>
