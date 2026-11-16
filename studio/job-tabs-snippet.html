@@ -18,13 +18,15 @@
     - 表の中の入力欄（応募資格・給与・賞与）は1行しか表示できず長い文が切れるので、
       入力欄を隠して、同じ文字・同じ見た目の文字に置き換えて表示する（折り返せる）
     - キーボード操作（Tab で移動、Enter / Space で切り替え）と読み上げ用の role / aria-selected も付ける
+    - クリックしたときのフォーカス線（オレンジの枠）は出さない。色が変わるのは文字とタブの線だけ
 -->
 <style>
   #job-tab-biz, #job-tab-eng, #job-tab-biz-sp, #job-tab-eng-sp { cursor: pointer; }
   #job-tab-biz, #job-tab-eng { caret-color: transparent; }
-  #job-tab-biz:focus, #job-tab-eng:focus { outline: none; }
+  /* クリックしたときに枠線（フォーカス線）を出さない。色が変わるのは文字と線だけ */
+  #job-tab-biz:focus, #job-tab-eng:focus, #job-tab-biz-sp:focus, #job-tab-eng-sp:focus,
   #job-tab-biz:focus-visible, #job-tab-eng:focus-visible,
-  #job-tab-biz-sp:focus-visible, #job-tab-eng-sp:focus-visible { outline: 2px solid #EF852D; outline-offset: 2px; }
+  #job-tab-biz-sp:focus-visible, #job-tab-eng-sp:focus-visible { outline: none !important; box-shadow: none !important; }
   [id^="job-panel-"] input { caret-color: transparent; pointer-events: none; }
   .job-cell-text { margin: 0; width: 100%; box-sizing: border-box; white-space: normal; overflow-wrap: anywhere; }
 
