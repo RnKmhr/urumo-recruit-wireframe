@@ -1,0 +1,100 @@
+<!--
+  URUMO Recruit / 新卒採用：ページ内リンク（anchor_link > anchor_button）を押したら該当セクションへスクロール（PC・SP）
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    anchor_button はタグが button 固定でリンクを設定できないため、IDで行き先を決める。
+    ボタンのID ＝ 「go-」＋ 行き先のID
+      PC：go-who-were / go-positions / go-voices / go-flow
+      SP：go-message-sp / go-positions-sp / go-voices-sp / go-who-were-sp / go-flow-sp
+    行き先（セクション）のID
+      PC：who-were（求める人物像）/ positions（募集要項）/ voices（先輩社員の声）/ flow（選考フロー）
+      SP：message-sp（FVのメッセージ）/ positions-sp / voices-sp / who-were-sp / flow-sp
+
+  動き
+    - ボタンを押すと、行き先のセクションへなめらかにスクロールする
+    - 固定ヘッダーの高さ＋24pxぶん手前で止める（見出しがヘッダーに隠れず、少し余白が空く）
+    - URLの末尾に #positions などを付ける（PC・SP共通の名前）。共有したURLを開くとそのセクションへ移動する
+    - 押したときのフォーム送信は止める
+-->
+<style>
+  [id^="go-"] { cursor: pointer; }
+</style>
+<script>
+  (function () {
+    if (window.__urumoAnchors) return;
+    window.__urumoAnchors = true;
+    var NAMES = ['who-were', 'positions', 'voices', 'flow', 'message'];
+    var GAP = 24; // ヘッダーの下に空ける余白（px）
+
+    function visible(el) { return !!(el && el.getClientRects().length); }
+
+    // 表示中のほう（PC用 or SP用）の行き先を返す
+    function target(name) {
+      var pc = document.getElementById(name), sp = document.getElementById(name + '-sp');
+      if (visible(sp)) return sp;
+      if (visible(pc)) return pc;
+      return null;
+    }
+
+    // 画面上部に固定されているヘッダーの高さ
+    function headerHeight() {
+      var h = 0;
+      document.querySelectorAll('header').forEach(function (el) {
+        var cs = getComputedStyle(el), r = el.getBoundingClientRect();
+        if (cs.position === 'fixed' && r.height > 0 && r.top <= 0 && cs.visibility !== 'hidden' && cs.opacity !== '0') h = Math.max(h, r.bottom);
+      });
+      return h;
+    }
+
+    function scrollToName(name, smooth) {
+      var t = target(name);
+      if (!t) return false;
+      var y = Math.max(0, t.getBoundingClientRect().top + window.scrollY - headerHeight() - GAP);
+      if (!smooth || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+        jump(y);
+      } else {
+        animateTo(y);
+      }
+      return true;
+    }
+
+    // サイト側の html に scroll-behavior: smooth が付いているので、1コマごとの移動は瞬時に行う
+    // （そうしないと、なめらかさが二重にかかって遅くなる）
+    function jump(y) {
+      try { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
+      catch (err) { window.scrollTo(0, y); }
+    }
+
+    // ブラウザの smooth スクロールは環境によって効かないことがあるので、自前でなめらかに動かす
+    var anim = 0;
+    function animateTo(y) {
+      var start = window.scrollY, dist = y - start, dur = Math.min(900, 300 + Math.abs(dist) / 6), t0 = null;
+      cancelAnimationFrame(anim);
+      function step(ts) {
+        if (t0 === null) t0 = ts;
+        var p = Math.min(1, (ts - t0) / dur);
+        var e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; // easeInOutCubic
+        jump(start + dist * e);
+        if (p < 1) anim = requestAnimationFrame(step);
+      }
+      anim = requestAnimationFrame(step);
+    }
+
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('[id^="go-"]');
+      if (!b) return;
+      e.preventDefault();
+      var name = b.id.slice(3).replace(/-sp$/, '');
+      if (scrollToName(name, true) && history.replaceState) history.replaceState(null, '', '#' + name);
+    });
+
+    // #positions などが付いたURLで開いたとき
+    function fromHash() {
+      var name = decodeURIComponent(location.hash.slice(1));
+      if (NAMES.indexOf(name) > -1) scrollToName(name, false);
+    }
+    window.addEventListener('load', function () { setTimeout(fromHash, 300); });
+    window.addEventListener('hashchange', fromHash);
+  })();
+</script>

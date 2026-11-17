@@ -1,0 +1,56 @@
+<!--
+  URUMO Recruit / 新卒採用：募集要項の表（Frame 2394 > tr > td）で、左の見出しセルの背景色を行の高さいっぱいにする（PC・SP）
+  貼り付け先：Studio > サイト設定 > カスタムコード > <body>内の末尾
+  （<head>内の末尾は登録できる数の上限（10件）に達しているため）
+
+  Studio側の前提（設定済み）
+    - 募集要項の表の入れ物に ID「job-panel-biz」「job-panel-eng」（PC）／「job-panel-biz-sp」「job-panel-eng-sp」（SP）
+    - 表の中は「行（tr）＝ 左の見出しセル（薄い青の背景）＋ 右の内容セル」の横並び
+    - 見出しセルは高さが固定（例：128px）、行は上下中央揃え
+
+  困っていたこと
+    画面幅が狭くなって右の内容セルの文字が折り返すと、行だけが高くなり、
+    見出しセルは固定の高さのままなので、背景色が上下に足りなくなっていた
+
+  動き
+    - 見出しセルを行の高さいっぱいまで伸ばす
+    - Studioで決めた高さは「最低の高さ」として残す（行が低くなることはない）
+    - 画面幅やタブ（ビジネス職／エンジニア職）が変わったら、高さを測り直す
+-->
+<style>
+  html.urumo-th-fit [id^="job-panel-"] > * > :has(> :nth-child(2)) > :first-child {
+    align-self: stretch !important;
+    height: auto !important;
+    min-height: var(--urumo-th-h, 0px) !important;
+  }
+</style>
+<script>
+  (function () {
+    if (window.__urumoThFit) return;
+    window.__urumoThFit = true;
+    var SEL = '[id^="job-panel-"] > * > :has(> :nth-child(2)) > :first-child';
+    var root = document.documentElement;
+
+    function fit() {
+      var ths = document.querySelectorAll(SEL);
+      if (!ths.length) return;
+      // いったん元に戻して、Studioで決めた高さを測る
+      root.classList.remove('urumo-th-fit');
+      var hs = [].map.call(ths, function (th) { return getComputedStyle(th).height; });
+      [].forEach.call(ths, function (th, i) {
+        if (/px$/.test(hs[i])) th.style.setProperty('--urumo-th-h', hs[i]);
+      });
+      root.classList.add('urumo-th-fit');
+    }
+
+    var timer = 0;
+    function schedule() { clearTimeout(timer); timer = setTimeout(fit, 100); }
+
+    window.addEventListener('resize', schedule);
+    window.addEventListener('load', schedule);
+    // タブ切り替え（html の data-job が変わる）のとき
+    new MutationObserver(schedule).observe(root, { attributes: true, attributeFilter: ['data-job'] });
+    if (document.readyState !== 'loading') schedule();
+    else document.addEventListener('DOMContentLoaded', schedule);
+  })();
+</script>

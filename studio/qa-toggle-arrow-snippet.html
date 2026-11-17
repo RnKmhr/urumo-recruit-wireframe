@@ -1,0 +1,22 @@
+<!--
+  URUMO Recruit / Q&A：質問トグルが開いている間は右端の矢印を上向きにする（PC・SP）
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    - Q&Aページの質問リスト（Toggle が並んでいる箱）に ID「faq」（PC）／「faq-sp」（SP）
+    - 各 Toggle の input の中に、矢印アイコンの箱（画像を直接入れている箱）がある
+
+  動き
+    - トグルが開いている間（sd-toggle に open が付いている間）、矢印の箱を180度回転させる
+    - 0.3秒かけて回転する（Studioのほかのアニメーションと同じ速さ）
+-->
+<style>
+  #faq sd-toggle > [data-toggle-trigger] :has(> img),
+  #faq-sp sd-toggle > [data-toggle-trigger] :has(> img) {
+    transition: rotate .3s cubic-bezier(.4, .4, 0, 1);
+  }
+  #faq sd-toggle[open] > [data-toggle-trigger] :has(> img),
+  #faq-sp sd-toggle[open] > [data-toggle-trigger] :has(> img) {
+    rotate: 180deg;
+  }
+</style>

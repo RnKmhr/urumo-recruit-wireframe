@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Header Scroll Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ここはStudioが生成するDOMの代わり（デモ用）。本番ではStudioで組む */
+  body { margin: 0; font-family: "Noto Sans JP", sans-serif; background: #fff; color: #24272D; }
+  .header-inner { height: 70px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { position: relative; display: flex; align-items: center; gap: 16px; text-decoration: none; }
+  .logo-imgs { position: relative; width: 144px; height: 28px; }
+  .logo-imgs img { position: absolute; inset: 0; width: 144px; height: 28px; }
+  .logo p { margin: 0; font: 700 16px Montserrat, sans-serif; color: #fff; }
+  #site-header.is-scrolled .logo p { color: #114EE7 !important; }
+  nav { display: flex; align-items: center; gap: 30px; }
+  nav a { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; }
+  nav a.entry { background: #EF852D; color: #fff; padding: 18px 26px; border-radius: 4px; }
+  #fv { height: 1227px; background: linear-gradient(180deg, #114EE7 0%, #3a7bff 45%, #ffffff 100%); display: grid; place-items: center; color: #fff; font-size: 40px; font-weight: 700; }
+  section { height: 900px; padding: 120px 40px; box-sizing: border-box; border-top: 1px solid #eee; }
+  .note { position: fixed; right: 16px; bottom: 16px; background: #24272D; color: #fff; font-size: 12px; padding: 8px 12px; border-radius: 6px; z-index: 2000; }
+</style>
+</head>
+<body>
+  <header id="site-header">
+    <div class="header-inner">
+      <a class="logo" href="#">
+        <span class="logo-imgs">
+          <img src="../assets/img/header-logo.svg" alt="URUMO Recruit white">
+          <img src="color-logo-demo.svg" alt="URUMO Recruit color">
+        </span>
+        <p>Recruit</p>
+      </a>
+      <nav>
+        <a href="#">会社について</a><a href="#">働く環境</a><a href="#">数字で見る</a>
+        <a href="#">公式コンテンツ</a><a href="#">新卒採用</a><a href="#">Q&amp;A</a>
+        <a class="entry" href="https://herp.careers/v1/fezinc">エントリー</a>
+      </nav>
+    </div>
+  </header>
+  <div id="fv">重ねた分だけ、未来はひらく。（statement_bg）</div>
+  <section>culture</section>
+  <section>services</section>
+  <div class="note">デモ：FVを超えるとヘッダーが切り替わります</div>
+
+  <script>
+    // header-scroll-snippet.html を読み込んで、Studioのカスタムコードと同じ状態を再現
+    fetch('header-scroll-snippet.html').then(r => r.text()).then(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      doc.querySelectorAll('style').forEach(s => document.head.appendChild(s.cloneNode(true)));
+      doc.querySelectorAll('script').forEach(s => { const n = document.createElement('script'); n.textContent = s.textContent; document.body.appendChild(n); });
+    });
+  </script>
+</body>
+</html>

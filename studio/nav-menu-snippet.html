@@ -1,0 +1,26 @@
+<!--
+  URUMO Recruit / PCヘッダー「会社について」プルダウン：項目テキストを改行させない
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    - header_pc コンポーネント > list > pulldown > menu_pulldown に ID「nav-company-menu」
+
+  なぜ必要か
+    menu_pulldown は「絶対」配置で、親の「会社について」（幅 約100px）を基準にしている。
+    Studio はすべての要素に max-width: 100% を付けるため、プルダウンが親の幅までしか広がらず、
+    「会社紹介資料」などが改行されていた。Studio の設定画面には最大幅を外す項目がないので CSS で外す。
+
+  動き
+    - 最大幅の制限を外し、幅を中身の長さに合わせる（項目が長くなっても自動で広がる）
+    - 左の位置は Studio の設定（-27px）のまま、右は固定しない
+-->
+<style>
+  #nav-company-menu {
+    max-width: none !important;
+    width: max-content !important;
+    right: auto !important;
+  }
+  #nav-company-menu * {
+    white-space: nowrap;
+  }
+</style>

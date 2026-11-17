@@ -1,0 +1,65 @@
+<!--
+  URUMO Recruit / SP：CTAの下のパンくず「トップ > []」に、今いるページの名前を入れる
+  貼り付け先：Studio > サイト設定 > カスタムコード > <head>内の末尾
+
+  Studio側の前提（設定済み）
+    - 各ページのSP用CTA（コンポーネント cta&bread_list_sp）に ID「cta-sp」
+    - その中のパンくずは「トップ」と「[]」（ページ名の入れ物）が固定の文字で入っている
+
+  動き
+    - 「[]」を、そのページのPC用パンくずの文字（例：わたしたちが大切にしていること）に置き換える
+    - PC用パンくずが無いページは、ページタイトルの「 | 」より前（例：働く環境）を使う
+    - ホームのようにページ名が無いときは「> []」を消して「トップ」だけにする
+    - Studioはページを切り替えても読み込み直さないことがあるので、ページが変わるたびに付け直す
+-->
+<script>
+  (function () {
+    if (window.__urumoCrumb) return;
+    window.__urumoCrumb = true;
+
+    // PC用パンくず（「トップ」の隣の文字）→ 無ければページタイトル
+    function crumbName() {
+      var tops = [].filter.call(document.querySelectorAll('p'), function (q) {
+        return q.textContent.trim() === 'トップ' && !q.closest('#cta-sp, header, footer');
+      });
+      for (var i = 0; i < tops.length; i++) {
+        var row = tops[i].parentElement && tops[i].parentElement.parentElement;
+        var last = row && row.lastElementChild;
+        if (last && last !== tops[i].parentElement) {
+          var t = last.textContent.trim();
+          if (t && t !== '[]') return t;
+        }
+      }
+      var parts = document.title.split(' | ');
+      return parts.length > 1 ? parts[0].trim() : '';
+    }
+
+    function apply() {
+      var ps = document.querySelectorAll('#cta-sp p');
+      for (var i = 0; i < ps.length; i++) {
+        var p = ps[i];
+        if (!p.hasAttribute('data-urumo-crumb')) {
+          if (p.textContent.trim() !== '[]') continue;
+          p.setAttribute('data-urumo-crumb', '');
+        }
+        var name = crumbName();
+        var item = p.parentElement;
+        var arrow = item.previousElementSibling && item.previousElementSibling.tagName === 'IMG' ? item.previousElementSibling : null;
+        var show = name ? '' : 'none';
+        if (name && p.textContent !== name) p.textContent = name;
+        if (item.style.display !== show) item.style.display = show;
+        if (arrow && arrow.style.display !== show) arrow.style.display = show;
+      }
+    }
+
+    var queued = false;
+    function schedule() {
+      if (queued) return;
+      queued = true;
+      setTimeout(function () { queued = false; apply(); }, 50);
+    }
+    new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+    document.addEventListener('DOMContentLoaded', schedule);
+    schedule();
+  })();
+</script>
